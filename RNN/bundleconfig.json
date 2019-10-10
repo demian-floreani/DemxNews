@@ -1,0 +1,24 @@
+[
+  {
+    "outputFileName": "wwwroot/css/prod-opinions.min.css",
+    "inputFiles": [
+      "wwwroot/css/global.min.css",
+      "wwwroot/css/opinions.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/prod-home.min.css",
+    "inputFiles": [
+      "wwwroot/css/global.min.css",
+      "wwwroot/css/home.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  }
+]

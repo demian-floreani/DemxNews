@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/StyleSheet.css",
+    "inputFile": "wwwroot/css/StyleSheet.less"
+  },
+  {
+    "outputFile": "wwwroot/css/opinions.css",
+    "inputFile": "wwwroot/css/opinions.less"
+  },
+  {
+    "outputFile": "wwwroot/css/global.css",
+    "inputFile": "wwwroot/css/global.less"
+  },
+  {
+    "outputFile": "wwwroot/css/home.css",
+    "inputFile": "wwwroot/css/home.less"
+  }
+]

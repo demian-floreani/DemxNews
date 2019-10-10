@@ -1,0 +1,24 @@
+﻿<!--
+    editorial view
+-->
+@model RNN.Models.ViewModels.ViewComponents.EditorialViewComponent
+
+<!-- main opinion or editorial -->
+<div class="row editorial-row">
+    <div class="col-sm-12 editorial-column">
+        <div class="prefix">Editorial</div>
+        <div class="editorial-box">
+            <div class="row row-equal">
+                <div class="col-sm-6 editorial-left-column">
+                    <img class="featured-editorial-img" src="~/images/uploads/@Model.Img" alt="editorial">
+                </div>
+                <div class="col-sm-6 editorial-right-column">
+                    <div class="flex-container">
+                        <div><a href="@Model.Url"><span class="featured-editorial-title">@Model.Title</span></a></div>
+                        <div><span class="featured-editorial-paragrah">@Model.Paragraph</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

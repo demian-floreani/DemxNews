@@ -1,0 +1,38 @@
+﻿@model RNN.Models.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row subjects-block">
+    <div class="col-sm-12">
+        <ul class="subject-list">
+            @foreach (var subject in Model.Trending)
+            {
+                <li><a asp-controller="Home" asp-action="Index" asp-route-id="@subject.Id"><span>@subject.Name</span></a></li>
+            }
+        </ul>
+    </div>
+</div>
+
+<!-- grid engine -->
+<div class="row featured-section">
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-12 headlines">
+                <span>Headlines</span>
+            </div>
+        </div>
+        @await Component.InvokeAsync("Row", new { rows = Model.FeaturedLeftGrid })
+    </div>
+    <div class="col-sm-8">
+        @await Component.InvokeAsync("Row", new { rows = Model.FeaturedRightGrid })
+    </div>
+</div>
+
+
+<!-- grid engine -->
+@*@await Component.InvokeAsync("Row", new { rows = Model.Grid })*@
+
+
+
