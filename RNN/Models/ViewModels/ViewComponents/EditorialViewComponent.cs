@@ -5,8 +5,9 @@ namespace RNN.Models.ViewModels.ViewComponents
 {
     public class EditorialViewComponent : ViewComponent
     {
-        public string Url { get; set; }
         public string Title { get; set; }
+        public string Url { get; set; }
+        public string HeadLine { get; set; }
         public string Author { get; set; }
         public string Paragraph { get; set; }
         public string Body { get; set; }
@@ -17,7 +18,7 @@ namespace RNN.Models.ViewModels.ViewComponents
             return new EditorialViewComponent()
             {
                 Url = model.Url,
-                Title = model.Title,
+                Title = model.HeadLine,
                 Author = model.Author.Name,
                 Paragraph = model.Paragraph,
                 Body = model.Body,

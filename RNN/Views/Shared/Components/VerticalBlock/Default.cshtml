@@ -1,0 +1,23 @@
+﻿<!--
+    opinion view
+-->
+@model RNN.Models.ViewModels.ViewComponents.VerticalBlockViewComponent
+
+<div class="row opinion-row">
+    <div class="col-sm-12 opinion-column">
+        <div class="prefix">@Model.Title</div>
+        <a asp-controller="Opinions" asp-action="Index" asp-route-id="@Model.Id">
+            <div class="opinion">
+                <img src="~/images/uploads/@Model.Img" alt="opinion" />
+                <header>
+                    @if (Model.Topic != null)
+                    {
+                        <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
+                    }
+                    <span>@Model.HeadLine</span>
+                </header>
+                <section><p>@Model.Paragraph</p></section>
+            </div>
+        </a>
+    </div>
+</div>

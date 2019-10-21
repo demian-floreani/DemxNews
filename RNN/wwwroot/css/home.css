@@ -1,4 +1,7 @@
-﻿/* subjec titles */
+﻿.grid-row {
+  margin-bottom: 10px;
+}
+/* subjec titles */
 .subject-list {
   text-align: center;
 }
@@ -8,14 +11,14 @@
 .subject-list li {
   display: inline-block;
   float: none;
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 .subject-list li span {
-  color: black;
-  font-size: 20px;
+  color: #000;
+  font-size: 18px;
   font-weight: 400;
   font-family: 'Merriweather', serif;
 }
@@ -38,7 +41,7 @@
 /*************/
 .subject-section {
   border-bottom: 1px solid lightgray;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 /***/
 /*** posts ***/
@@ -77,11 +80,12 @@
   border-left: 1px solid darkgray;
 }
 .prefix {
+  border-bottom: 1px solid #FC7416;
+  font-style: italic;
+  font-weight: normal;
   color: #FC7416;
   margin-bottom: 5px;
   font-size: 18px;
-  border-bottom: 1px solid #FC7416;
-  font-style: italic;
   line-height: 1;
 }
 .editorial-left-column {
@@ -166,8 +170,45 @@
   display: block;
 }
 .headlines {
-  font-size: 24px;
+  font-size: 30px;
   font-style: italic;
   font-family: 'Merriweather', serif;
+  color: #FC7416;
+  margin-bottom: 20px;
 }
 /***********/
+.horizontal-block {
+  background-color: #eff5f5;
+}
+.horizontal-block:hover {
+  background-color: #e0ebeb;
+  cursor: pointer;
+}
+.horizontal-block-column {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid darkgray;
+}
+.horizontal-block-column > a > div > div > div > img {
+  width: 100%;
+}
+.horizontal-block-column > a > div > div > div > header > span {
+  font-size: 18px;
+  color: #000000;
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+}
+.horizontal-block-column .left-column {
+  padding-right: 5px;
+}
+.horizontal-block-column .right-column {
+  padding-left: 5px;
+}
+.highlight {
+  font-size: 20px;
+  background-color: yellow;
+}
+mark {
+  background-color: yellow;
+  font-size: 30px;
+}

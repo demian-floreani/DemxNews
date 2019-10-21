@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Shared\Components\Text\Default.cshtml">
+    <Content Update="Views\Shared\Components\VerticalBlock\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\Components\Post\Default.cshtml">

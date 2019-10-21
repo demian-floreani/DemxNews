@@ -1,7 +1,7 @@
 ﻿<!--
     editorial view
 -->
-@model RNN.Models.ViewModels.ViewComponents.EditorialViewComponent
+@model RNN.Models.ViewModels.ViewComponents.HorizontalBlockViewComponent
 
 <!-- main opinion or editorial -->
 <div class="row editorial-row">
@@ -14,6 +14,10 @@
                 </div>
                 <div class="col-sm-6 editorial-right-column">
                     <div class="flex-container">
+                        @if (Model.Topic != null)
+                        {
+                           <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
+                        }
                         <div><a href="@Model.Url"><span class="featured-editorial-title">@Model.HeadLine</span></a></div>
                         <div><span class="featured-editorial-paragrah">@Model.Paragraph</span></div>
                     </div>

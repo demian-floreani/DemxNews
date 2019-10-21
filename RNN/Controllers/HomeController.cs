@@ -25,9 +25,9 @@ namespace RNN.Controllers
 
             Models.ViewModels.IndexViewModel viewModel = new Models.ViewModels.IndexViewModel()
             {
-                // get topics with most mentions in latest posts
-                Trending = _context.PostToTopics
-                    .OrderByDescending(pt => pt.PostId)
+                // get topics with most mentions
+                Trending = _context.ArticleToTopics
+                    .OrderByDescending(pt => pt.ArticleId)
                     .Take(10)
                     .Include(pt => pt.Topic)
                     .GroupBy(pt => pt.Topic)
@@ -36,22 +36,35 @@ namespace RNN.Controllers
                     .Take(5)
                     .ToList()
             };
-            
-            // featured editorial
-            var editorial = _context.Editorials.Include(e => e.Author).FirstOrDefault(e => e.IsFeatured == true);
+
+            // featured editorials
+            var editorials = _context.Editorials
+                .Include(e => e.Author)
+                .Include(e => e.Title)
+                .Where(e => e.IsFeatured == true)
+                .ToList();
             
             // featured posts
             var posts = _context.Posts
                     .Where(p => p.IsFeatured)
-                    .Include(p => p.PostToTopic)
+                    .Include(p => p.ArticleToTopics)
                     .ThenInclude(pt => pt.Topic)
                     .OrderByDescending(p => p.Date)
                     .ToList();
 
-            var opinions = _context.Set<Opinion>()
-                .Include(o => o.OpinionToTopic)
+            var news = _context.News
+                .Include(o => o.ArticleToTopics)
                 .ThenInclude(ot => ot.Topic)
                 .Include(o => o.Author)
+                .Include(o => o.Title)
+                .Where(o => o.IsFeatured == true)
+                .ToList();
+
+            var opinions = _context.Opinions
+                .Include(o => o.ArticleToTopics)
+                .ThenInclude(ot => ot.Topic)
+                .Include(o => o.Author)
+                .Include(o => o.Title)
                 .Where(o => o.IsFeatured == true)
                 .ToList();
 
@@ -68,8 +81,8 @@ namespace RNN.Controllers
                             Components = posts.Select(p => new PostViewComponent()
                             {
                                 Url = p.Url,
-                                Title = p.Title,
-                                Topics = p.PostToTopic.Select(pt => pt.Topic.Name)
+                                Title = p.HeadLine,
+                                Topics = p.ArticleToTopics.Select(pt => pt.Topic.Name)
                             })
                         }
                     }
@@ -85,9 +98,9 @@ namespace RNN.Controllers
                         new ColumnViewComponent()
                         {
                             Width = 12,
-                            Components = new List<EditorialViewComponent>()
+                            Components = new List<HorizontalBlockViewComponent>()
                             {
-                                EditorialViewComponent.ToViewModel(editorial)
+                                HorizontalBlockViewComponent.ToViewModel(editorials.First())
                             }
                         }
                     }
@@ -95,21 +108,63 @@ namespace RNN.Controllers
                 new RowViewComponent()
                 {
                     Columns = opinions.Select(o => new ColumnViewComponent()
+                    {
+                        Width = 4,
+                        Rows = null,
+                        Components = new List<VerticalBlockViewComponent>()
                         {
-                            Width = 4,
-                            Rows = null,
-                            Components = new List<OpinionViewComponent>()
+                            VerticalBlockViewComponent.ToViewModel(o)
+                        }
+                    })
+                },
+                new RowViewComponent()
+                {
+                    Columns = new List<ColumnViewComponent>()
+                    {
+                        new ColumnViewComponent()
+                        {
+                            Width = 8,
+                            Rows = new List<RowViewComponent>()
                             {
-                                new OpinionViewComponent()
+                                new RowViewComponent()
                                 {
-                                    Id = o.Id,
-                                    Title = o.Title,
-                                    Img = o.Img,
-                                    Paragraph = o.Paragraph,
-                                    Topics = o.OpinionToTopic.Select(ot => ot.Topic.Name)
+                                    Columns = new List<ColumnViewComponent>() 
+                                    {
+                                        new ColumnViewComponent()
+                                        {
+                                            Width = 12,
+                                            Components = new List<HorizontalMediumBlockViewComponent>()
+                                            {
+                                                HorizontalMediumBlockViewComponent.ToViewModel(editorials[1])
+                                            }
+                                        }
+                                    }
+                                },
+                                new RowViewComponent()
+                                {
+                                    Columns = new List<ColumnViewComponent>() 
+                                    {
+                                        new ColumnViewComponent()
+                                        {
+                                            Width = 12,
+                                            Components = new List<HorizontalMediumBlockViewComponent>()
+                                            {
+                                                HorizontalMediumBlockViewComponent.ToViewModel(editorials[1])
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        })
+                        },
+                        new ColumnViewComponent()
+                        {
+                            Width = 4,
+                            Components = new List<VerticalBlockViewComponent>()
+                            {
+                                VerticalBlockViewComponent.ToViewModel(opinions.First())
+                            }
+                        }
+                    }
                 }
             };
 
@@ -126,11 +181,11 @@ namespace RNN.Controllers
             return View("Index", viewModel);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
 
         /// <summary>
         /// 
@@ -147,31 +202,30 @@ namespace RNN.Controllers
                 .ToList();
 
             var posts = _context.Posts
-                .Include(p => p.PostToTopic)
-                .Where(p => p.PostToTopic.Any(pt => topics.FirstOrDefault(t => t.Id == pt.TopicId) != null))
+                .Include(p => p.ArticleToTopics)
+                .Where(p => p.ArticleToTopics.Any(pt => topics.FirstOrDefault(t => t.Id == pt.TopicId) != null))
                 .ToList();
 
             var opinions = _context.Opinions
-                .Include(p => p.OpinionToTopic)
-                .Where(p => p.OpinionToTopic.Any(ot => topics.FirstOrDefault(t => t.Id == ot.TopicId) != null))
+                .Include(p => p.ArticleToTopics)
+                .Where(p => p.ArticleToTopics.Any(ot => topics.FirstOrDefault(t => t.Id == ot.TopicId) != null))
                 .ToList();
 
             var row = new RowViewComponent()
             {
-                CssClass = "subject-section",
                 Columns = new List<ColumnViewComponent>()
                 {
+                    //new ColumnViewComponent()
+                    //{
+                    //    Width = 2,
+                    //    Rows = null,
+                    //    Components = new List<ViewComponent>() { new TextViewComponent() { Text = rank.Name, SpanCssClass = "subject-sub-title" } }
+                    //},
                     new ColumnViewComponent()
                     {
-                        Width = 2,
+                        Width = 6,
                         Rows = null,
-                        Components = new List<ViewComponent>() { new TextViewComponent() { Text = rank.Name, SpanCssClass = "subject-sub-title" } }
-                    },
-                    new ColumnViewComponent()
-                    {
-                        Width = 4,
-                        Rows = null,
-                        Components = posts.Select(p => new PostViewComponent() { Title = p.Title, Url = p.Url, Topics = p.PostToTopic.Select(pt => pt.Topic.Name) })
+                        Components = posts.Select(p => new PostViewComponent() { Title = p.HeadLine, Url = p.Url, Topics = p.ArticleToTopics.Select(pt => pt.Topic.Name) })
                     },
                     new ColumnViewComponent()
                     {
@@ -180,7 +234,7 @@ namespace RNN.Controllers
                         {
                             new RowViewComponent()
                             {
-                                Columns = ArrangeComponentsInColumns(opinions.Select(o => new OpinionViewComponent(){ Title = o.Title, Img = o.Img, Paragraph = o.Paragraph }))
+                                Columns = ArrangeComponentsInColumns(opinions.Select(o => new OpinionViewComponent(){ Title = o.HeadLine, Img = o.Img, Paragraph = o.Paragraph }))
                             }
                         }
                     }

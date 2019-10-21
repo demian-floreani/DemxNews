@@ -11,7 +11,9 @@ namespace RNN.Models
         public string Name { get; set; }
 
         public ICollection<SubjectToTopic> SubjectToTopic { get; set; }
-        public ICollection<PostToTopic> PostToTopic { get; set; }
-        public ICollection<OpinionToTopic> OpinionToTopic { get; set; }
+        //public ICollection<PostToTopic> PostToTopic { get; set; }
+        public ICollection<ArticleToTopic> ArticleToTopic { get; set; }
+
+        //public ICollection<OpinionToTopic> OpinionToTopic { get; set; }
     }
 }

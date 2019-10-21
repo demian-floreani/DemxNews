@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<RNN.Models.ViewModels.ViewComponents.RowViewComponent>
 
 @foreach (var row in Model) {
-    <div class="row @row.CssClass">
+    <div class="row grid-row">
        @foreach(var column in row.Columns) {
             <div class="col-sm-@column.Width">
                 @if (column.Rows != null) {

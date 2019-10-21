@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RNN.Models;
 
 namespace RNN.Migrations
 {
     [DbContext(typeof(RNNContext))]
-    partial class RNNContextModelSnapshot : ModelSnapshot
+    [Migration("20191017161933_new-editorial")]
+    partial class neweditorial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,10 +87,7 @@ namespace RNN.Migrations
                         new { TopicId = 30, ArticleId = 14 },
                         new { TopicId = 30, ArticleId = 15 },
                         new { TopicId = 30, ArticleId = 16 },
-                        new { TopicId = 8, ArticleId = 17 },
-                        new { TopicId = 2, ArticleId = 18 },
                         new { TopicId = 30, ArticleId = 19 },
-                        new { TopicId = 2, ArticleId = 19 },
                         new { TopicId = 30, ArticleId = 20 },
                         new { TopicId = 30, ArticleId = 21 },
                         new { TopicId = 30, ArticleId = 22 },
@@ -244,7 +243,7 @@ namespace RNN.Migrations
 
                     b.HasData(
                         new { Id = 17, AuthorId = 1, Body = "", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears", Img = "editorial.jpg", IsFeatured = true, Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", TitleId = 1, Url = "" },
-                        new { Id = 18, AuthorId = 1, Body = "", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "MPs debate Boris Johnson's deal as People's Vote march sets off – live news", Img = "editorial.jpg", IsFeatured = true, Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", TitleId = 2, Url = "" }
+                        new { Id = 18, AuthorId = 1, Body = "", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears", Img = "editorial.jpg", IsFeatured = true, Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", TitleId = 2, Url = "" }
                     );
                 });
 

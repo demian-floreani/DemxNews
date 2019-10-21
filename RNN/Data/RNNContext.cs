@@ -11,20 +11,19 @@ namespace RNN.Models
         public RNNContext(DbContextOptions<RNNContext> options) : base(options) {}
 
         public DbSet<Author> Authors { get; set; }
-
         public DbSet<Edition> Editions { get; set; }
+        public DbSet<Title> Titles { get; set; }
 
         public DbSet<Editorial> Editorials { get; set; }
         public DbSet<Opinion> Opinions { get; set; }
-
-        public DbSet<SubjectToTopic> SubjectToTopics { get; set; }
-        public DbSet<PostToTopic> PostToTopics { get; set; }
-        public DbSet<OpinionToTopic> OpinionToTopic { get; set; }
-
+        public DbSet<News> News { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<ArticleToTopic> ArticleToTopics { get; set; }
 
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<SubjectToTopic> SubjectToTopics { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,27 +38,39 @@ namespace RNN.Models
                 .WithMany(t => t.SubjectToTopic)
                 .HasForeignKey(bc => bc.TopicId);
 
-            modelBuilder.Entity<PostToTopic>()
-                .HasKey(pt => new { pt.TopicId, pt.PostId });
-            modelBuilder.Entity<PostToTopic>()
-                .HasOne(pt => pt.Post)
-                .WithMany(p => p.PostToTopic)
-                .HasForeignKey(bc => bc.PostId);
-            modelBuilder.Entity<PostToTopic>()
+            //modelBuilder.Entity<PostToTopic>()
+            //    .HasKey(pt => new { pt.TopicId, pt.PostId });
+            //modelBuilder.Entity<PostToTopic>()
+            //    .HasOne(pt => pt.Post)
+            //    .WithMany(p => p.PostToTopic)
+            //    .HasForeignKey(bc => bc.PostId);
+            //modelBuilder.Entity<PostToTopic>()
+            //    .HasOne(pt => pt.Topic)
+            //    .WithMany(t => t.PostToTopic)
+            //    .HasForeignKey(bc => bc.TopicId);
+
+            modelBuilder.Entity<ArticleToTopic>()
+                .HasKey(pt => new { pt.TopicId, pt.ArticleId });
+            modelBuilder.Entity<ArticleToTopic>()
+                .HasOne(pt => pt.Article)
+                .WithMany(p => p.ArticleToTopics)
+                .HasForeignKey(bc => bc.ArticleId);
+            modelBuilder.Entity<ArticleToTopic>()
                 .HasOne(pt => pt.Topic)
-                .WithMany(t => t.PostToTopic)
+                .WithMany(t => t.ArticleToTopic)
                 .HasForeignKey(bc => bc.TopicId);
 
-            modelBuilder.Entity<OpinionToTopic>()
-                .HasKey(pt => new { pt.TopicId, pt.OpinionId });
-            modelBuilder.Entity<OpinionToTopic>()
-                .HasOne(pt => pt.Opinion)
-                .WithMany(p => p.OpinionToTopic)
-                .HasForeignKey(bc => bc.OpinionId);
-            modelBuilder.Entity<OpinionToTopic>()
-                .HasOne(pt => pt.Topic)
-                .WithMany(t => t.OpinionToTopic)
-                .HasForeignKey(bc => bc.TopicId);
+
+            //modelBuilder.Entity<OpinionToTopic>()
+            //    .HasKey(pt => new { pt.TopicId, pt.OpinionId });
+            //modelBuilder.Entity<OpinionToTopic>()
+            //    .HasOne(pt => pt.Opinion)
+            //    .WithMany(p => p.OpinionToTopic)
+            //    .HasForeignKey(bc => bc.OpinionId);
+            //modelBuilder.Entity<OpinionToTopic>()
+            //    .HasOne(pt => pt.Topic)
+            //    .WithMany(t => t.OpinionToTopic)
+            //    .HasForeignKey(bc => bc.TopicId);
 
             Seed.SeedDatabase(modelBuilder);
         }
