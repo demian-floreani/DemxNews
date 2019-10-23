@@ -19,6 +19,8 @@ namespace RNN.Models
         public Author Author { get; set; }
         public bool IsFeatured { get; set; }
         public DateTime Date { get; set; }
+        public Grouping Grouping { get; set; }
+        public int? GroupingId { get; set; }
 
         public ICollection<ArticleToTopic> ArticleToTopics { get; set; }
     }

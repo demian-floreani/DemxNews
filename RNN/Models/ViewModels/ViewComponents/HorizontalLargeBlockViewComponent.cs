@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RNN.Models.ViewModels.ViewComponents
 {
-    public class HorizontalBlockViewComponent : ViewComponent
+    public class HorizontalLargeBlockViewComponent : ViewComponent
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,9 +17,9 @@ namespace RNN.Models.ViewModels.ViewComponents
         public string Author { get; set; }
         public string Topic { get; set; }
 
-        public static HorizontalBlockViewComponent ToViewModel(Article model)
+        public static HorizontalLargeBlockViewComponent ToViewModel(Article model)
         {
-            return new HorizontalBlockViewComponent()
+            return new HorizontalLargeBlockViewComponent()
             {
                 Url = model.Url,
                 Title = model.Title.Name,
@@ -31,7 +31,7 @@ namespace RNN.Models.ViewModels.ViewComponents
             };
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(HorizontalBlockViewComponent component)
+        public async Task<IViewComponentResult> InvokeAsync(HorizontalLargeBlockViewComponent component)
         {
             return View(component);
         }

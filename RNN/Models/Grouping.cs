@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace RNN.Models
 {
-    public class Subject
+    public class Grouping
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Type { get; set; }
         public int Rank { get; set; }
-
-        public ICollection<SubjectToTopic> SubjectToTopic { get; set; }
     }
 }

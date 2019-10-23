@@ -78,12 +78,7 @@ namespace RNN.Controllers
                         {
                             Width = 12,
                             Rows = null,
-                            Components = posts.Select(p => new PostViewComponent()
-                            {
-                                Url = p.Url,
-                                Title = p.HeadLine,
-                                Topics = p.ArticleToTopics.Select(pt => pt.Topic.Name)
-                            })
+                            Components = posts.Select(p => HorizontalSmallBlockViewComponent.ToViewModel(p))
                         }
                     }
                 }
@@ -98,9 +93,9 @@ namespace RNN.Controllers
                         new ColumnViewComponent()
                         {
                             Width = 12,
-                            Components = new List<HorizontalBlockViewComponent>()
+                            Components = new List<HorizontalLargeBlockViewComponent>()
                             {
-                                HorizontalBlockViewComponent.ToViewModel(editorials.First())
+                                HorizontalLargeBlockViewComponent.ToViewModel(editorials.First())
                             }
                         }
                     }
@@ -172,9 +167,16 @@ namespace RNN.Controllers
             //  \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
             //  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
             //  \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+            Grouping first = _context.Groupings.FirstOrDefault(g => g.Rank == 1);
+         
+            var n = _context.News.Where(o => o.GroupingId == first.Id);
+            
+
+
             //var grid = new List<RowViewComponent>();
             //grid.Add(BuildGrid(_context.Subjects.FirstOrDefault(s => s.Rank == 1)));
             //grid.Add(BuildGrid(_context.Subjects.FirstOrDefault(s => s.Rank == 2)));
+
 
 //            viewModel.Grid = grid;
 
@@ -192,57 +194,57 @@ namespace RNN.Controllers
         /// </summary>
         /// <param name="id">the subject id</param>
         /// <returns></returns>
-        private RowViewComponent BuildGrid(Subject rank)
-        {
+        //private RowViewComponent BuildGrid(Grouping rank)
+        //{
             // find the topics linked to the subject
-            var topics = _context.SubjectToTopics
-                .Where(st => st.SubjectId == rank.Rank)
-                .Include(st => st.Topic)
-                .Select(st => st.Topic)
-                .ToList();
+            //var topics = _context.SubjectToTopics
+            //    .Where(st => st.SubjectId == rank.Rank)
+            //    .Include(st => st.Topic)
+            //    .Select(st => st.Topic)
+            //    .ToList();
 
-            var posts = _context.Posts
-                .Include(p => p.ArticleToTopics)
-                .Where(p => p.ArticleToTopics.Any(pt => topics.FirstOrDefault(t => t.Id == pt.TopicId) != null))
-                .ToList();
+            //var posts = _context.Posts
+            //    .Include(p => p.ArticleToTopics)
+            //    .Where(p => p.ArticleToTopics.Any(pt => topics.FirstOrDefault(t => t.Id == pt.TopicId) != null))
+            //    .ToList();
 
-            var opinions = _context.Opinions
-                .Include(p => p.ArticleToTopics)
-                .Where(p => p.ArticleToTopics.Any(ot => topics.FirstOrDefault(t => t.Id == ot.TopicId) != null))
-                .ToList();
+            //var opinions = _context.Opinions
+            //    .Include(p => p.ArticleToTopics)
+            //    .Where(p => p.ArticleToTopics.Any(ot => topics.FirstOrDefault(t => t.Id == ot.TopicId) != null))
+            //    .ToList();
 
-            var row = new RowViewComponent()
-            {
-                Columns = new List<ColumnViewComponent>()
-                {
-                    //new ColumnViewComponent()
-                    //{
-                    //    Width = 2,
-                    //    Rows = null,
-                    //    Components = new List<ViewComponent>() { new TextViewComponent() { Text = rank.Name, SpanCssClass = "subject-sub-title" } }
-                    //},
-                    new ColumnViewComponent()
-                    {
-                        Width = 6,
-                        Rows = null,
-                        Components = posts.Select(p => new PostViewComponent() { Title = p.HeadLine, Url = p.Url, Topics = p.ArticleToTopics.Select(pt => pt.Topic.Name) })
-                    },
-                    new ColumnViewComponent()
-                    {
-                        Width = 6,
-                        Rows = new List<RowViewComponent>()
-                        {
-                            new RowViewComponent()
-                            {
-                                Columns = ArrangeComponentsInColumns(opinions.Select(o => new OpinionViewComponent(){ Title = o.HeadLine, Img = o.Img, Paragraph = o.Paragraph }))
-                            }
-                        }
-                    }
-                }
-            };
+            //var row = new RowViewComponent()
+            //{
+            //    Columns = new List<ColumnViewComponent>()
+            //    {
+            //        //new ColumnViewComponent()
+            //        //{
+            //        //    Width = 2,
+            //        //    Rows = null,
+            //        //    Components = new List<ViewComponent>() { new TextViewComponent() { Text = rank.Name, SpanCssClass = "subject-sub-title" } }
+            //        //},
+            //        new ColumnViewComponent()
+            //        {
+            //            Width = 6,
+            //            Rows = null,
+            //            Components = posts.Select(p => new PostViewComponent() { Title = p.HeadLine, Url = p.Url, Topics = p.ArticleToTopics.Select(pt => pt.Topic.Name) })
+            //        },
+            //        new ColumnViewComponent()
+            //        {
+            //            Width = 6,
+            //            Rows = new List<RowViewComponent>()
+            //            {
+            //                new RowViewComponent()
+            //                {
+            //                    Columns = ArrangeComponentsInColumns(opinions.Select(o => new OpinionViewComponent(){ Title = o.HeadLine, Img = o.Img, Paragraph = o.Paragraph }))
+            //                }
+            //            }
+            //        }
+            //    }
+            //};
             
-            return row;
-        }
+        //    return row;
+        //}
 
         /// <summary>
         /// 

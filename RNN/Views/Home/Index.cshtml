@@ -18,11 +18,20 @@
 <!-- grid engine -->
 <div class="row featured-section">
     <div class="col-sm-4">
-        <div class="row">
+        @*<div class="row">
             <div class="col-sm-12 headlines">
                 <span>Headlines</span>
             </div>
+        </div>*@
+        <div class="row grouping-title">
+            <div class="col-sm-12">
+                <mark>
+                    <span>Headlines /</span>
+                    @*<span class="post-span-divider">/</span>*@
+                </mark>
+            </div>
         </div>
+
         @await Component.InvokeAsync("Row", new { rows = Model.FeaturedLeftGrid })
     </div>
     <div class="col-sm-8">
@@ -31,10 +40,22 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-4">
+        <div class="row grouping-title">
+            <div class="col-sm-12">
+                <mark><span>In Focus /</span></mark>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-sm-4">
-                <mark>In Focus</mark>
+            <div class="col-sm-12 headlines">
+                <span>Grouping 1</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-12">
+
             </div>
         </div>
     </div>

@@ -28,114 +28,46 @@ namespace RNN.Models
             modelBuilder.Entity<Title>().HasData(titles.ToArray());
 
             List<Author> authors = new List<Author>();
-            authors.Add(new Author() { Id = 1, Name = "RenegadeNews" });
+            authors.Add(new Author() { Id = 1, Name = "Autho1" });
 
             modelBuilder.Entity<Author>().HasData(authors.ToArray());
 
-            List<Subject> subjects = new List<Subject>()
+            List<Grouping> subjects = new List<Grouping>()
             {
-                new Subject() { Name = "Migration", Rank = 1 },
-                new Subject() { Name = "Boom & Bust", Rank = 2 },
-                new Subject() { Name = "Climate Activism", Rank = 3 },
-                new Subject() { Name = "Free Speech", Rank = 4 },
-                new Subject() { Name = "Deep State", Rank = 5 }
+                new Grouping() { Name = "Grouping 1", Rank = 1 },
+                new Grouping() { Name = "Grouping 2", Rank = 2 },
+                new Grouping() { Name = "Grouping 3", Rank = 3 },
+                new Grouping() { Name = "Grouping 4", Rank = 4 },
             };
 
             int i = 1;
             subjects.ForEach(s => s.Id = i++);
-            modelBuilder.Entity<Subject>().HasData(subjects.ToArray());
+            modelBuilder.Entity<Grouping>().HasData(subjects.ToArray());
 
             List<Topic> topics = new List<Topic>()
             {
-                new Topic() { Name = "Brexit" },
-                new Topic() { Name = "Deep State" },
-                new Topic() { Name = "Corruption" },
-                new Topic() { Name = "Money in Politics" },
-                new Topic() { Name = "Donald Trump" },
-                new Topic() { Name = "EU" },
-                new Topic() { Name = "Neo-Liberalism" },
-                new Topic() { Name = "Bilderberg" },
-                new Topic() { Name = "Federal Reserve" },
-                new Topic() { Name = "NWO" },
-                new Topic() { Name = "Migrants" },
-                new Topic() { Name = "Mass Immigration" },
-                new Topic() { Name = "Islamism" },
-                new Topic() { Name = "Assange" },
-                new Topic() { Name = "Merkel" },
-                new Topic() { Name = "Neo-Cons" },
-                new Topic() { Name = "RINOs" },
-                new Topic() { Name = "Crony Capitalism" },
-                new Topic() { Name = "Economy" },
-                new Topic() { Name = "Animal Rights" },
-                new Topic() { Name = "GMO" },
-                new Topic() { Name = "5G" },
-                new Topic() { Name = "Wifi" },
-                new Topic() { Name = "Censorship" },
-                new Topic() { Name = "Tech Fascism" },
-                new Topic() { Name = "First Amendment" },
-                new Topic() { Name = "Big Brother" },
-                new Topic() { Name = "Wikipedia" },
-                new Topic() { Name = "Viktor Orban" },
-                new Topic() { Name = "Salvini" },
-                new Topic() { Name = "Junker" },
-                new Topic() { Name = "Refugees" },
-                new Topic() { Name = "Integration" }
+                new Topic() { Name = "Topic 1" },
+                new Topic() { Name = "Topic 2" },
+                new Topic() { Name = "Topic 3" },
+                new Topic() { Name = "Topic 4" },
+                new Topic() { Name = "Topic 5" },
+                new Topic() { Name = "Topic 6" },
+                new Topic() { Name = "Topic 7" },
+                new Topic() { Name = "Topic 8" },
+                new Topic() { Name = "Topic 9" },
+                new Topic() { Name = "Topic 10" },
+                new Topic() { Name = "Topic 11" },
+                new Topic() { Name = "Topic 12" },
+                new Topic() { Name = "Topic 13" },
+                new Topic() { Name = "Topic 14" }
             };
 
             i = 1;
             topics.ForEach(t => t.Id = i++);
             modelBuilder.Entity<Topic>().HasData(topics.ToArray());
 
-            List<SubjectToTopic> subjectToTopics = new List<SubjectToTopic>()
-            {
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Fight for EU" }, Topic = new Topic() { Name = "Viktor Orban"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Fight for EU" }, Topic = new Topic() { Name = "Salvini"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Fight for EU" }, Topic = new Topic() { Name = "Junker"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Fight for EU" }, Topic = new Topic() { Name = "Refugees"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Fight for EU" }, Topic = new Topic() { Name = "Integration"} },
-
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Environment" }, Topic = new Topic() { Name = "Animal rights"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Environment" }, Topic = new Topic() { Name = "GMO"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Environment" }, Topic = new Topic() { Name = "5G"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Environment" }, Topic = new Topic() { Name = "Wifi"} },
-
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Free Speech" }, Topic = new Topic() { Name = "First Amendment"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Free Speech" }, Topic = new Topic() { Name = "Censorship"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Free Speech" }, Topic = new Topic() { Name = "Tech fascism"} },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Free Speech" }, Topic = new Topic() { Name = "Big Brother"} },
-
-                ////new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Migrants"} },
-                ////new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Mass immigration"} },
-                ////new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Islamism"} },
-                ////new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Brexit" } },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Deep state" } },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Corruption" } },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Money in politics" } },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Donald Trump" } },
-                ////new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "EU" } },
-                //new SubjectToTopic() { Subject = new Subject() { Name = "Divided States" }, Topic = new Topic() { Name = "Neo-liberalism" } }
-            };
-
-            foreach (var item in subjectToTopics)
-            {
-                item.SubjectId = subjects.FirstOrDefault(s => s.Name == item.Subject.Name).Id;
-                item.TopicId = topics.FirstOrDefault(t => t.Name == item.Topic.Name).Id;
-                item.Subject = null;
-                item.Topic = null;
-            }
-
-            modelBuilder.Entity<SubjectToTopic>().HasData(subjectToTopics.ToArray());
-
             List<Post> posts = new List<Post>()
             {
-                new Post() { IsFeatured = true, HeadLine = "Journalists Detained During First Day of Bilderberg", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "RON PAUL: US/UK Trying To Kill Assange?", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "Merkel Attacks Trump in Harvard Speech", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "Bye-bye Bolton?", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "White House launches tool to report censorship on Facebook", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "Barr: Mueller could have reached a decision on obstruction", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "U.S. Economy Grew 3.1% in First Quarter", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "Donald Trump: 'I Got Me Elected'", Url = "" },
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 1", Url = "" },
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 2", Url = "" },
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 3", Url = "" },
@@ -143,7 +75,10 @@ namespace RNN.Models
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 5", Url = "" },
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 6", Url = "" },
                 new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 7", Url = "" },
-                new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 8", Url = "" }
+                new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 8", Url = "" },
+                new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 9", Url = "" },
+                new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 10", Url = "" },
+                new Post() { IsFeatured = true, HeadLine = "Test post: put all the content here for the post title 11", Url = "" }
             };
 
             i = 1;
@@ -152,21 +87,18 @@ namespace RNN.Models
 
             List<ArticleToTopic> postToTopics = new List<ArticleToTopic>()
             {
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Journalists Detained During First Day of Bilderberg" }, Topic = new Topic() { Name = "Bilderberg"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "RON PAUL: US/UK Trying To Kill Assange?" }, Topic = new Topic() { Name = "Deep State"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Merkel Attacks Trump in Harvard Speech" }, Topic = new Topic() { Name = "Merkel"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Bye-bye Bolton?" }, Topic = new Topic() { Name = "Neo-Cons"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "White House launches tool to report censorship on Facebook" }, Topic = new Topic() { Name = "Tech Fascism"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "U.S. Economy Grew 3.1% in First Quarter" }, Topic = new Topic() { Name = "Economy"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Donald Trump: 'I Got Me Elected'" }, Topic = new Topic() { Name = "Donald Trump"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 1" }, Topic = new Topic() { Name = "Viktor Orban"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 2" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 3" }, Topic = new Topic() { Name = "Junker"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 4" }, Topic = new Topic() { Name = "Integration"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 5" }, Topic = new Topic() { Name = "Deep State"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 6" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 7" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 8" }, Topic = new Topic() { Name = "Salvini"} }
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 1" }, Topic = new Topic() { Name = "Topic 1"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 2" }, Topic = new Topic() { Name = "Topic 2"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 3" }, Topic = new Topic() { Name = "Topic 3"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 4" }, Topic = new Topic() { Name = "Topic 4"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 5" }, Topic = new Topic() { Name = "Topic 5"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 6" }, Topic = new Topic() { Name = "Topic 6"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 7" }, Topic = new Topic() { Name = "Topic 7"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 8" }, Topic = new Topic() { Name = "Topic 1"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 9" }, Topic = new Topic() { Name = "Topic 2"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 10" }, Topic = new Topic() { Name = "Topic 3"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Test post: put all the content here for the post title 11" }, Topic = new Topic() { Name = "Topic 4"} }
+
             };
 
             foreach (var item in postToTopics)
@@ -210,8 +142,8 @@ namespace RNN.Models
 
             List<ArticleToTopic> editorialToTopics = new List<ArticleToTopic>()
             {
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears" }, Topic = new Topic() { Name = "Bilderberg"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "MPs debate Boris Johnson's deal as People's Vote march sets off – live news" }, Topic = new Topic() { Name = "Deep State"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears" }, Topic = new Topic() { Name = "Topic 1"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "MPs debate Boris Johnson's deal as People's Vote march sets off – live news" }, Topic = new Topic() { Name = "Topic 2"} },
             };
 
             foreach (var item in editorialToTopics)
@@ -303,14 +235,14 @@ namespace RNN.Models
 
             List<ArticleToTopic> opinionToTopics = new List<ArticleToTopic>()
             {
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 1" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 1" }, Topic = new Topic() { Name = "Deep State"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 2" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 3" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 4" }, Topic = new Topic() { Name = "Salvini"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 5" }, Topic = new Topic() { Name = "Deep State"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 6" }, Topic = new Topic() { Name = "Viktor Orban"} },
-                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 7" }, Topic = new Topic() { Name = "Donald Trump"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 1" }, Topic = new Topic() { Name = "Topic 1"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 1" }, Topic = new Topic() { Name = "Topic 2"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 2" }, Topic = new Topic() { Name = "Topic 3"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 3" }, Topic = new Topic() { Name = "Topic 4"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 4" }, Topic = new Topic() { Name = "Topic 5"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 5" }, Topic = new Topic() { Name = "Topic 6"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 6" }, Topic = new Topic() { Name = "Topic 7"} },
+                new ArticleToTopic() { Article = new Article() { HeadLine = "Opinion piece 7" }, Topic = new Topic() { Name = "Topic 1"} },
             };
 
             foreach (var item in opinionToTopics)

@@ -10,7 +10,7 @@ namespace RNN.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<SubjectToTopic> SubjectToTopic { get; set; }
+        //public ICollection<SubjectToTopic> SubjectToTopic { get; set; }
         //public ICollection<PostToTopic> PostToTopic { get; set; }
         public ICollection<ArticleToTopic> ArticleToTopic { get; set; }
 

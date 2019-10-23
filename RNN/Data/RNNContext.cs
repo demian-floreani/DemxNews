@@ -11,32 +11,31 @@ namespace RNN.Models
         public RNNContext(DbContextOptions<RNNContext> options) : base(options) {}
 
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Edition> Editions { get; set; }
         public DbSet<Title> Titles { get; set; }
+        public DbSet<Grouping> Groupings { get; set; }
 
         public DbSet<Editorial> Editorials { get; set; }
         public DbSet<Opinion> Opinions { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Post> Posts { get; set; }
+
         public DbSet<ArticleToTopic> ArticleToTopics { get; set; }
 
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Grouping> Subjects { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<SubjectToTopic> SubjectToTopics { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SubjectToTopic>()
-                .HasKey(pt => new { pt.SubjectId, pt.TopicId });
-            modelBuilder.Entity<SubjectToTopic>()
-                .HasOne(st => st.Subject)
-                .WithMany(s => s.SubjectToTopic)
-                .HasForeignKey(st => st.SubjectId);
-            modelBuilder.Entity<SubjectToTopic>()
-                .HasOne(st => st.Topic)
-                .WithMany(t => t.SubjectToTopic)
-                .HasForeignKey(bc => bc.TopicId);
+            //modelBuilder.Entity<SubjectToTopic>()
+            //    .HasKey(pt => new { pt.SubjectId, pt.TopicId });
+            //modelBuilder.Entity<SubjectToTopic>()
+            //    .HasOne(st => st.Subject)
+            //    .WithMany(s => s.SubjectToTopic)
+            //    .HasForeignKey(st => st.SubjectId);
+            //modelBuilder.Entity<SubjectToTopic>()
+            //    .HasOne(st => st.Topic)
+            //    .WithMany(t => t.SubjectToTopic)
+            //    .HasForeignKey(bc => bc.TopicId);
 
             //modelBuilder.Entity<PostToTopic>()
             //    .HasKey(pt => new { pt.TopicId, pt.PostId });
