@@ -1,0 +1,25 @@
+﻿
+@model RNN.Models.ViewModels.ViewComponents.GroupingViewComponent
+
+<div class="row featured-section">
+    <div class="col-sm-12">
+        <div class="row grouping-title">
+            <div class="col-sm-12">
+                <mark><span>@Model.Title /</span></mark><span class="headlines">@Model.Name</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 headlines">
+                
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("Row", new { rows = Model.Grid })
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+﻿@model RNN.Models.Article
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paragraph)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paragraph)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Img)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Img)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Author.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Rank)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rank)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HeadLine)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HeadLine)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Grouping)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grouping.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,25 +1,23 @@
-﻿<!--
-    editorial view
--->
-@model RNN.Models.ViewModels.ViewComponents.HorizontalLargeBlockViewComponent
+﻿@model RNN.Models.ViewModels.ViewComponents.HorizontalLargeBlockViewComponent
 
-<!-- main opinion or editorial -->
-<div class="row editorial-row">
-    <div class="col-sm-12 editorial-column">
+<div class="row horizontal-large-block-row">
+    <div class="col-sm-12 horizontal-large-block-column">
         <div class="prefix">@Model.Title</div>
-        <div class="editorial-box">
+        <div class="horizontal-large-block">
             <div class="row row-equal">
-                <div class="col-sm-6 editorial-left-column">
-                    <img class="featured-editorial-img" src="~/images/uploads/@Model.Img" alt="editorial">
+                <div class="col-sm-6 left-column">
+                    <img src="~/images/uploads/@Model.Img" alt="editorial">
                 </div>
-                <div class="col-sm-6 editorial-right-column">
+                <div class="col-sm-6 right-column">
                     <div class="flex-container">
-                        @if (Model.Topic != null)
-                        {
-                           <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                        }
-                        <div><a href="@Model.Url"><span class="featured-editorial-title">@Model.HeadLine</span></a></div>
-                        <div><span class="featured-editorial-paragrah">@Model.Paragraph</span></div>
+                        <header>
+                            @if (Model.Topic != null) {
+                                <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
+                            }
+                            <span>@Model.HeadLine</span>
+                        </header>
+
+                        <section class="hidden-xs hidden-sm hidden-md">@Model.Paragraph</section>
                     </div>
                 </div>
             </div>

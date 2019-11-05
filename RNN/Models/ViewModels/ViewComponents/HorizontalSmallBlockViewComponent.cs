@@ -12,7 +12,7 @@ namespace RNN.Models.ViewModels.ViewComponents
         public string Url { get; set; }
         public string Topic { get; set; }
 
-        public static HorizontalSmallBlockViewComponent ToViewModel(Article model)
+        public static HorizontalSmallBlockViewComponent ToViewModel(Entry model)
         {
             return new HorizontalSmallBlockViewComponent()
             {

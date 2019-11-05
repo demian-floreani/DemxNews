@@ -19,85 +19,6 @@ namespace RNN.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RNN.Models.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AuthorId");
-
-                    b.Property<string>("Body");
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<int?>("GroupingId");
-
-                    b.Property<string>("HeadLine");
-
-                    b.Property<string>("Img");
-
-                    b.Property<bool>("IsFeatured");
-
-                    b.Property<string>("Paragraph");
-
-                    b.Property<int?>("TitleId");
-
-                    b.Property<string>("Url");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("GroupingId");
-
-                    b.HasIndex("TitleId");
-
-                    b.ToTable("Article");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Article");
-                });
-
-            modelBuilder.Entity("RNN.Models.ArticleToTopic", b =>
-                {
-                    b.Property<int>("TopicId");
-
-                    b.Property<int>("ArticleId");
-
-                    b.HasKey("TopicId", "ArticleId");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("ArticleToTopics");
-
-                    b.HasData(
-                        new { TopicId = 1, ArticleId = 1 },
-                        new { TopicId = 2, ArticleId = 2 },
-                        new { TopicId = 3, ArticleId = 3 },
-                        new { TopicId = 4, ArticleId = 4 },
-                        new { TopicId = 5, ArticleId = 5 },
-                        new { TopicId = 6, ArticleId = 6 },
-                        new { TopicId = 7, ArticleId = 7 },
-                        new { TopicId = 1, ArticleId = 8 },
-                        new { TopicId = 2, ArticleId = 9 },
-                        new { TopicId = 3, ArticleId = 10 },
-                        new { TopicId = 4, ArticleId = 11 },
-                        new { TopicId = 1, ArticleId = 12 },
-                        new { TopicId = 2, ArticleId = 13 },
-                        new { TopicId = 1, ArticleId = 14 },
-                        new { TopicId = 2, ArticleId = 14 },
-                        new { TopicId = 3, ArticleId = 15 },
-                        new { TopicId = 4, ArticleId = 16 },
-                        new { TopicId = 5, ArticleId = 17 },
-                        new { TopicId = 6, ArticleId = 18 },
-                        new { TopicId = 7, ArticleId = 19 },
-                        new { TopicId = 1, ArticleId = 20 }
-                    );
-                });
-
             modelBuilder.Entity("RNN.Models.Author", b =>
                 {
                     b.Property<int>("Id")
@@ -111,7 +32,71 @@ namespace RNN.Migrations
                     b.ToTable("Authors");
 
                     b.HasData(
-                        new { Id = 1, Name = "Autho1" }
+                        new { Id = 1, Name = "Author1" }
+                    );
+                });
+
+            modelBuilder.Entity("RNN.Models.Entry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<int?>("GroupingId");
+
+                    b.Property<string>("HeadLine");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupingId");
+
+                    b.ToTable("Entry");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Entry");
+                });
+
+            modelBuilder.Entity("RNN.Models.EntryToTopic", b =>
+                {
+                    b.Property<int>("TopicId");
+
+                    b.Property<int>("EntryId");
+
+                    b.HasKey("TopicId", "EntryId");
+
+                    b.HasIndex("EntryId");
+
+                    b.ToTable("EntryToTopics");
+
+                    b.HasData(
+                        new { TopicId = 1, EntryId = 1 },
+                        new { TopicId = 2, EntryId = 2 },
+                        new { TopicId = 3, EntryId = 3 },
+                        new { TopicId = 4, EntryId = 4 },
+                        new { TopicId = 5, EntryId = 5 },
+                        new { TopicId = 6, EntryId = 6 },
+                        new { TopicId = 7, EntryId = 7 },
+                        new { TopicId = 1, EntryId = 8 },
+                        new { TopicId = 2, EntryId = 9 },
+                        new { TopicId = 3, EntryId = 10 },
+                        new { TopicId = 4, EntryId = 11 },
+                        new { TopicId = 1, EntryId = 12 },
+                        new { TopicId = 2, EntryId = 21 },
+                        new { TopicId = 1, EntryId = 13 },
+                        new { TopicId = 2, EntryId = 13 },
+                        new { TopicId = 3, EntryId = 14 },
+                        new { TopicId = 4, EntryId = 15 },
+                        new { TopicId = 5, EntryId = 16 },
+                        new { TopicId = 6, EntryId = 17 },
+                        new { TopicId = 7, EntryId = 18 },
+                        new { TopicId = 1, EntryId = 19 },
+                        new { TopicId = 1, EntryId = 20 }
                     );
                 });
 
@@ -132,10 +117,8 @@ namespace RNN.Migrations
                     b.ToTable("Grouping");
 
                     b.HasData(
-                        new { Id = 1, Name = "Grouping 1", Rank = 1 },
-                        new { Id = 2, Name = "Grouping 2", Rank = 2 },
-                        new { Id = 3, Name = "Grouping 3", Rank = 3 },
-                        new { Id = 4, Name = "Grouping 4", Rank = 4 }
+                        new { Id = 1, Name = "", Rank = 1, Type = "Headlines" },
+                        new { Id = 2, Name = "EU Migrant Crisis", Rank = 2, Type = "In Focus" }
                     );
                 });
 
@@ -155,7 +138,13 @@ namespace RNN.Migrations
                         new { Id = 1, Name = "Editorial" },
                         new { Id = 2, Name = "Opinion" },
                         new { Id = 3, Name = "UK News" },
-                        new { Id = 4, Name = "UK Politics" }
+                        new { Id = 4, Name = "UK Politics" },
+                        new { Id = 5, Name = "US News" },
+                        new { Id = 6, Name = "US Politics" },
+                        new { Id = 7, Name = "EU News" },
+                        new { Id = 8, Name = "EU Article" },
+                        new { Id = 9, Name = "Italian News" },
+                        new { Id = 10, Name = "Italian Politics" }
                     );
                 });
 
@@ -189,54 +178,49 @@ namespace RNN.Migrations
                     );
                 });
 
-            modelBuilder.Entity("RNN.Models.Editorial", b =>
+            modelBuilder.Entity("RNN.Models.Article", b =>
                 {
-                    b.HasBaseType("RNN.Models.Article");
+                    b.HasBaseType("RNN.Models.Entry");
 
+                    b.Property<int?>("AuthorId");
 
-                    b.ToTable("Editorial");
+                    b.Property<string>("Body");
 
-                    b.HasDiscriminator().HasValue("Editorial");
+                    b.Property<string>("Img");
+
+                    b.Property<string>("Paragraph");
+
+                    b.Property<int>("Rank");
+
+                    b.Property<int?>("TitleId");
+
+                    b.Property<int>("Width");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("TitleId");
+
+                    b.ToTable("Article");
+
+                    b.HasDiscriminator().HasValue("Article");
 
                     b.HasData(
-                        new { Id = 12, AuthorId = 1, Body = "", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears", Img = "editorial.jpg", IsFeatured = true, Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", TitleId = 1, Url = "" },
-                        new { Id = 13, AuthorId = 1, Body = "", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "MPs debate Boris Johnson's deal as People's Vote march sets off – live news", Img = "editorial.jpg", IsFeatured = true, Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", TitleId = 2, Url = "" }
-                    );
-                });
-
-            modelBuilder.Entity("RNN.Models.News", b =>
-                {
-                    b.HasBaseType("RNN.Models.Article");
-
-
-                    b.ToTable("News");
-
-                    b.HasDiscriminator().HasValue("News");
-                });
-
-            modelBuilder.Entity("RNN.Models.Opinion", b =>
-                {
-                    b.HasBaseType("RNN.Models.Article");
-
-
-                    b.ToTable("Opinion");
-
-                    b.HasDiscriminator().HasValue("Opinion");
-
-                    b.HasData(
-                        new { Id = 14, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 1", Img = "nature.jpg", IsFeatured = true, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 15, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 2", Img = "nature.jpg", IsFeatured = true, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 16, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 3", Img = "nature.jpg", IsFeatured = true, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 17, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 4", Img = "nature.jpg", IsFeatured = false, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 18, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 5", Img = "nature.jpg", IsFeatured = false, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 19, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 6", Img = "nature.jpg", IsFeatured = false, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 },
-                        new { Id = 20, AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Opinion piece 7", Img = "nature.jpg", IsFeatured = false, Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", TitleId = 2 }
+                        new { Id = 12, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Boris Johnson under fire over row with partner as top Tories raise fears", Url = "", AuthorId = 1, Body = "", Img = "Article.jpg", Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", Rank = 1, TitleId = 1, Width = 12 },
+                        new { Id = 13, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 1", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 2, TitleId = 2, Width = 4 },
+                        new { Id = 14, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 2", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 3, TitleId = 2, Width = 4 },
+                        new { Id = 15, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 3", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 4, TitleId = 2, Width = 4 },
+                        new { Id = 16, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 4", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 5, TitleId = 5, Width = 8 },
+                        new { Id = 17, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 5", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 6, TitleId = 6, Width = 8 },
+                        new { Id = 18, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Article piece 6", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 7, TitleId = 4, Width = 4 },
+                        new { Id = 19, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 2, HeadLine = "Article piece 7", AuthorId = 1, Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Img = "nature.jpg", Paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", Rank = 1, TitleId = 2, Width = 12 },
+                        new { Id = 20, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 2, HeadLine = "Over 350 migrants on NGO ship Ocean Viking after new rescue in Mediterranean", AuthorId = 1, Body = "", Img = "viking.jpg", Paragraph = "", Rank = 2, TitleId = 9, Width = 8 },
+                        new { Id = 21, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 2, HeadLine = "MPs debate Boris Johnson's deal as People's Vote march sets off – live Article", Url = "", AuthorId = 1, Body = "", Img = "Article.jpg", Paragraph = "Leadership campaign falters as he refuses to respond to questions at hustings about late-night argument with Carrie Symonds", Rank = 2, TitleId = 1, Width = 8 }
                     );
                 });
 
             modelBuilder.Entity("RNN.Models.Post", b =>
                 {
-                    b.HasBaseType("RNN.Models.Article");
+                    b.HasBaseType("RNN.Models.Entry");
 
 
                     b.ToTable("Post");
@@ -244,18 +228,38 @@ namespace RNN.Migrations
                     b.HasDiscriminator().HasValue("Post");
 
                     b.HasData(
-                        new { Id = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 1", IsFeatured = true, Url = "" },
-                        new { Id = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 2", IsFeatured = true, Url = "" },
-                        new { Id = 3, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 3", IsFeatured = true, Url = "" },
-                        new { Id = 4, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 4", IsFeatured = true, Url = "" },
-                        new { Id = 5, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 5", IsFeatured = true, Url = "" },
-                        new { Id = 6, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 6", IsFeatured = true, Url = "" },
-                        new { Id = 7, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 7", IsFeatured = true, Url = "" },
-                        new { Id = 8, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 8", IsFeatured = true, Url = "" },
-                        new { Id = 9, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 9", IsFeatured = true, Url = "" },
-                        new { Id = 10, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 10", IsFeatured = true, Url = "" },
-                        new { Id = 11, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), HeadLine = "Test post: put all the content here for the post title 11", IsFeatured = true, Url = "" }
+                        new { Id = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 1", Url = "" },
+                        new { Id = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 2", Url = "" },
+                        new { Id = 3, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 3", Url = "" },
+                        new { Id = 4, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 4", Url = "" },
+                        new { Id = 5, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 5", Url = "" },
+                        new { Id = 6, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 6", Url = "" },
+                        new { Id = 7, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 7", Url = "" },
+                        new { Id = 8, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 8", Url = "" },
+                        new { Id = 9, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 9", Url = "" },
+                        new { Id = 10, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 10", Url = "" },
+                        new { Id = 11, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), GroupingId = 1, HeadLine = "Test post: put all the content here for the post title 11", Url = "" }
                     );
+                });
+
+            modelBuilder.Entity("RNN.Models.Entry", b =>
+                {
+                    b.HasOne("RNN.Models.Grouping", "Grouping")
+                        .WithMany()
+                        .HasForeignKey("GroupingId");
+                });
+
+            modelBuilder.Entity("RNN.Models.EntryToTopic", b =>
+                {
+                    b.HasOne("RNN.Models.Entry", "Entry")
+                        .WithMany("ArticleToTopics")
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RNN.Models.Topic", "Topic")
+                        .WithMany("ArticleToTopic")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RNN.Models.Article", b =>
@@ -264,26 +268,9 @@ namespace RNN.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("RNN.Models.Grouping", "Grouping")
-                        .WithMany()
-                        .HasForeignKey("GroupingId");
-
                     b.HasOne("RNN.Models.Title", "Title")
                         .WithMany()
                         .HasForeignKey("TitleId");
-                });
-
-            modelBuilder.Entity("RNN.Models.ArticleToTopic", b =>
-                {
-                    b.HasOne("RNN.Models.Article", "Article")
-                        .WithMany("ArticleToTopics")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("RNN.Models.Topic", "Topic")
-                        .WithMany("ArticleToTopic")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

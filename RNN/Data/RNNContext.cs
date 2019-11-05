@@ -14,12 +14,10 @@ namespace RNN.Models
         public DbSet<Title> Titles { get; set; }
         public DbSet<Grouping> Groupings { get; set; }
 
-        public DbSet<Editorial> Editorials { get; set; }
-        public DbSet<Opinion> Opinions { get; set; }
-        public DbSet<News> News { get; set; }
+        public DbSet<Article> Articles { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        public DbSet<ArticleToTopic> ArticleToTopics { get; set; }
+        public DbSet<EntryToTopic> EntryToTopics { get; set; }
 
         public DbSet<Grouping> Subjects { get; set; }
         public DbSet<Topic> Topics { get; set; }
@@ -48,13 +46,13 @@ namespace RNN.Models
             //    .WithMany(t => t.PostToTopic)
             //    .HasForeignKey(bc => bc.TopicId);
 
-            modelBuilder.Entity<ArticleToTopic>()
-                .HasKey(pt => new { pt.TopicId, pt.ArticleId });
-            modelBuilder.Entity<ArticleToTopic>()
-                .HasOne(pt => pt.Article)
+            modelBuilder.Entity<EntryToTopic>()
+                .HasKey(pt => new { pt.TopicId, pt.EntryId });
+            modelBuilder.Entity<EntryToTopic>()
+                .HasOne(pt => pt.Entry)
                 .WithMany(p => p.ArticleToTopics)
-                .HasForeignKey(bc => bc.ArticleId);
-            modelBuilder.Entity<ArticleToTopic>()
+                .HasForeignKey(bc => bc.EntryId);
+            modelBuilder.Entity<EntryToTopic>()
                 .HasOne(pt => pt.Topic)
                 .WithMany(t => t.ArticleToTopic)
                 .HasForeignKey(bc => bc.TopicId);

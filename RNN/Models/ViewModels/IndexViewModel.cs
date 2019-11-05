@@ -9,8 +9,6 @@ namespace RNN.Models.ViewModels
     public class IndexViewModel
     {
         public List<Topic> Trending { get; set; }
-        public IEnumerable<RowViewComponent> FeaturedLeftGrid { get; set; }
-        public IEnumerable<RowViewComponent> FeaturedRightGrid { get; set; }
-        public IEnumerable<RowViewComponent> Grid { get; set; }
+        public IEnumerable<GroupingViewComponent> Groupings { get; set; }
     }
 }

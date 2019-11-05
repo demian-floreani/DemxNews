@@ -1,6 +1,7 @@
 ﻿/*  */
 body {
   padding-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
 }
 .top-row {
   display: flex;
