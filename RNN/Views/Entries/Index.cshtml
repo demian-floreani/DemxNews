@@ -1,0 +1,78 @@
+﻿@model RNN.Models.ViewModels.DisplayArticle
+
+<div class="row row-equal opinion-header-row">
+    <div class="hidden-xs col-sm-2 col-md-3 opinion-page-side-header">
+        <h3>@Model.Article.Title.Name</h3>
+        <section></section>
+        <section></section>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-6 middle-column">
+        <header>
+            <h3>@Model.Article.HeadLine</h3>
+            <p>@Model.Article.Paragraph</p>
+        </header>
+    </div>
+</div>
+
+<div class="row">
+    <div class="hidden-xs col-sm-2 col-md-3">
+        <h4>Topics</h4>
+
+        @foreach(var t in Model.Topics)
+        {
+            <span class="topic">@t.Name</span><span>,</span>
+        }
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-6 middle-column">
+        <article>
+            @if (!String.IsNullOrEmpty(Model.Article.Url))
+            {
+                var host = new Uri(Model.Article.Url).Host;
+                <p class="source">Sourced from <a href="@Model.Article.Url" target="_blank">@host</a></p>
+            }
+
+            <img src="~/images/uploads/@Model.Article.Img" />
+
+            @Html.Raw(@Model.Article.Body)
+        </article>
+
+        <div id="disqus_thread"></div>
+    </div>
+    <div class="hidden-xs col-sm-2 col-md-3">
+        @if (Model.Reccomendations.Any())
+        {
+            <h4>More like this</h4>
+
+            @foreach (var r in Model.Reccomendations)
+            {
+                @await Component.InvokeAsync("HorizontalSmallBlock", new { component = r })
+            }
+        }
+    </div>
+</div>
+
+
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+    //this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    //this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.callbacks.onIdentify = [function (id)
+    {
+        //alert(id);
+        //alert(id);
+    }];
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://rnn.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

@@ -14,5 +14,13 @@
   {
     "outputFile": "wwwroot/css/home.css",
     "inputFile": "wwwroot/css/home.less"
+  },
+  {
+    "outputFile": "wwwroot/css/articles.css",
+    "inputFile": "wwwroot/css/articles.less"
+  },
+  {
+    "outputFile": "wwwroot/css/entries.css",
+    "inputFile": "wwwroot/css/entries.less"
   }
 ]

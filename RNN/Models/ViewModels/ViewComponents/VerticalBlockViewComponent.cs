@@ -8,7 +8,7 @@ namespace RNN.Models.ViewModels.ViewComponents
 {
     public class VerticalBlockViewComponent : ViewComponent
     {
-        public int Id { get; set; }
+        public string Slug { get; set; }
         public string Title { get; set; }
         public string HeadLine { get; set; }
         public string Url { get; set; }
@@ -16,19 +16,21 @@ namespace RNN.Models.ViewModels.ViewComponents
         public string Img { get; set; }
         public string Author { get; set; }
         public string Topic { get; set; }
+        public bool HasBorder { get; set; }
 
-
-        public static VerticalBlockViewComponent ToViewModel(Article model)
+        public static VerticalBlockViewComponent ToViewModel(Entry model, bool hasBorder)
         {
             return new VerticalBlockViewComponent()
             {
+                Slug = model.Slug,
                 Url = model.Url,
                 Title = model.Title.Name,
                 HeadLine = model.HeadLine,
                 Author = model.Author.Name,
                 Paragraph = model.Paragraph,
                 Img = model.Img,
-                Topic = model?.ArticleToTopics.First().Topic.Name
+                Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First().Topic.Name : null,
+                HasBorder = hasBorder
             };
         }
 

@@ -1,9 +1,9 @@
 [
   {
-    "outputFileName": "wwwroot/css/prod-opinions.min.css",
+    "outputFileName": "wwwroot/css/prod-articles.min.css",
     "inputFiles": [
       "wwwroot/css/global.min.css",
-      "wwwroot/css/opinions.min.css"
+      "wwwroot/css/articles.min.css"
     ],
     "minify": {
       "enabled": true,

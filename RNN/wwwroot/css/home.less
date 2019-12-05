@@ -1,7 +1,6 @@
 ﻿@merriweather: 'Merriweather', serif;
 @color: #FC7416;
 
-// Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
     .container {
         
@@ -19,12 +18,15 @@
         font-size: 16px;
     }
 
+    .vertical-block header {
+        font-size: 16px;
+    }
+
     .prefix {
         font-size: 16px;
     }
 }
 
-// Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
     .container {
 
@@ -34,8 +36,8 @@
         font-size: 16px;
     }
 
-    .opinion header {
-        font-size: 14px;
+    .vertical-block header {
+        font-size: 18px;
     }
 
     .horizontal-large-block header {
@@ -59,34 +61,37 @@
     }
 }
 
-// Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
     .container {
 
     }
 
     .post > span, .post > a > span {
-        font-size: 16px;
+        font-size: 18px;
     }
 
-    .opinion header {
-        font-size: 16px;
+    .vertical-block header {
+        font-size: 18px;
     }
 
     .horizontal-large-block header {
-        font-size: 22px;
+        font-size: 24px;
     }
 
     .horizontal-block header {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .prefix {
-        font-size: 16px;
+        font-size: 18px;
+    }
+
+    .grouping-column {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
-// Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
     .container {
 
@@ -100,8 +105,8 @@
         font-size: 24px;
     }
 
-    .opinion header {
-        font-size: 18px;
+    .vertical-block header {
+        font-size: 20px;
     }
 
     .horizontal-block header {
@@ -111,10 +116,18 @@
     .prefix {
         font-size: 18px;
     }
+
+    .headlines {
+        font-size: 18px;
+    }
+
+    .grouping-column {
+        padding-left: 10px;
+        padding-right: 0px;
+    }
 }
 
 .grid-row {
-    margin-bottom: 10px;
 }
 
 /* subjec titles */
@@ -148,7 +161,6 @@
 
 .subject-list li:hover {
     cursor: pointer;
-    
 }
 
 .subjects-block {
@@ -181,7 +193,6 @@
 }
 
 .post-span-divider {
-    /*font-size: 20px;*/
     padding-left: 1px;
     padding-right: 2px;
     color: #FC7416;
@@ -202,6 +213,10 @@
     color: #FC7416;
 }
 
+.border {
+    border-left: 1px solid darkgray;
+}
+
 .horizontal-large-block-row {
     margin-bottom: 10px;
 }
@@ -209,7 +224,6 @@
 .horizontal-large-block-column {
     padding-left: 10px;
     padding-right: 10px;
-    border-left: 1px solid darkgray;
 }
 
 .prefix {
@@ -218,7 +232,6 @@
     font-weight: normal;
     color: @color;
     margin-bottom: 5px;
-    /*font-size: 18px;*/
     line-height: 1;
 }
 
@@ -256,6 +269,7 @@
     font-family: @merriweather;
     margin-bottom: 5px;
     display: block;
+    color: #000000;
 }
 
 .subject-sub-title {
@@ -264,55 +278,39 @@
 }
 
 .text-block {
-    /*text-align:center;*/
     margin-bottom: 5px;
 }
 
 /* opinion */
-.opinion-row {
+.vertical-block-row {
     margin-bottom: 5px;
 }
 
-.opinion-column {
+.vertical-block-column {
     padding-left: 10px;
     padding-right: 10px;
-    border-left: 1px solid darkgray;
 }
 
-.opinion {
+.vertical-block {
     background-color: #eff5f5;
 }
 
-.opinion:hover {
+.vertical-block:hover {
     background-color: #e0ebeb;
     cursor: pointer;
 }
 
-.opinion > header {
-    margin-bottom: 20px;
+.vertical-block > header {
     padding: 5px;
-}
-
-.opinion > header > span {
-    /*font-size: 18px;*/
-    color: @color;
-    font-family: @merriweather;
-}
-
-.opinion > img {
-    width: 100%;
-}
-
-.opinion > section > p {
-    font-size: 14px;
-    font-family: @merriweather;
     color: #000000;
-    margin: 0;
-    padding: 5px;
 }
 
-.opinion > section {
-    display: block;
+.vertical-block > header > span {
+    font-family: @merriweather;
+}
+
+.vertical-block > img {
+    width: 100%;
 }
 
 /***********/
@@ -333,7 +331,6 @@
 .horizontal-block-column {
     padding-left: 10px;
     padding-right: 10px;
-    border-left: 1px solid darkgray;
 }
 
 .horizontal-block img {
@@ -347,9 +344,6 @@
 }
 
 /*******/
-
-
-
 .highlight {
     font-size: 20px;
     background-color: yellow;
@@ -359,6 +353,9 @@ mark {
     background-color: yellow;
     font-size: 24px;
     font-family: @merriweather;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
 }
 
 .grouping-title {
@@ -366,8 +363,36 @@ mark {
 }
 
 .headlines {
-    font-size: 24px;
     color: @color;
-    padding-left: 5px;
     display: inline-block;
 }
+
+.discussion {
+    float: right;
+    font-size: 16px;
+}
+
+.discussion :hover {
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,53 +37,31 @@ namespace RNN.Controllers
                     .ToList()
             };
 
-            //  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
-            //  \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
-            //  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
-            //  \\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
-            var groupings = _context.Groupings.OrderBy(g => g.Rank);
+            // layout for articles
+            var layout = new List<int>() { 9, 48, 3, 48,
+                                           5, 48, 24, 7, 7, 48 };
+                                           //24, 7, 7, 48, 5, 48 };
+            
+            var groupings = _context.Groupings.OrderBy(group => group.Rank);
 
             List<GroupingViewComponent> groupingViews = new List<GroupingViewComponent>();
 
             foreach(Grouping grouping in groupings)
             {
-                var articles = _context.Articles
+                var articles = _context.Entries
                     .Where(a => a.GroupingId == grouping.Id)
+                    .Where(a => a.Rank != 0)
                     .Include(a => a.Title)
                     .Include(a => a.Author)
-                    .Include(a => a.ArticleToTopics)
+                    .Include(a => a.EntryToTopics)
                     .ThenInclude(at => at.Topic)
-                    .OrderBy(a => a.Rank);
-
-                var posts = _context.Posts
-                    .Where(p => p.GroupingId == grouping.Id)
-                    .Include(p => p.ArticleToTopics)
-                    .ThenInclude(pt => pt.Topic)
-                    .OrderByDescending(p => p.Date);
-
+                    .OrderByDescending(a => a.Rank);
+                
                 groupingViews.Add(GroupingViewComponent.ToViewModel(new Models.ViewModels.GroupingViewModel()
                 {
                     Title = grouping.Type,
                     Name = grouping.Name,
-                    Grid = new List<RowViewComponent>()
-                    {
-                        new RowViewComponent()
-                        {
-                            Columns = new List<ColumnViewComponent>()
-                            {
-                                new ColumnViewComponent()
-                                {
-                                    Width = 4,
-                                    Components = posts.Select(p => HorizontalSmallBlockViewComponent.ToViewModel(p))
-                                },
-                                new ColumnViewComponent()
-                                {
-                                    Width = 8,
-                                    Rows = ArrangeArticles(articles)
-                                }
-                            }
-                        }
-                    }
+                    Grid = ArrangeArticles(articles, layout)
                 }));
             }
 
@@ -92,55 +70,87 @@ namespace RNN.Controllers
             return View("Index", viewModel);
         }
 
-        public List<RowViewComponent> ArrangeArticles(IEnumerable<Article> articles)
+        public List<RowViewComponent> ArrangeArticles(IEnumerable<Entry> articles, List<int> layout)
         {
+            Stack<Entry> stack = new Stack<Entry>(articles);
+
             List<RowViewComponent> rows = new List<RowViewComponent>();
             List<ColumnViewComponent> columns = new List<ColumnViewComponent>();
 
             List<ViewComponent> components = new List<ViewComponent>();
             bool filledColumn = false;
             int currentLength = 0;
+            bool stacking = false;
+            int maxWidth = 0;
+            bool loop = true;
 
-            foreach (Article article in articles)
+            for(int i = 0; i < layout.Count() && loop; ++i)
             {
-                switch (article.Width)
+                var width = layout[i];
+
+                switch (width)
                 {
-                    case 12:
-                        {
-                            components.Add(HorizontalLargeBlockViewComponent.ToViewModel(article));
-                            filledColumn = true;
-                        }
+                    case 48:
+                        filledColumn = true;
                         break;
 
-                    case 4:
-                        {
-                            components.Add(VerticalBlockViewComponent.ToViewModel(article));
-                            filledColumn = true;
-                        }
+                    case 24:
+                        stacking = true;
                         break;
 
+                    case 9:
+                    {
+                        Entry article = null;
+                        if (stack.TryPop(out article))
+                        {
+                            components.Add(HorizontalLargeBlockViewComponent.ToViewModel(article, columns.Count > 0));
+
+                            if (width > maxWidth)
+                                maxWidth = width;
+                        }
+                        else
+                        {
+                            loop = false;
+                        }
+                    } break;
+
+                    case 6:
                     case 8:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 4:
+                    {
+                        Entry article = null;
+                        if (stack.TryPop(out article))
                         {
-                            components.Add(HorizontalMediumBlockViewComponent.ToViewModel(article));
+                            components.Add(stacking ? (ViewComponent) HorizontalMediumBlockViewComponent.ToViewModel(article, columns.Count > 0) : 
+                                                                      VerticalBlockViewComponent.ToViewModel(article, columns.Count > 0));
 
-                            if (components.Count == 2)
-                                filledColumn = true;
+                            if (width > maxWidth)
+                                maxWidth = width;
                         }
-                        break;
+                        else
+                        {
+                            loop = false;
+                        }
+                    } break;
                 }
 
                 if (filledColumn)
                 {
                     columns.Add(new ColumnViewComponent()
                     {
-                        Width = article.Width,
+                        Width = maxWidth,
                         Components = components
                     });
 
-                    currentLength += article.Width;
+                    currentLength += maxWidth;
 
                     components = new List<ViewComponent>();
                     filledColumn = false;
+                    maxWidth = 0;
+                    stacking = false;
                 }
 
                 if (currentLength >= 12)

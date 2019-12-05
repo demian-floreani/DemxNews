@@ -9,6 +9,9 @@
   .horizontal-block header {
     font-size: 16px;
   }
+  .vertical-block header {
+    font-size: 16px;
+  }
   .prefix {
     font-size: 16px;
   }
@@ -18,8 +21,8 @@
   .post > a > span {
     font-size: 16px;
   }
-  .opinion header {
-    font-size: 14px;
+  .vertical-block header {
+    font-size: 18px;
   }
   .horizontal-large-block header {
     font-size: 20px;
@@ -40,19 +43,23 @@
 @media (min-width: 992px) {
   .post > span,
   .post > a > span {
-    font-size: 16px;
+    font-size: 18px;
   }
-  .opinion header {
-    font-size: 16px;
+  .vertical-block header {
+    font-size: 18px;
   }
   .horizontal-large-block header {
-    font-size: 22px;
+    font-size: 24px;
   }
   .horizontal-block header {
-    font-size: 16px;
+    font-size: 18px;
   }
   .prefix {
-    font-size: 16px;
+    font-size: 18px;
+  }
+  .grouping-column {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 @media (min-width: 1200px) {
@@ -63,8 +70,8 @@
   .horizontal-large-block header {
     font-size: 24px;
   }
-  .opinion header {
-    font-size: 18px;
+  .vertical-block header {
+    font-size: 20px;
   }
   .horizontal-block header {
     font-size: 18px;
@@ -72,9 +79,13 @@
   .prefix {
     font-size: 18px;
   }
-}
-.grid-row {
-  margin-bottom: 10px;
+  .headlines {
+    font-size: 18px;
+  }
+  .grouping-column {
+    padding-left: 10px;
+    padding-right: 0px;
+  }
 }
 /* subjec titles */
 .subject-list {
@@ -128,7 +139,6 @@
   cursor: pointer;
 }
 .post-span-divider {
-  /*font-size: 20px;*/
   padding-left: 1px;
   padding-right: 2px;
   color: #FC7416;
@@ -145,13 +155,15 @@
 .post > a > span:hover {
   color: #FC7416;
 }
+.border {
+  border-left: 1px solid darkgray;
+}
 .horizontal-large-block-row {
   margin-bottom: 10px;
 }
 .horizontal-large-block-column {
   padding-left: 10px;
   padding-right: 10px;
-  border-left: 1px solid darkgray;
 }
 .prefix {
   border-bottom: 1px solid #FC7416;
@@ -159,7 +171,6 @@
   font-weight: normal;
   color: #FC7416;
   margin-bottom: 5px;
-  /*font-size: 18px;*/
   line-height: 1;
 }
 .horizontal-large-block-left-column {
@@ -190,52 +201,39 @@
   font-family: 'Merriweather', serif;
   margin-bottom: 5px;
   display: block;
+  color: #000000;
 }
 .subject-sub-title {
   font-size: 20px;
   font-family: 'Merriweather', serif;
 }
 .text-block {
-  /*text-align:center;*/
   margin-bottom: 5px;
 }
 /* opinion */
-.opinion-row {
+.vertical-block-row {
   margin-bottom: 5px;
 }
-.opinion-column {
+.vertical-block-column {
   padding-left: 10px;
   padding-right: 10px;
-  border-left: 1px solid darkgray;
 }
-.opinion {
+.vertical-block {
   background-color: #eff5f5;
 }
-.opinion:hover {
+.vertical-block:hover {
   background-color: #e0ebeb;
   cursor: pointer;
 }
-.opinion > header {
-  margin-bottom: 20px;
+.vertical-block > header {
   padding: 5px;
-}
-.opinion > header > span {
-  /*font-size: 18px;*/
-  color: #FC7416;
-  font-family: 'Merriweather', serif;
-}
-.opinion > img {
-  width: 100%;
-}
-.opinion > section > p {
-  font-size: 14px;
-  font-family: 'Merriweather', serif;
   color: #000000;
-  margin: 0;
-  padding: 5px;
 }
-.opinion > section {
-  display: block;
+.vertical-block > header > span {
+  font-family: 'Merriweather', serif;
+}
+.vertical-block > img {
+  width: 100%;
 }
 /***********/
 .horizontal-block {
@@ -251,7 +249,6 @@
 .horizontal-block-column {
   padding-left: 10px;
   padding-right: 10px;
-  border-left: 1px solid darkgray;
 }
 .horizontal-block img {
   width: 100%;
@@ -270,13 +267,21 @@ mark {
   background-color: yellow;
   font-size: 24px;
   font-family: 'Merriweather', serif;
+  margin-bottom: 15px;
+  display: inline-block;
+  width: 100%;
 }
 .grouping-title {
   margin-bottom: 5px;
 }
 .headlines {
-  font-size: 24px;
   color: #FC7416;
-  padding-left: 5px;
   display: inline-block;
+}
+.discussion {
+  float: right;
+  font-size: 16px;
+}
+.discussion :hover {
+  cursor: pointer;
 }

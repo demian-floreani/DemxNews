@@ -1,14 +1,11 @@
-﻿<!--
-    opinion view
--->
-@model RNN.Models.ViewModels.ViewComponents.VerticalBlockViewComponent
+﻿@model RNN.Models.ViewModels.ViewComponents.VerticalBlockViewComponent
 
-<div class="row opinion-row">
-    <div class="col-sm-12 opinion-column">
+<div class="row vertical-block-row">
+    <div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "border" : "")">
         <div class="prefix">@Model.Title</div>
-        <a asp-controller="Opinions" asp-action="Index" asp-route-id="@Model.Id">
-            <div class="opinion">
-                <img src="~/images/uploads/@Model.Img" alt="opinion" />
+        <a asp-route="display" asp-route-slug="@Model.Slug">
+            <div class="vertical-block">
+                <img src="~/images/uploads/@Model.Img" />
                 <header>
                     @if (Model.Topic != null)
                     {
@@ -16,7 +13,6 @@
                     }
                     <span>@Model.HeadLine</span>
                 </header>
-                <section class="hidden-xs hidden-sm hidden-md"><p>@Model.Paragraph</p></section>
             </div>
         </a>
     </div>

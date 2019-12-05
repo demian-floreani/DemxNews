@@ -1,26 +1,29 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.HorizontalLargeBlockViewComponent
 
 <div class="row horizontal-large-block-row">
-    <div class="col-sm-12 horizontal-large-block-column">
+    <div class="col-sm-12 horizontal-large-block-column @(Model.HasBorder ? "border" : "")">
         <div class="prefix">@Model.Title</div>
-        <div class="horizontal-large-block">
-            <div class="row row-equal">
-                <div class="col-sm-6 left-column">
-                    <img src="~/images/uploads/@Model.Img" alt="editorial">
-                </div>
-                <div class="col-sm-6 right-column">
-                    <div class="flex-container">
-                        <header>
-                            @if (Model.Topic != null) {
-                                <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                            }
-                            <span>@Model.HeadLine</span>
-                        </header>
+        <a asp-route="display" asp-route-slug="@Model.Slug">
+            <div class="horizontal-large-block">
+                <div class="row row-equal">
+                    <div class="col-sm-8 left-column">
+                        <img src="~/images/uploads/@Model.Img" alt="editorial">
+                    </div>
+                    <div class="col-sm-4 right-column">
+                        <div class="flex-container">
+                            <header>
+                                @if (Model.Topic != null)
+                                {
+                                    <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
+                                }
+                                <span>@Model.HeadLine</span>
+                            </header>
 
-                        <section class="hidden-xs hidden-sm hidden-md">@Model.Paragraph</section>
+                            <section class="hidden-xs hidden-sm hidden-md">@Model.Paragraph</section>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>

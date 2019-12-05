@@ -21,13 +21,15 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+   
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 </head>
 <body>
     <div class="container">
         <div class="row top-row">
             <div class="col-sm-12">
-                <a href="#"><span>Sign In</span></a>
+                <a href="#"><span>Contribute</span></a>
             </div>
         </div>
     </div>
@@ -40,13 +42,13 @@
                 <a asp-controller="Home" asp-action="Index">
                     <div class="banner">
                         <img src="~/images/banner/R.png">
-                        <span>An Open Platform for the Free Flow of Ideas & Opinion</span>
+                        <span>Straight. Real. News.</span>
                     </div>
                 </a>
             </div>
-            <div class="col-sm-3 contribute-box">
+            @*<div class="col-sm-3 contribute-box">
                 <a href="#"><span>+Contribute</span></a>
-            </div>
+            </div>*@
         </div>
 
         @RenderBody()

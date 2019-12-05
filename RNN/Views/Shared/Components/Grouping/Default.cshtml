@@ -2,8 +2,20 @@
 @model RNN.Models.ViewModels.ViewComponents.GroupingViewComponent
 
 <div class="row featured-section">
-    <div class="col-sm-12">
-        <div class="row grouping-title">
+
+    <div class="col-lg-2 grouping-column">
+        @*<div class="row grouping-title">
+            <div class="col-sm-12 grouping-column">*@
+                <mark><span>@Model.Title</span></mark>@*<span class="headlines">@Model.Name</span>*@
+            @*</div>
+        </div>*@
+    </div>
+    <div class="col-lg-10">
+        @await Component.InvokeAsync("Row", new { rows = Model.Grid })
+    </div>
+
+    @*<div class="col-sm-12">*@
+        @*<div class="row grouping-title">
             <div class="col-sm-12">
                 <mark><span>@Model.Title /</span></mark><span class="headlines">@Model.Name</span>
             </div>
@@ -12,10 +24,10 @@
             <div class="col-sm-12 headlines">
                 
             </div>
-        </div>
+        </div>*@
 
-        @await Component.InvokeAsync("Row", new { rows = Model.Grid })
-    </div>
+        @*@await Component.InvokeAsync("Row", new { rows = Model.Grid })*@
+    @*</div>*@
 </div>
 
 
