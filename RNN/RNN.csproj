@@ -34,6 +34,12 @@
     <Content Update="Views\Shared\Components\Grouping\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\Components\ReccomendationBlock\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Components\VerticalNarrowBlock\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\Components\VerticalBlock\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

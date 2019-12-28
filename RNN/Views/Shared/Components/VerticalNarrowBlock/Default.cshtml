@@ -1,0 +1,12 @@
+﻿@model RNN.Models.ViewModels.ViewComponents.VerticalNarrowBlockViewComponent
+
+<div class="col-sm-12 vertical-narrow-block-column @(Model.HasBorder ? "block-border" : "")">
+    <mark><span>@Model.Topic</span></mark>
+    <div class="seperator"></div>
+    <a asp-route="display" asp-route-slug="@Model.Slug">
+        <div class="vertical-narrow-block">
+            <img src="~/images/uploads/@Model.Img" />
+            <header><span>@Model.HeadLine</span></header>
+        </div>
+    </a>
+</div>

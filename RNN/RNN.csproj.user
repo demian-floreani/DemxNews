@@ -15,5 +15,6 @@
     <WebStackScaffolding_DbContextTypeFullName>RNN.Models.RNNContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
+    <NameOfLastUsedPublishProfile>RNN20191227073420 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

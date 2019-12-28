@@ -13,11 +13,6 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TitleId" class="control-label"></label>
-                <select asp-for="TitleId" class="form-control" asp-items="ViewBag.TitleId"></select>
-                <span asp-validation-for="TitleId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="HeadLine" class="control-label"></label>
                 <input asp-for="HeadLine" class="form-control" />
                 <span asp-validation-for="HeadLine" class="text-danger"></span>
@@ -62,11 +57,6 @@
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GroupingId" class="control-label"></label>
-                <select asp-for="GroupingId" class="form-control" asp-items="ViewBag.GroupingId"></select>
-                <span asp-validation-for="GroupingId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -1,4 +1,5 @@
 ﻿@model RNN.Models.ViewModels.IndexViewModel
+@using RNN.Models.ViewModels.ViewComponents
 
 @{
     ViewData["Title"] = "Home Page";
@@ -12,10 +13,23 @@
                 <li><a asp-controller="Home" asp-action="Index" asp-route-id="@subject.Id"><span>@subject.Name</span></a></li>
             }
         </ul>
-    </div>
+    </div>      
 </div>
 
-@foreach (var grouping in Model.Groupings)
-{
-    @await Component.InvokeAsync("Grouping", new { component = grouping })
-}
+<div class="row">
+    @*<div class="col-sm-2 categories">
+        @foreach (var category in Model.Categories)
+        {
+            <a asp-route="category" asp-route-category="@category.Name"><span class="category">@category.Name</span></a>
+        }
+    </div>*@
+    @*<div class="col-md-1"></div>*@
+    <div class="col-sm-12">
+        @foreach (var grouping in Model.Groupings)
+        {
+            @await Component.InvokeAsync(typeof(GroupingViewComponent), new { component = grouping })
+        }
+    </div>
+    @*<div class="col-md-1"></div>*@
+</div>
+

@@ -30,10 +30,6 @@ namespace RNN.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Author1" }
-                    );
                 });
 
             modelBuilder.Entity("RNN.Models.Entry", b =>
@@ -48,8 +44,6 @@ namespace RNN.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("GroupingId");
-
                     b.Property<string>("HeadLine");
 
                     b.Property<string>("Img");
@@ -60,17 +54,11 @@ namespace RNN.Migrations
 
                     b.Property<string>("Slug");
 
-                    b.Property<int?>("TitleId");
-
                     b.Property<string>("Url");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("GroupingId");
-
-                    b.HasIndex("TitleId");
 
                     b.ToTable("Entries");
                 });
@@ -88,53 +76,6 @@ namespace RNN.Migrations
                     b.ToTable("EntryToTopics");
                 });
 
-            modelBuilder.Entity("RNN.Models.Grouping", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Rank");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Grouping");
-
-                    b.HasData(
-                        new { Id = 1, Name = "", Rank = 1, Type = "Headlines" }
-                    );
-                });
-
-            modelBuilder.Entity("RNN.Models.Title", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Titles");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Editorial" },
-                        new { Id = 2, Name = "Opinion" },
-                        new { Id = 3, Name = "UK News" },
-                        new { Id = 4, Name = "UK Politics" },
-                        new { Id = 5, Name = "US News" },
-                        new { Id = 6, Name = "US Politics" },
-                        new { Id = 7, Name = "EU News" },
-                        new { Id = 8, Name = "EU Entry" },
-                        new { Id = 9, Name = "Italian News" },
-                        new { Id = 10, Name = "Italian Politics" }
-                    );
-                });
-
             modelBuilder.Entity("RNN.Models.Topic", b =>
                 {
                     b.Property<int>("Id")
@@ -146,23 +87,6 @@ namespace RNN.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Topics");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Topic 1" },
-                        new { Id = 2, Name = "Topic 2" },
-                        new { Id = 3, Name = "Topic 3" },
-                        new { Id = 4, Name = "Topic 4" },
-                        new { Id = 5, Name = "Topic 5" },
-                        new { Id = 6, Name = "Topic 6" },
-                        new { Id = 7, Name = "Topic 7" },
-                        new { Id = 8, Name = "Topic 8" },
-                        new { Id = 9, Name = "Topic 9" },
-                        new { Id = 10, Name = "Topic 10" },
-                        new { Id = 11, Name = "Topic 11" },
-                        new { Id = 12, Name = "Topic 12" },
-                        new { Id = 13, Name = "Topic 13" },
-                        new { Id = 14, Name = "Topic 14" }
-                    );
                 });
 
             modelBuilder.Entity("RNN.Models.Entry", b =>
@@ -170,14 +94,6 @@ namespace RNN.Migrations
                     b.HasOne("RNN.Models.Author", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId");
-
-                    b.HasOne("RNN.Models.Grouping", "Grouping")
-                        .WithMany()
-                        .HasForeignKey("GroupingId");
-
-                    b.HasOne("RNN.Models.Title", "Title")
-                        .WithMany()
-                        .HasForeignKey("TitleId");
                 });
 
             modelBuilder.Entity("RNN.Models.EntryToTopic", b =>

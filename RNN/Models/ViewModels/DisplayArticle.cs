@@ -11,6 +11,6 @@ namespace RNN.Models.ViewModels
     {
         public Entry Article { get; set; }
         public IEnumerable<Topic> Topics { get; set; }
-        public IEnumerable<HorizontalSmallBlockViewComponent> Reccomendations { get; set; }
+        public IEnumerable<ReccomendationBlockViewComponent> Reccomendations { get; set; }
     }
 }

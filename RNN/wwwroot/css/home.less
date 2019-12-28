@@ -1,10 +1,7 @@
 ﻿@merriweather: 'Merriweather', serif;
-@color: #FC7416;
+@color: #d75f0f;
 
 @media (min-width: 576px) {
-    .container {
-        
-    }
 
     .post > span, .post > a > span {
         font-size: 16px;
@@ -28,29 +25,30 @@
 }
 
 @media (min-width: 768px) {
-    .container {
 
-    }
-
-    .post > span, .post > a > span {
+    /*.post > span, .post > a > span {
         font-size: 16px;
-    }
+    }*/
 
     .vertical-block header {
+        font-size: 20px;
+    }
+
+    .vertical-narrow-block header {
         font-size: 18px;
     }
 
     .horizontal-large-block header {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .horizontal-block header {
-        font-size: 16px;
+        font-size: 18px;
     }
 
-    .prefix {
+    /*.prefix {
         font-size: 16px;
-    }
+    }*/
 
     .left-column {
         padding-right: 5px;
@@ -62,11 +60,8 @@
 }
 
 @media (min-width: 992px) {
-    .container {
 
-    }
-
-    .post > span, .post > a > span {
+    /*.post > span, .post > a > span {
         font-size: 18px;
     }
 
@@ -89,13 +84,7 @@
     .grouping-column {
         padding-left: 10px;
         padding-right: 10px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-
-    }
+    }*/
 
     .post > span, .post > a > span {
         font-size: 18px;
@@ -106,11 +95,15 @@
     }
 
     .vertical-block header {
-        font-size: 20px;
+        font-size: 24px;
+    }
+
+    .vertical-narrow-block header {
+        font-size: 22px;
     }
 
     .horizontal-block header {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .prefix {
@@ -123,11 +116,43 @@
 
     .grouping-column {
         padding-left: 10px;
-        padding-right: 0px;
+        padding-right: 10px;
     }
 }
 
-.grid-row {
+@media (min-width: 1200px) {
+    /*.post > span, .post > a > span {
+        font-size: 18px;
+    }
+
+    .horizontal-large-block header {
+        font-size: 24px;
+    }
+
+    .vertical-block header {
+        font-size: 24px;
+    }
+
+    .vertical-narrow-block header {
+        font-size: 20px;
+    }
+
+    .horizontal-block header {
+        font-size: 20px;
+    }
+
+    .prefix {
+        font-size: 18px;
+    }
+
+    .headlines {
+        font-size: 18px;
+    }
+
+    .grouping-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }*/
 }
 
 /* subjec titles */
@@ -213,7 +238,7 @@
     color: #FC7416;
 }
 
-.border {
+.block-border {
     border-left: 1px solid darkgray;
 }
 
@@ -224,6 +249,7 @@
 .horizontal-large-block-column {
     padding-left: 10px;
     padding-right: 10px;
+    margin-bottom: 10px;
 }
 
 .prefix {
@@ -244,7 +270,7 @@
 }
 
 .horizontal-large-block {
-    background-color: #eff5f5;
+    background-color: white;
 }
 
 .horizontal-large-block:hover {
@@ -282,27 +308,28 @@
 }
 
 /* opinion */
-.vertical-block-row {
+/*.vertical-block-row {
     margin-bottom: 5px;
-}
+}*/
 
 .vertical-block-column {
     padding-left: 10px;
     padding-right: 10px;
+    margin-bottom: 10px;
 }
 
 .vertical-block {
-    background-color: #eff5f5;
+    background-color: white;
 }
 
 .vertical-block:hover {
-    background-color: #e0ebeb;
+    background-color: #dae0e0;
     cursor: pointer;
 }
 
 .vertical-block > header {
     padding: 5px;
-    color: #000000;
+    color: @color;
 }
 
 .vertical-block > header > span {
@@ -315,8 +342,38 @@
 
 /***********/
 
+.vertical-narrow-block-column {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.vertical-narrow-block {
+    background-color: white;
+}
+
+.vertical-narrow-block:hover {
+    background-color: #dae0e0;
+    cursor: pointer;
+}
+
+.vertical-narrow-block > header {
+    padding: 5px;
+    color: @color;
+}
+
+.vertical-narrow-block > header > span {
+    font-family: @merriweather;
+}
+
+.vertical-narrow-block > img {
+    width: 100%;
+}
+
+/***********/
+
 .horizontal-block {
-    background-color: #eff5f5;
+    background-color: white;
 }
 
 .horizontal-block:hover {
@@ -331,6 +388,7 @@
 .horizontal-block-column {
     padding-left: 10px;
     padding-right: 10px;
+    margin-bottom: 10px;
 }
 
 .horizontal-block img {
@@ -341,6 +399,7 @@
     color: black;
     font-family: @merriweather;
     padding-top: 5px;
+    font-style: italic;
 }
 
 /*******/
@@ -351,11 +410,19 @@
 
 mark {
     background-color: yellow;
-    font-size: 24px;
+    font-size: 16px;
     font-family: @merriweather;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     display: inline-block;
-    width: 100%;
+    /*width: 100%;*/
+    padding-left: 5px;
+    padding-right: 5px;
+    /*padding-top: 2px;
+    padding-bottom: 2px;*/
+}
+
+.seperator {
+    border-bottom: 1px solid @color;
 }
 
 .grouping-title {
@@ -374,6 +441,23 @@ mark {
 
 .discussion :hover {
     cursor: pointer;
+}
+
+.categories {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.categories > a > span {
+    margin-bottom: 8px;
+    display: block;
+    font-size: 22px;
+    color: black;
+}
+
+.categories > a > span:hover {
+    background-color: @color;
+    color: white;
 }
 
 

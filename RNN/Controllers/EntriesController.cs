@@ -41,9 +41,7 @@ namespace RNN.Controllers
             }
 
             var article = await _context.Entries
-                .Include(a => a.Grouping)
                 .Include(a => a.Author)
-                .Include(a => a.Title)
                 .Include(a => a.EntryToTopics)
                 .ThenInclude(et => et.Topic)
                 .FirstOrDefaultAsync(a => a.Slug == slug);
@@ -51,28 +49,14 @@ namespace RNN.Controllers
             // find Entries with similar topics
             // get topics linked to article
             var topics = article.EntryToTopics.Select(et => et.Topic);
-            //var topics = _context.EntryToTopics
-            //    .Where(et => et.EntryId == article.Id)
-            //    .Include(et => et.Topic)
-            //    .Select(et => et.Topic);
-
+            // get topic ids
             var topicIds = topics.Select(t => t.Id).ToList();
 
             var reccomendations = _context.Entries
                                           .Include(a => a.EntryToTopics)
-                                          .ThenInclude(et => et.Topic)
                                           .Where(a => a.EntryToTopics.Any(et => topicIds.Contains(et.Topic.Id)))
-                                          .Where(a => a.Id != article.Id);
-
-            //var reccomendations = _context.EntryToTopics
-            //                              .Where(et => topics.Contains(et.TopicId))
-            //                              .Where(et => et.EntryId != article.Id)
-            //                              .Select(et => et.Entry)
-            //                              .Distinct();
-            //.Include(e => e.EntryToTopics)
-            //.ThenInclude(at => at.Topic)
-            //.ToList();
-
+                                          .Where(a => a.Id != article.Id)
+                                          .ToList();
 
             if (article == null)
             {
@@ -83,7 +67,7 @@ namespace RNN.Controllers
             {
                 Article = article,
                 Topics = topics,
-                Reccomendations = reccomendations.Select(r => HorizontalSmallBlockViewComponent.ToViewModel(r))
+                Reccomendations = reccomendations.Select(r => ReccomendationBlockViewComponent.ToViewModel(r))
             };
 
             return View("Index", model);
@@ -98,9 +82,7 @@ namespace RNN.Controllers
             }
 
             var article = await _context.Entries
-                .Include(a => a.Grouping)
                 .Include(a => a.Author)
-                .Include(a => a.Title)
                 .FirstOrDefaultAsync(m => m.Id == id);
             
             if (article == null)
@@ -115,9 +97,7 @@ namespace RNN.Controllers
         // GET: Entries/Create
         public IActionResult Create()
         {
-            ViewData["GroupingId"] = new SelectList(_context.Groupings, "Id", "Type");
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name");
-            ViewData["TitleId"] = new SelectList(_context.Titles, "Id", "Name");
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Name");
             return View();
         }
@@ -141,9 +121,7 @@ namespace RNN.Controllers
                     AuthorId = form.AuthorId,
                     Body = form.Body,
                     Date = DateTime.Now,
-                    GroupingId = form.GroupingId,
                     Rank = form.Rank,
-                    TitleId = form.TitleId,
                     Url = form.Url,
                     Paragraph = form.Paragraph,
                     Img = imageName
@@ -188,9 +166,7 @@ namespace RNN.Controllers
             {
                 return NotFound();
             }
-            ViewData["GroupingId"] = new SelectList(_context.Groupings, "Id", "Name", article.GroupingId);
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name", article.AuthorId);
-            ViewData["TitleId"] = new SelectList(_context.Titles, "Id", "Name", article.TitleId);
             return View(article);
         }
 
@@ -227,9 +203,7 @@ namespace RNN.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GroupingId"] = new SelectList(_context.Groupings, "Id", "Id", article.GroupingId);
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", article.AuthorId);
-            ViewData["TitleId"] = new SelectList(_context.Titles, "Id", "Id", article.TitleId);
             return View(article);
         }
 

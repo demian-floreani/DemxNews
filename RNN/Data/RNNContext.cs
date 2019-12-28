@@ -10,14 +10,9 @@ namespace RNN.Models
     {
         public RNNContext(DbContextOptions<RNNContext> options) : base(options) {}
 
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Title> Titles { get; set; }
-        public DbSet<Grouping> Groupings { get; set; }
-
+        public DbSet<Author> Authors { get; set; } 
         public DbSet<Entry> Entries { get; set; }
         public DbSet<EntryToTopic> EntryToTopics { get; set; }
-
-        public DbSet<Grouping> Subjects { get; set; }
         public DbSet<Topic> Topics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +28,7 @@ namespace RNN.Models
                 .WithMany(t => t.EntryToTopics)
                 .HasForeignKey(bc => bc.TopicId);
 
-            Seed.SeedDatabase(modelBuilder);
+            //Seed.SeedDatabase(modelBuilder);
         }
 
     }

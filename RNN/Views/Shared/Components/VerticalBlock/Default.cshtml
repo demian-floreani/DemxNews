@@ -1,19 +1,13 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.VerticalBlockViewComponent
 
-<div class="row vertical-block-row">
-    <div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "border" : "")">
-        <div class="prefix">@Model.Title</div>
-        <a asp-route="display" asp-route-slug="@Model.Slug">
-            <div class="vertical-block">
-                <img src="~/images/uploads/@Model.Img" />
-                <header>
-                    @if (Model.Topic != null)
-                    {
-                        <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                    }
-                    <span>@Model.HeadLine</span>
-                </header>
-            </div>
-        </a>
-    </div>
+<div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "block-border" : "")">
+    <mark><span>@Model.Topic</span></mark>
+    <div class="seperator"></div>
+
+    <a asp-route="display" asp-route-slug="@Model.Slug">
+        <div class="vertical-block">
+            <img src="~/images/uploads/@Model.Img" />
+            <header><span>@Model.HeadLine</span></header>
+        </div>
+    </a>
 </div>

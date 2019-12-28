@@ -19,7 +19,7 @@ namespace RNN.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int? id)
+        public IActionResult Index()
         {
             ViewData["Controller"] = String.Concat(/*"prod-", */this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
 
@@ -37,42 +37,66 @@ namespace RNN.Controllers
                     .ToList()
             };
 
-            // layout for articles
-            var layout = new List<int>() { 9, 48, 3, 48,
-                                           5, 48, 24, 7, 7, 48 };
-                                           //24, 7, 7, 48, 5, 48 };
-            
-            var groupings = _context.Groupings.OrderBy(group => group.Rank);
-
-            List<GroupingViewComponent> groupingViews = new List<GroupingViewComponent>();
-
-            foreach(Grouping grouping in groupings)
+            var layouts = new List<List<int>>() 
             {
-                var articles = _context.Entries
-                    .Where(a => a.GroupingId == grouping.Id)
-                    .Where(a => a.Rank != 0)
-                    .Include(a => a.Title)
-                    .Include(a => a.Author)
-                    .Include(a => a.EntryToTopics)
-                    .ThenInclude(at => at.Topic)
-                    .OrderByDescending(a => a.Rank);
-                
-                groupingViews.Add(GroupingViewComponent.ToViewModel(new Models.ViewModels.GroupingViewModel()
-                {
-                    Title = grouping.Type,
-                    Name = grouping.Name,
-                    Grid = ArrangeArticles(articles, layout)
-                }));
-            }
+                new List<int>() { 9, 48, 3, 48, 
+                                  5, 48, 24, 7, 7, 48 },
+                new List<int>() { 24, 7, 7, 48, 5, 48, 
+                                  6, 48, 24, 6, 6, 48 },
+                new List<int>() { 24, 7, 7, 48, 5, 48  }
+            };
 
-            viewModel.Groupings = groupingViews;
-              
+            var articles = _context.Entries
+                                   .Include(a => a.EntryToTopics)
+                                   .ThenInclude(at => at.Topic)
+                                   .ToList(); 
+
+            var sorted = articles.OrderByDescending(a => RankHalfTime(a.Rank, a.Date));
+
+            viewModel.Groupings = GroupArticles(sorted, layouts);
+
             return View("Index", viewModel);
         }
 
-        public List<RowViewComponent> ArrangeArticles(IEnumerable<Entry> articles, List<int> layout)
+        public static List<GroupingViewComponent> GroupArticles(IEnumerable<Entry> entries, List<List<int>> layouts)
         {
-            Stack<Entry> stack = new Stack<Entry>(articles);
+            List<GroupingViewComponent> groupingViews = new List<GroupingViewComponent>();
+
+            LinkedList<Entry> list = new LinkedList<Entry>(entries);
+            List<Entry> splits = new List<Entry>();
+
+            var head = list.First;
+            int i = 0;
+
+            while (head != null)
+            {
+                splits.Add(head.Value);
+                head = head.Next;
+
+                if (splits.Count > 4 || head == null)
+                {
+                    groupingViews.Add(GroupingViewComponent.ToViewModel(new Models.ViewModels.GroupingViewModel()
+                    {
+                        Grid = ArrangeArticles(splits, layouts[i++])
+                    }));
+
+                    splits = new List<Entry>();
+                }
+            }
+
+            return groupingViews;
+        }
+
+        public static double RankHalfTime(int rank, DateTime date)
+        {
+            double magicNum = 1.025;
+            return (double) rank - (Math.Pow(magicNum, (DateTime.Now - date).TotalHours) - 1d);
+        }
+
+        public static List<RowViewComponent> ArrangeArticles(IEnumerable<Entry> articles, List<int> layout)
+        {
+            LinkedList<Entry> list = new LinkedList<Entry>(articles);
+            var head = list.First;
 
             List<RowViewComponent> rows = new List<RowViewComponent>();
             List<ColumnViewComponent> columns = new List<ColumnViewComponent>();
@@ -83,58 +107,62 @@ namespace RNN.Controllers
             bool stacking = false;
             int maxWidth = 0;
             bool loop = true;
-
+            
             for(int i = 0; i < layout.Count() && loop; ++i)
             {
-                var width = layout[i];
-
-                switch (width)
+                if (head != null)
                 {
-                    case 48:
+                    var width = layout[i];
+
+                    switch (width)
+                    {
+                        case 48:
+                            filledColumn = true;
+                            break;
+
+                        case 24:
+                            stacking = true;
+                            break;
+
+                        case 9:
+                            components.Add(HorizontalLargeBlockViewComponent.ToViewModel(head.Value, columns.Count > 0));
+
+                            head = head.Next;
+
+                            if (width > maxWidth)
+                                maxWidth = width;
+                            break;
+
+                        case 3:
+                            components.Add(VerticalNarrowBlockViewComponent.ToViewModel(head.Value, columns.Count > 0));
+
+                            head = head.Next;
+
+                            if (width > maxWidth)
+                                maxWidth = width;
+                            break;
+
+                        case 6:
+                        case 8:
+                        case 5:
+                        case 7:
+                        case 4:
+                            components.Add(stacking ? (ViewComponent)HorizontalMediumBlockViewComponent.ToViewModel(head.Value, columns.Count > 0) :
+                                                                        VerticalBlockViewComponent.ToViewModel(head.Value, columns.Count > 0));
+
+                            head = head.Next;
+
+                            if (width > maxWidth)
+                                maxWidth = width;
+                            break;
+                    }
+                }
+                else
+                {
+                    loop = false;
+
+                    if(components.Any())
                         filledColumn = true;
-                        break;
-
-                    case 24:
-                        stacking = true;
-                        break;
-
-                    case 9:
-                    {
-                        Entry article = null;
-                        if (stack.TryPop(out article))
-                        {
-                            components.Add(HorizontalLargeBlockViewComponent.ToViewModel(article, columns.Count > 0));
-
-                            if (width > maxWidth)
-                                maxWidth = width;
-                        }
-                        else
-                        {
-                            loop = false;
-                        }
-                    } break;
-
-                    case 6:
-                    case 8:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 4:
-                    {
-                        Entry article = null;
-                        if (stack.TryPop(out article))
-                        {
-                            components.Add(stacking ? (ViewComponent) HorizontalMediumBlockViewComponent.ToViewModel(article, columns.Count > 0) : 
-                                                                      VerticalBlockViewComponent.ToViewModel(article, columns.Count > 0));
-
-                            if (width > maxWidth)
-                                maxWidth = width;
-                        }
-                        else
-                        {
-                            loop = false;
-                        }
-                    } break;
                 }
 
                 if (filledColumn)

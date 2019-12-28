@@ -9,12 +9,12 @@ namespace RNN.Models.ViewModels.ViewComponents
     public class HorizontalLargeBlockViewComponent : ViewComponent
     {
         public string Slug { get; set; }
-        public string Title { get; set; }
+        //public string Title { get; set; }
         public string HeadLine { get; set; }
         public string Url { get; set; }
         public string Paragraph { get; set; }
         public string Img { get; set; }
-        public string Author { get; set; }
+        //public string Author { get; set; }
         public string Topic { get; set; }
         public bool HasBorder { get; set; }
 
@@ -24,9 +24,9 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Slug = model.Slug,
                 Url = model.Url,
-                Title = model.Title.Name,
+                //Title = model.Title.Name,
                 HeadLine = model.HeadLine,
-                Author = model.Author.Name,
+                //Author = model.Author.Name,
                 Paragraph = model.Paragraph,
                 Img = model.Img,
                 Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First().Topic.Name : null,

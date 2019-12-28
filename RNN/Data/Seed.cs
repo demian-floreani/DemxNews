@@ -17,58 +17,27 @@ namespace RNN.Models
 
         public static void SeedDatabase(ModelBuilder modelBuilder)
         {
-            List<Title> titles = new List<Title>() 
-            {
-                new Title() { Id = 1, Name = "Editorial" },
-                new Title() { Id = 2, Name = "Opinion" },
-                new Title() { Id = 3, Name = "UK News" },
-                new Title() { Id = 4, Name = "UK Politics" },
-                new Title() { Id = 5, Name = "US News" },
-                new Title() { Id = 6, Name = "US Politics" },
-                new Title() { Id = 7, Name = "EU News" },
-                new Title() { Id = 8, Name = "EU Entry" },
-                new Title() { Id = 9, Name = "Italian News" },
-                new Title() { Id = 10, Name = "Italian Politics" }
-            };
+            //List<Topic> topics = new List<Topic>()
+            //{
+            //    new Topic() { Name = "Topic 1" },
+            //    new Topic() { Name = "Topic 2" },
+            //    new Topic() { Name = "Topic 3" },
+            //    new Topic() { Name = "Topic 4" },
+            //    new Topic() { Name = "Topic 5" },
+            //    new Topic() { Name = "Topic 6" },
+            //    new Topic() { Name = "Topic 7" },
+            //    new Topic() { Name = "Topic 8" },
+            //    new Topic() { Name = "Topic 9" },
+            //    new Topic() { Name = "Topic 10" },
+            //    new Topic() { Name = "Topic 11" },
+            //    new Topic() { Name = "Topic 12" },
+            //    new Topic() { Name = "Topic 13" },
+            //    new Topic() { Name = "Topic 14" }
+            //};
 
-            modelBuilder.Entity<Title>().HasData(titles.ToArray());
-
-            List<Author> authors = new List<Author>();
-            authors.Add(new Author() { Id = 1, Name = "Author1" });
-
-            modelBuilder.Entity<Author>().HasData(authors.ToArray());
-
-            List<Grouping> subjects = new List<Grouping>()
-            {
-                new Grouping() { Name = "", Type = "Headlines", Rank = 1 },
-                //new Grouping() { Name = "EU Migrant Crisis", Type = "In Focus", Rank = 2 }
-            };
-
-            int i = 1;
-            subjects.ForEach(s => s.Id = i++);
-            modelBuilder.Entity<Grouping>().HasData(subjects.ToArray());
-
-            List<Topic> topics = new List<Topic>()
-            {
-                new Topic() { Name = "Topic 1" },
-                new Topic() { Name = "Topic 2" },
-                new Topic() { Name = "Topic 3" },
-                new Topic() { Name = "Topic 4" },
-                new Topic() { Name = "Topic 5" },
-                new Topic() { Name = "Topic 6" },
-                new Topic() { Name = "Topic 7" },
-                new Topic() { Name = "Topic 8" },
-                new Topic() { Name = "Topic 9" },
-                new Topic() { Name = "Topic 10" },
-                new Topic() { Name = "Topic 11" },
-                new Topic() { Name = "Topic 12" },
-                new Topic() { Name = "Topic 13" },
-                new Topic() { Name = "Topic 14" }
-            };
-
-            i = 1;
-            topics.ForEach(t => t.Id = i++);
-            modelBuilder.Entity<Topic>().HasData(topics.ToArray());
+            //int i = 1;
+            //topics.ForEach(t => t.Id = i++);
+            //modelBuilder.Entity<Topic>().HasData(topics.ToArray());
 
             //List<Post> posts = new List<Post>()
             //{

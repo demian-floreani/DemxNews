@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<RNN.Models.ViewModels.ViewComponents.RowViewComponent>
+@using RNN.Models.ViewModels.ViewComponents
 
 @foreach (var row in Model) {
-    <div class="row grid-row">
+    <div class="row">
        @foreach(var column in row.Columns) {
             <div class="col-sm-@column.Width">
                 @if (column.Rows != null) {
-                    @await Component.InvokeAsync("Row", new { rows = column.Rows })
+                    @await Component.InvokeAsync(typeof(RowViewComponent), new { rows = column.Rows })
                 }
                 else {
-                    foreach (var component in column.Components) {
+                <div class="row">
+                    @foreach (var component in column.Components) {
                         @await Component.InvokeAsync(component.GetType(), new { component = component })
                     }
+                </div>
                 }
             </div>
         }

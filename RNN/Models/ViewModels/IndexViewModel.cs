@@ -11,4 +11,4 @@ namespace RNN.Models.ViewModels
         public List<Topic> Trending { get; set; }
         public IEnumerable<GroupingViewComponent> Groupings { get; set; }
     }
-}
+}  

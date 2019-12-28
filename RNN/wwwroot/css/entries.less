@@ -12,11 +12,12 @@
 }
 
 .opinion-page-side-header h3 {
-    color: antiquewhite;
+    color: white;
     font-size: 20px;
     margin-bottom: 5px;
     padding-left: 5px;
     font-style: italic;
+    margin-top: 20px;
 }
 
 .opinion-page-side-header > section {
@@ -34,7 +35,7 @@ header {
 
 header > h3 {
     color: azure;
-    font-size: 28px;
+    font-size: 32px;
     margin-top: 10px;
     font-family: @merriweather;
     line-height: 1.2;
@@ -42,26 +43,22 @@ header > h3 {
 
 header > p {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 18px;
     font-family: @merriweather;
 }
 
 article {
     margin-top: 10px;
-    /*border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;*/
 }
 
 article > img {
-    /*margin-top: 15px;
-    margin-bottom: 15px;*/
     width: 100%;
     display: inline-block;
     margin-bottom: 10px;
 }
 
 article > p {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .source {
@@ -69,7 +66,7 @@ article > p {
 }
 
 .middle-column {
-    border-left: 1px solid #cccccc;
+    /*border-left: 1px solid #cccccc;*/
     border-right: 1px solid #cccccc;
 }
 
@@ -119,5 +116,58 @@ article > p {
 .topic {
     color: @color;
     font-family: @merriweather;
+    font-size: 18px;
+}
+
+/* global */
+
+.vertical-block-column {
+    /*padding-left: 10px;
+    padding-right: 10px;*/
+    margin-bottom: 10px;
+}
+
+.vertical-block {
+    background-color: #eff5f5;
+}
+
+.vertical-block:hover {
+    background-color: #e0ebeb;
+    cursor: pointer;
+}
+
+.vertical-block > header {
+    padding: 5px;
+    color: #000000;
+    font-size: 18px;
+}
+
+.vertical-block > header > span {
+    font-family: @merriweather;
+}
+
+.vertical-block > img {
+    width: 100%;
+}
+
+mark {
+    background-color: yellow;
+    font-size: 24px;
+    font-family: @merriweather;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+
+.reccomendations-block, .donate-block {
+    margin-top: 15px;
+}
+
+.inner {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.inner > p {
     font-size: 18px;
 }

@@ -11,10 +11,6 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TitleId" class="control-label"></label>
-                <select asp-for="TitleId" class="form-control" asp-items="ViewBag.TitleId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="HeadLine" class="control-label"></label>
                 <input asp-for="HeadLine" class="form-control" />
                 <span asp-validation-for="HeadLine" class="text-danger"></span>
@@ -52,10 +48,6 @@
                 <label asp-for="Url" class="control-label"></label>
                 <input asp-for="Url" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GroupingId" class="control-label"></label>
-                <select asp-for="GroupingId" class="form-control" asp-items="ViewBag.GroupingId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="TopicId" class="control-label"></label>

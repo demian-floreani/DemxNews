@@ -8,7 +8,6 @@ namespace RNN.Models.ViewModels
 {
     public class CreateArticle : Entry
     {
-        public Title Title { get; set; }
         public int? TitleId { get; set; }
         public string Paragraph { get; set; }
         public IFormFile Img { get; set; }

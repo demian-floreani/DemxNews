@@ -23,9 +23,9 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Slug = model.Slug,
                 Url = model.Url,
-                Title = model.Title.Name,
+                //Title = model.Title.Name,
                 HeadLine = model.HeadLine,
-                Author = model.Author.Name,
+                //Author = model.Author.Name,
                 Img = model.Img,
                 Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First().Topic.Name : null,
                 HasBorder = hasBorder

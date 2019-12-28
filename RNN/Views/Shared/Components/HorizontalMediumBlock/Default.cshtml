@@ -1,8 +1,10 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.HorizontalMediumBlockViewComponent
 
-<div class="row horizontal-block-row">
-    <div class="col-sm-12 horizontal-block-column @(Model.HasBorder ? "border" : "")">
-        <div class="prefix">@Model.Title</div>
+@*<div class="row horizontal-block-row">*@
+    <div class="col-sm-12 horizontal-block-column @(Model.HasBorder ? "block-border" : "")">
+        @*<div class="prefix">@Model.Title</div>*@
+        <mark><span>@Model.Topic</span></mark>
+        <div class="seperator"></div>
         <a asp-route="display" asp-route-slug="@Model.Slug">
             <div class="horizontal-block">
                 <div class="row">
@@ -11,10 +13,10 @@
                     </div>
                     <div class="col-sm-6 right-column">
                         <header>
-                            @if (Model.Topic != null)
+                            @*@if (Model.Topic != null)
                             {
                                 <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                            }
+                            }*@
                             <span>@Model.HeadLine</span>
                         </header>
                     </div>
@@ -22,4 +24,4 @@
             </div>
         </a>
     </div>
-</div>
+@*</div>*@
