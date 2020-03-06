@@ -62,5 +62,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>tinymce.init({ selector: 'textarea' });</script>
+    <script>tinymce.init({ selector: 'textarea', plugins: 'link' /*, menubar: 'insert', toolbar: 'link'*/ });</script>
 }

@@ -1,9 +1,9 @@
 [
   {
-    "outputFileName": "wwwroot/css/prod-articles.min.css",
+    "outputFileName": "wwwroot/css/prod-entries.min.css",
     "inputFiles": [
       "wwwroot/css/global.min.css",
-      "wwwroot/css/articles.min.css"
+      "wwwroot/css/entries.min.css"
     ],
     "minify": {
       "enabled": true,
@@ -15,6 +15,17 @@
     "inputFiles": [
       "wwwroot/css/global.min.css",
       "wwwroot/css/home.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/prod-message.min.css",
+    "inputFiles": [
+      "wwwroot/css/global.min.css",
+      "wwwroot/css/message.min.css"
     ],
     "minify": {
       "enabled": true,

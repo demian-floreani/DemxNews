@@ -1,13 +1,5 @@
 ﻿[
   {
-    "outputFile": "wwwroot/css/StyleSheet.css",
-    "inputFile": "wwwroot/css/StyleSheet.less"
-  },
-  {
-    "outputFile": "wwwroot/css/opinions.css",
-    "inputFile": "wwwroot/css/opinions.less"
-  },
-  {
     "outputFile": "wwwroot/css/global.css",
     "inputFile": "wwwroot/css/global.less"
   },
@@ -16,11 +8,11 @@
     "inputFile": "wwwroot/css/home.less"
   },
   {
-    "outputFile": "wwwroot/css/articles.css",
-    "inputFile": "wwwroot/css/articles.less"
-  },
-  {
     "outputFile": "wwwroot/css/entries.css",
     "inputFile": "wwwroot/css/entries.less"
+  },
+  {
+    "outputFile": "wwwroot/css/message.css",
+    "inputFile": "wwwroot/css/message.less"
   }
 ]

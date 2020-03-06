@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RNN</title>
+    <title>Renegade News</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css" />
@@ -14,25 +14,35 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-
-        <link rel="stylesheet" href="~/css/global.min.css" />
         <link rel="stylesheet" href="~/css/@ViewData["Controller"]" />
     </environment>
 
     <!-- custom fonts -->
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-   
+
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
+    <!-- for facebook sharing -->
+    <meta property="og:title" content="@ViewData["OGTitle"]" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@ViewData["OGDescription"]" />
+    <meta property="og:image" content="@ViewData["OGImage"]" />
+    <meta property="og:url" content="@ViewData["OGUrl"]" />
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
+
     <div class="container">
-        <div class="row top-row">
+        <div class="row">
             <div class="col-sm-12">
-                <a href="#"><span>Contribute</span></a>
+                <div class="fb-like" data-href="https://www.facebook.com/rnnonline/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
+
+                <a href="/contribute"><span class="contribute">Contribute</span></a>
             </div>
         </div>
+
     </div>
     <div class="container outer-box">
         <div class="row row-equal">
@@ -47,9 +57,6 @@
                     </div>
                 </a>
             </div>
-            @*<div class="col-sm-3 contribute-box">
-                <a href="#"><span>+Contribute</span></a>
-            </div>*@
         </div>
 
         @RenderBody()

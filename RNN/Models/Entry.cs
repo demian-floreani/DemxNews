@@ -19,6 +19,7 @@ namespace RNN.Models
         public string HeadLine { get; set; }
         public string Url { get; set; }
         public DateTime Date { get; set; }
+        public int PageViews { get; set; }
         public ICollection<EntryToTopic> EntryToTopics { get; set; }
     }
 }

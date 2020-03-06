@@ -18,7 +18,7 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Url = model.Url,
                 HeadLine = model.HeadLine,
-                Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First().Topic.Name : null
+                Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First(et => et.IsPrimary).Topic.Name : null
             };
         }
 

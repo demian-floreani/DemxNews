@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RNN.Models;
@@ -12,23 +13,25 @@ namespace RNN.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHostingEnvironment _environment;
         private readonly RNNContext _context;
 
-        public HomeController(RNNContext context)
+        public HomeController(RNNContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         public IActionResult Index()
         {
-            ViewData["Controller"] = String.Concat(/*"prod-", */this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
+            ViewData["Controller"] = String.Concat(!_environment.IsDevelopment() ? "prod-" : "", this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
 
             Models.ViewModels.IndexViewModel viewModel = new Models.ViewModels.IndexViewModel()
             {
                 // get topics with most mentions
                 Trending = _context.EntryToTopics
                     .OrderByDescending(pt => pt.EntryId)
-                    .Take(10)
+                    .Take(20)
                     .Include(pt => pt.Topic)
                     .GroupBy(pt => pt.Topic)
                     .OrderByDescending(group => group.Count())
@@ -49,11 +52,9 @@ namespace RNN.Controllers
             var articles = _context.Entries
                                    .Include(a => a.EntryToTopics)
                                    .ThenInclude(at => at.Topic)
-                                   .ToList(); 
+                                   .ToList();
 
-            var sorted = articles.OrderByDescending(a => RankHalfTime(a.Rank, a.Date));
-
-            viewModel.Groupings = GroupArticles(sorted, layouts);
+            viewModel.Groupings = GroupArticles(articles.OrderByDescending(a => RankHalfTime(a.Rank, a.Date)), layouts);
 
             return View("Index", viewModel);
         }
@@ -67,19 +68,29 @@ namespace RNN.Controllers
 
             var head = list.First;
             int i = 0;
+            var layout = layouts[0];
+            var layoutSize = layout.Count(e => e <= 12);
 
             while (head != null)
             {
                 splits.Add(head.Value);
                 head = head.Next;
 
-                if (splits.Count > 4 || head == null)
+                // number of elements is higher than current layout size
+                if (splits.Count == layoutSize || head == null)
                 {
                     groupingViews.Add(GroupingViewComponent.ToViewModel(new Models.ViewModels.GroupingViewModel()
                     {
-                        Grid = ArrangeArticles(splits, layouts[i++])
+                        Grid = ArrangeArticles(splits, layout)
                     }));
 
+                    if(head != null && i++ > layouts.Count - 1)
+                    {
+                        break;
+                    }
+
+                    layout = layouts[i];
+                    layoutSize = layout.Count(e => e <= 12);
                     splits = new List<Entry>();
                 }
             }

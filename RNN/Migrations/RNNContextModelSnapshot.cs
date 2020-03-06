@@ -15,7 +15,7 @@ namespace RNN.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,6 +30,10 @@ namespace RNN.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new { Id = 1, Name = "Renegade News" }
+                    );
                 });
 
             modelBuilder.Entity("RNN.Models.Entry", b =>
@@ -48,6 +52,8 @@ namespace RNN.Migrations
 
                     b.Property<string>("Img");
 
+                    b.Property<int>("PageViews");
+
                     b.Property<string>("Paragraph");
 
                     b.Property<int>("Rank");
@@ -60,6 +66,10 @@ namespace RNN.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("Slug")
+                        .IsUnique()
+                        .HasFilter("[Slug] IS NOT NULL");
+
                     b.ToTable("Entries");
                 });
 
@@ -69,11 +79,34 @@ namespace RNN.Migrations
 
                     b.Property<int>("EntryId");
 
+                    b.Property<int>("Id");
+
+                    b.Property<bool>("IsPrimary");
+
                     b.HasKey("TopicId", "EntryId");
 
                     b.HasIndex("EntryId");
 
                     b.ToTable("EntryToTopics");
+                });
+
+            modelBuilder.Entity("RNN.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("RNN.Models.Topic", b =>
@@ -87,6 +120,12 @@ namespace RNN.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Topics");
+
+                    b.HasData(
+                        new { Id = 1, Name = "Topic 1" },
+                        new { Id = 2, Name = "Topic 2" },
+                        new { Id = 3, Name = "Topic 3" }
+                    );
                 });
 
             modelBuilder.Entity("RNN.Models.Entry", b =>

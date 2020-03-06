@@ -11,5 +11,6 @@ namespace RNN.Models
         public Entry Entry { get; set; }
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
+        public bool IsPrimary { get; set; }
     }
 }

@@ -1,34 +1,28 @@
 ﻿@merriweather: 'Merriweather', serif;
 @color: #d75f0f;
+@background: #f5f5f5;
 
-@media (min-width: 576px) {
-
-    .post > span, .post > a > span {
-        font-size: 16px;
-    }
-
-    .horizontal-large-block header {
-        font-size: 20px;
-    }
-
-    .horizontal-block header {
-        font-size: 16px;
-    }
-
-    .vertical-block header {
-        font-size: 16px;
-    }
-
-    .prefix {
-        font-size: 16px;
-    }
+.vertical-block header {
+    font-size: 20px;
 }
 
-@media (min-width: 768px) {
+.vertical-narrow-block header {
+    font-size: 20px;
+}
 
-    /*.post > span, .post > a > span {
-        font-size: 16px;
-    }*/
+.horizontal-large-block header {
+    font-size: 20px;
+}
+
+.horizontal-block header {
+    font-size: 20px;
+}
+
+@media (min-width: 576px) {
+    .trending-container {
+        display: flex;
+        overflow-x: auto;
+    }
 
     .vertical-block header {
         font-size: 20px;
@@ -45,10 +39,6 @@
     .horizontal-block header {
         font-size: 18px;
     }
-
-    /*.prefix {
-        font-size: 16px;
-    }*/
 
     .left-column {
         padding-right: 5px;
@@ -59,39 +49,38 @@
     }
 }
 
-@media (min-width: 992px) {
-
-    /*.post > span, .post > a > span {
-        font-size: 18px;
+@media (min-width: 768px) {
+    .trending-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
     .vertical-block header {
+        font-size: 20px;
+    }
+
+    .vertical-narrow-block header {
         font-size: 18px;
     }
 
     .horizontal-large-block header {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .horizontal-block header {
         font-size: 18px;
     }
 
-    .prefix {
-        font-size: 18px;
+    .block-border {
+        border-left: 1px solid darkgray;
     }
+}
 
-    .grouping-column {
-        padding-left: 10px;
-        padding-right: 10px;
-    }*/
-
-    .post > span, .post > a > span {
-        font-size: 18px;
-    }
-
+@media (min-width: 992px) {
     .horizontal-large-block header {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .vertical-block header {
@@ -105,54 +94,24 @@
     .horizontal-block header {
         font-size: 20px;
     }
-
-    .prefix {
-        font-size: 18px;
-    }
-
-    .headlines {
-        font-size: 18px;
-    }
-
-    .grouping-column {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
 }
 
 @media (min-width: 1200px) {
-    /*.post > span, .post > a > span {
-        font-size: 18px;
-    }
-
     .horizontal-large-block header {
-        font-size: 24px;
+        font-size: 32px;
     }
 
     .vertical-block header {
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .vertical-narrow-block header {
-        font-size: 20px;
+        font-size: 24px;
     }
 
     .horizontal-block header {
-        font-size: 20px;
+        font-size: 22px;
     }
-
-    .prefix {
-        font-size: 18px;
-    }
-
-    .headlines {
-        font-size: 18px;
-    }
-
-    .grouping-column {
-        padding-left: 10px;
-        padding-right: 10px;
-    }*/
 }
 
 /* subjec titles */
@@ -238,10 +197,6 @@
     color: #FC7416;
 }
 
-.block-border {
-    border-left: 1px solid darkgray;
-}
-
 .horizontal-large-block-row {
     margin-bottom: 10px;
 }
@@ -261,16 +216,8 @@
     line-height: 1;
 }
 
-.horizontal-large-block-left-column {
-    padding-right: 5px;
-}
-
-.horizontal-large-block-right-column {
-    padding-left: 5px;
-}
-
 .horizontal-large-block {
-    background-color: white;
+    background-color: @background;
 }
 
 .horizontal-large-block:hover {
@@ -288,6 +235,12 @@
     font-style: italic;
     font-family: @merriweather;
     padding-top: 5px;
+
+}
+
+.horizontal-large-block header span {
+    display: block;
+    line-height: 1.35;
 }
 
 .horizontal-large-block section {
@@ -303,9 +256,7 @@
     font-family: @merriweather;
 }
 
-.text-block {
-    margin-bottom: 5px;
-}
+
 
 /* opinion */
 /*.vertical-block-row {
@@ -319,7 +270,7 @@
 }
 
 .vertical-block {
-    background-color: white;
+    background-color: @background;
 }
 
 .vertical-block:hover {
@@ -329,7 +280,7 @@
 
 .vertical-block > header {
     padding: 5px;
-    color: @color;
+    color: black;
 }
 
 .vertical-block > header > span {
@@ -349,7 +300,7 @@
 }
 
 .vertical-narrow-block {
-    background-color: white;
+    background-color: @background;
 }
 
 .vertical-narrow-block:hover {
@@ -359,7 +310,8 @@
 
 .vertical-narrow-block > header {
     padding: 5px;
-    color: @color;
+    color: black;
+    /*color: @color;*/
 }
 
 .vertical-narrow-block > header > span {
@@ -373,7 +325,7 @@
 /***********/
 
 .horizontal-block {
-    background-color: white;
+    background-color: @background;
 }
 
 .horizontal-block:hover {
@@ -409,8 +361,9 @@
 }
 
 mark {
-    background-color: yellow;
+    background-color: @color;
     font-size: 16px;
+    color: white;
     font-family: @merriweather;
     margin-bottom: 5px;
     display: inline-block;
@@ -460,23 +413,50 @@ mark {
     color: white;
 }
 
+.trending-container > a {
 
+}
 
+.trending-container::-webkit-scrollbar {
+    display: none;
+}
 
+.trending-container a {
+    display: inline-block;
+    float: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
 
+.trending-container-row {
+    border-top: 1px solid black;
+    border-bottom: 2px solid black;
+}
 
+.trending-container-column {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
+.trending-container {
+    overflow: auto;
+    white-space: nowrap;
+}
 
+.trending-container span {
+    display: inline-block;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: @merriweather;
+}
 
+.trending-container a span:hover {
+    color: #FC7416;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.trending-container a:hover {
+    cursor: pointer;
+}

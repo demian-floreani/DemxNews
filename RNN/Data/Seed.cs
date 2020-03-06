@@ -17,27 +17,25 @@ namespace RNN.Models
 
         public static void SeedDatabase(ModelBuilder modelBuilder)
         {
-            //List<Topic> topics = new List<Topic>()
-            //{
-            //    new Topic() { Name = "Topic 1" },
-            //    new Topic() { Name = "Topic 2" },
-            //    new Topic() { Name = "Topic 3" },
-            //    new Topic() { Name = "Topic 4" },
-            //    new Topic() { Name = "Topic 5" },
-            //    new Topic() { Name = "Topic 6" },
-            //    new Topic() { Name = "Topic 7" },
-            //    new Topic() { Name = "Topic 8" },
-            //    new Topic() { Name = "Topic 9" },
-            //    new Topic() { Name = "Topic 10" },
-            //    new Topic() { Name = "Topic 11" },
-            //    new Topic() { Name = "Topic 12" },
-            //    new Topic() { Name = "Topic 13" },
-            //    new Topic() { Name = "Topic 14" }
-            //};
+            List<Topic> topics = new List<Topic>()
+            {
+                new Topic() { Name = "Topic 1" },
+                new Topic() { Name = "Topic 2" },
+                new Topic() { Name = "Topic 3" }
+            };
 
-            //int i = 1;
-            //topics.ForEach(t => t.Id = i++);
-            //modelBuilder.Entity<Topic>().HasData(topics.ToArray());
+            int i = 1;
+            topics.ForEach(t => t.Id = i++);
+            modelBuilder.Entity<Topic>().HasData(topics.ToArray());
+
+            List<Author> authors = new List<Author>()
+            {
+                new Author() { Name = "Renegade News" }
+            };
+
+            i = 1;
+            authors.ForEach(t => t.Id = i++);
+            modelBuilder.Entity<Author>().HasData(authors.ToArray());
 
             //List<Post> posts = new List<Post>()
             //{

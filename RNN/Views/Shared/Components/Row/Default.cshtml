@@ -4,7 +4,7 @@
 @foreach (var row in Model) {
     <div class="row">
        @foreach(var column in row.Columns) {
-            <div class="col-sm-@column.Width">
+            <div class="col-md-@column.Width">
                 @if (column.Rows != null) {
                     @await Component.InvokeAsync(typeof(RowViewComponent), new { rows = column.Rows })
                 }

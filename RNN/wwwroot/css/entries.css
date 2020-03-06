@@ -1,5 +1,4 @@
 ﻿.opinion-header-row {
-  margin-top: 15px;
   background-color: #FC7416;
 }
 .opinion-page-side-header {
@@ -84,9 +83,13 @@ article > p {
   color: #FC7416;
 }
 .topic {
-  color: #FC7416;
+  color: white;
+  background-color: #FC7416;
   font-family: 'Merriweather', serif;
-  font-size: 18px;
+  font-size: 20px;
+  padding: 2px;
+  display: inline-block;
+  margin-bottom: 4px;
 }
 /* global */
 .vertical-block-column {
@@ -112,22 +115,26 @@ article > p {
 .vertical-block > img {
   width: 100%;
 }
+.text-block {
+  margin-bottom: 15px;
+}
 mark {
   background-color: yellow;
   font-size: 24px;
   font-family: 'Merriweather', serif;
   margin-bottom: 15px;
-  display: inline-block;
+  /*display: block;*/
   width: 100%;
 }
-.reccomendations-block,
-.donate-block {
+.side-block {
   margin-top: 15px;
 }
 .inner {
+  margin-top: 15px;
   padding-left: 5px;
   padding-right: 5px;
 }
 .inner > p {
   font-size: 18px;
+  margin-bottom: 0;
 }

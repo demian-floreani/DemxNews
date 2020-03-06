@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row subjects-block">
+@*<div class="row subjects-block">
     <div class="col-sm-12">
         <ul class="subject-list">
             @foreach (var subject in Model.Trending)
@@ -13,16 +13,29 @@
                 <li><a asp-controller="Home" asp-action="Index" asp-route-id="@subject.Id"><span>@subject.Name</span></a></li>
             }
         </ul>
-    </div>      
+    </div>
+</div>*@
+
+<div class="row trending-container-row">
+    <div class="col-sm-12 trending-container-column">
+        <div class="trending-container">
+            @foreach (var subject in Model.Trending)
+            {
+            <a asp-controller="Home" asp-action="Index" asp-route-id="@subject.Id"><span>@subject.Name</span></a>
+            }
+        </div>
+
+    </div>
 </div>
+
 
 <div class="row">
     @*<div class="col-sm-2 categories">
-        @foreach (var category in Model.Categories)
-        {
-            <a asp-route="category" asp-route-category="@category.Name"><span class="category">@category.Name</span></a>
-        }
-    </div>*@
+            @foreach (var category in Model.Categories)
+            {
+                <a asp-route="category" asp-route-category="@category.Name"><span class="category">@category.Name</span></a>
+            }
+        </div>*@
     @*<div class="col-md-1"></div>*@
     <div class="col-sm-12">
         @foreach (var grouping in Model.Groupings)

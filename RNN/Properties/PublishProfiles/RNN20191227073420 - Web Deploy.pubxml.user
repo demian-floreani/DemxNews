@@ -6,6 +6,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAr1Ezwa5SiEaa6oV6tRM+NQAAAAACAAAAAAAQZgAAAAEAACAAAADPpZg6Li5Z3oHVV+0EwbsUr1sX1JsxyRu/OKTgPbI05wAAAAAOgAAAAAIAACAAAACRtU7mFvOwIjBnj/uvL8CfRAggPzOVSofkL1Asee6ilIAAAACPjoaaxhhFcVL2fxI9kY/dhAEe8Osh/8g6g0UwUwpiA8teGj8XcrUqH5gX2aSVhC7udmVuGYL8ig6eimXIsP09Dkr0iIW2jnV7K6erQaYtq6zxBjwNHyo0pW5N7puTVXQwA7q9BeAwvIGREi9A/isRM+So345ck5dOnpUEgwl6TkAAAAC92eVLZbtN+ge/TFmmTAgXoZzWGGWQyNyX332HUhhcRZUzYUlfs6woZP/UfCKrzd5P4xi1wI11h6TjrPN9CVgC</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAtR9exRt04Uuj7d0yj6xdFAAAAAACAAAAAAADZgAAwAAAABAAAAAl9BAH/i54+qTdipVA47s/AAAAAASAAACgAAAAEAAAACBLKBoEON0Erlo32V7hxe6AAAAAxZSUQDZ9Um6bB8r4r1HJSkrmHq+Aji+H7X9U2p6JQxzmIgR7wm048cQwPUrRvL9FU/WTOxC1sGiyhlUD68Pjvp+JJ9kvFAJ8rVfS6n1qKHi6b35mNKrft+E/GhUZ3iwDhG1jo0k2oRUFXn7k7dd1GcVFGOJHiUCKLQW6eJ4BA1EUAAAAtwnC2WNRdcSkHApa+FbiLzEf0HQ=</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="RNNContext">
+      <Value>Server=tcp:rnndbserver.database.windows.net,1433%3bInitial Catalog=RNNDB%3bPersist Security Info=False%3bUser ID=demx9%3bPassword=~Repubblica1%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="RNN.Models.RNNContext">
+      <Value>Server=tcp:rnndbserver.database.windows.net,1433%3bInitial Catalog=RNNDB%3bPersist Security Info=False%3bUser ID=demx9%3bPassword=~Repubblica1%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
 </Project>

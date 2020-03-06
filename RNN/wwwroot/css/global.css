@@ -1,9 +1,4 @@
-﻿@media (min-width: 1200px) {
-  .container {
-    max-width: 970px;
-  }
-}
-/*  */
+﻿/*  */
 body {
   padding-bottom: 20px;
   font-family: 'Open Sans', sans-serif;
@@ -104,4 +99,16 @@ blockquote {
 }*/
 blockquote p {
   display: inline;
+}
+.contribute {
+  float: right;
+  font-size: 16px;
+  color: #FC7416;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.fb-like {
+  margin-top: 3px;
+  display: block;
 }

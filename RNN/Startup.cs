@@ -38,6 +38,14 @@ namespace RNN
 
             services.AddDbContext<RNNContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RNNContext")));
+
+            services.AddMvc(options => {
+                options.Filters.Add(new RequireWwwAttribute
+                {
+                    IgnoreLocalhost = true,
+                    Permanent = true
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

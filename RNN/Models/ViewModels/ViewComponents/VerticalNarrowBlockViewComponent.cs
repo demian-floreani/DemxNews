@@ -24,12 +24,10 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Slug = model.Slug,
                 Url = model.Url,
-                //Title = model.Title?.Name,
                 HeadLine = model.HeadLine,
-                //Author = model.Author.Name,
                 Paragraph = model.Paragraph,
                 Img = model.Img,
-                Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First().Topic.Name : null,
+                Topic = model.EntryToTopics.Any() ? model.EntryToTopics.First(et => et.IsPrimary).Topic.Name : null,
                 HasBorder = hasBorder
             };
         }

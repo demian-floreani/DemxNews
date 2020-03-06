@@ -62,8 +62,15 @@ namespace RNN.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(entryToTopic);
+                _context.Add(new EntryToTopic() 
+                {
+                    EntryId = entryToTopic.EntryId,
+                    TopicId = entryToTopic.TopicId,
+                    IsPrimary = false
+                });
+
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EntryId"] = new SelectList(_context.Set<Entry>(), "Id", "Discriminator", entryToTopic.EntryId);
@@ -72,20 +79,22 @@ namespace RNN.Controllers
         }
 
         // GET: EntryToTopics/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? entry, int? topic)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var entryToTopic = await _context.EntryToTopics
+                .Include(e => e.Entry)
+                .Include(e => e.Topic)
+                .FirstOrDefaultAsync(m => m.TopicId == topic && m.EntryId == entry);
 
-            var entryToTopic = await _context.EntryToTopics.FindAsync(id);
             if (entryToTopic == null)
             {
                 return NotFound();
             }
+
             ViewData["EntryId"] = new SelectList(_context.Set<Entry>(), "Id", "Discriminator", entryToTopic.EntryId);
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Id", entryToTopic.TopicId);
+            ViewData["IsPrimary"] = entryToTopic.IsPrimary;
+
             return View(entryToTopic);
         }
 
@@ -94,13 +103,8 @@ namespace RNN.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EntryId,TopicId")] EntryToTopic entryToTopic)
+        public async Task<IActionResult> Edit(int id, [Bind("EntryId,TopicId,IsPrimary")] EntryToTopic entryToTopic)
         {
-            if (id != entryToTopic.TopicId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -108,21 +112,14 @@ namespace RNN.Controllers
                     _context.Update(entryToTopic);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!EntryToTopicExists(entryToTopic.TopicId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EntryId"] = new SelectList(_context.Set<Entry>(), "Id", "Discriminator", entryToTopic.EntryId);
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Id", entryToTopic.TopicId);
+
             return View(entryToTopic);
         }
 

@@ -4,10 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Manage Content</h2>
 
-<h4>Article</h4>
-<hr />
 <div class="row">
     <div class="col-sm-6">
         <form asp-action="Edit">
@@ -71,7 +69,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script>tinymce.init({ selector: 'textarea' });</script>
-
+    <script>tinymce.init({ selector: 'textarea', plugins: 'link' /*, menubar: 'insert', toolbar: 'link'*/ });</script>
 }

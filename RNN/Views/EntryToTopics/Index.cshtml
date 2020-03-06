@@ -12,12 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Entry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Topic)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Entry)</th>
+            <th>@Html.DisplayNameFor(model => model.Topic)</th>
+            <th>@Html.DisplayNameFor(model => model.IsPrimary)</th>
             <th></th>
         </tr>
     </thead>
@@ -31,9 +28,11 @@
                 @Html.DisplayFor(modelItem => item.Topic.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { entry=item.EntryId, topic=item.TopicId })
+                @Html.DisplayFor(modelItem => item.IsPrimary)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { entry = item.EntryId, topic = item.TopicId }) |
+                @Html.ActionLink("Delete", "Delete", new { entry = item.EntryId, topic = item.TopicId })
             </td>
         </tr>
 }

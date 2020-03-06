@@ -15,8 +15,13 @@ namespace RNN.Models
         public DbSet<EntryToTopic> EntryToTopics { get; set; }
         public DbSet<Topic> Topics { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Entry>().HasIndex(p => p.Slug).IsUnique();
+
             modelBuilder.Entity<EntryToTopic>()
                 .HasKey(pt => new { pt.TopicId, pt.EntryId });
             modelBuilder.Entity<EntryToTopic>()
@@ -28,7 +33,7 @@ namespace RNN.Models
                 .WithMany(t => t.EntryToTopics)
                 .HasForeignKey(bc => bc.TopicId);
 
-            //Seed.SeedDatabase(modelBuilder);
+            Seed.SeedDatabase(modelBuilder);
         }
 
     }

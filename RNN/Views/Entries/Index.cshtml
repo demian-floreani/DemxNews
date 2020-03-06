@@ -8,8 +8,8 @@
             <p>@Model.Article.Paragraph</p>
         </header>
     </div>
-    <div class="hidden-xs hidden-sm col-md-4 opinion-page-side-header">
-        <h3>@Model.Article.EntryToTopics.First().Topic.Name</h3>
+    <div class="d-none d-sm-none d-md-block col-md-4 opinion-page-side-header">
+        <h3>@Model.Article.EntryToTopics.First(et => et.IsPrimary == true).Topic.Name</h3>
         <section></section>
         <section></section>
     </div>
@@ -30,40 +30,55 @@
         </article>
     </div>
     <div class="col-md-4">
-        @*<div class="row">
+        <div class="row side-block">
             <div class="col-sm-12">
-                <h4>Topics</h4>
-
-                @foreach (var t in Model.Topics)
-                {
-                    <span class="topic">@t.Name</span><span>,</span>
-                }
-            </div>
-        </div>*@
-        <div class="row donate-block">
-            <div class="col-sm-12">
-                <mark><span>Enjoy our content?</span></mark>
+                <mark><span>Topics</span></mark>
 
                 <div class="inner">
-                    <p>We strive to provide a common-sense perspective of today's current events. If you, like us, love straight, unbiased news, please consider donating.g</p>
-                    <p></p>
+                    @foreach (var t in Model.Topics)
+                    {
+                        <div class="topic">@t.Name</div>
+                    }
                 </div>
             </div>
         </div>
 
-        <div class="row reccomendations-block">
-            @if (Model.Reccomendations.Any())
-            {
+        <div class="row side-block">
+            <div class="col-sm-12">
+                <mark><span>Enjoy our content?</span></mark>
+
+                <div class="inner">
+                    <p>We strive to provide a common-sense perspective of today's current events. If you, like us, love straight, unbiased news, please consider donating.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row side-block">
+            <div class="col-sm-12">
+                <mark><span>Spread the word</span></mark>
+
+                <div class="inner">
+                    <div class="fb-like" data-href="https://www.renegadenews.net/article/@(Model.Article.Slug)" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Reccomendations.Any())
+        {
+            <div class="row side-block">
+
                 <div class="col-sm-12">
-                    <mark><span>More like this</span></mark>
+                    <div class="text-block">
+                        <mark><span>More like this</span></mark>
+                    </div>
                 </div>
 
                 @foreach (var r in Model.Reccomendations)
                 {
                     @await Component.InvokeAsync(typeof(ReccomendationBlockViewComponent), new { component = r })
                 }
-            }
-        </div>
+            </div>
+        }
     </div>
 
 </div>
