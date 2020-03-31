@@ -26,7 +26,17 @@
 
             <img src="~/images/uploads/@Model.Article.Img" />
 
-            @Html.Raw(@Model.Article.Body)
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.Raw(@Model.Article.Body)
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="disqus_thread"></div>
+                </div>
+            </div>
         </article>
     </div>
     <div class="col-md-4">
@@ -79,12 +89,6 @@
                 }
             </div>
         }
-    </div>
-
-</div>
-<div class="row">
-    <div class="col-md-8">
-        <div id="disqus_thread"></div>
     </div>
 </div>
 

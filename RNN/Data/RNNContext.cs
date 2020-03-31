@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RNN.Models.Identity;
 
 namespace RNN.Models
 {
-    public class RNNContext : DbContext
+    public class RNNContext : IdentityDbContext<ApplicationUser>
     {
-        public RNNContext(DbContextOptions<RNNContext> options) : base(options) {}
+        public RNNContext(DbContextOptions<RNNContext> options) : base(options)
+        {
+           
+        }
 
         public DbSet<Author> Authors { get; set; } 
         public DbSet<Entry> Entries { get; set; }
@@ -20,6 +26,8 @@ namespace RNN.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Entry>().HasIndex(p => p.Slug).IsUnique();
 
             modelBuilder.Entity<EntryToTopic>()

@@ -2,20 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RNN.Models;
+using RNN.Models.ViewModels.ViewComponents;
 
 namespace RNN.Controllers
 {
+    [Authorize]
     public class TopicsController : Controller
     {
+        private readonly IHostingEnvironment _environment;
         private readonly RNNContext _context;
 
-        public TopicsController(RNNContext context)
+        public TopicsController(RNNContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
+        }
+
+        [HttpGet]
+        [Route("topic/{topicId}", Name = "topiclist")]
+        public async Task<IActionResult> List(int topicId)
+        {
+            ViewData["Controller"] = String.Concat(!_environment.IsDevelopment() ? "prod-" : "", this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
+
+            var topic = await _context.Topics.FirstOrDefaultAsync(t => t.Id == topicId);
+            ViewData["Topic"] = topic.Name;
+
+            var list = _context.Entries
+                              .Include(a => a.EntryToTopics)
+                              .ThenInclude(a => a.Topic)
+                              .Where(a => a.EntryToTopics.Any(et => et.TopicId == topicId))
+                              .OrderByDescending(a => a.Date)
+                              .AsNoTracking();
+
+            return View(list.Select(e => HorizontalMediumBlockViewComponent.ToViewModel(e, false)));
         }
 
         // GET: Topics

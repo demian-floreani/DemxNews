@@ -20,11 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\listentries.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\message.css" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.15.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />

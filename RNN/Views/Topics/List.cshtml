@@ -1,0 +1,16 @@
+﻿@using RNN.Models.ViewModels.ViewComponents
+@model IEnumerable<HorizontalMediumBlockViewComponent>
+
+<div class="row featured-section">
+    <div class="col-sm-2">
+        <span class="topic-title">@ViewData["Topic"]</span>
+    </div>
+    <div class="col-sm-10">
+        @foreach (var entry in Model)
+        {
+            @await Component.InvokeAsync(entry.GetType(), new { component = entry })
+        }
+    </div>
+</div>
+
+

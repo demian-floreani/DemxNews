@@ -4,45 +4,64 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using RNN.Controllers.Common;
 using RNN.Models;
+using RNN.Models.Identity;
 using RNN.Models.ViewModels;
 using RNN.Models.ViewModels.ViewComponents;
+using RNN.Services;
 
 namespace RNN.Controllers
 {
-    public class EntriesController : Controller
+    [Authorize]
+    public class EntriesController : BaseController
     {
-        private readonly IHostingEnvironment _environment;
         private readonly RNNContext _context;
+        private readonly IImageProcessingService _imageProcessing;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EntriesController(RNNContext context, IHostingEnvironment environment)
+        public EntriesController(
+            RNNContext context, 
+            IHostingEnvironment environment,
+            IImageProcessingService imageProcessing,
+            UserManager<ApplicationUser> userManager) : base(environment)
         {
+            _userManager = userManager;
             _context = context;
-            _environment = environment;
+            _imageProcessing = imageProcessing;
         }
 
-        [Route("Entries/")]
-        public async Task<IActionResult> Index()
+        [Route("Entries/List")]
+        [HttpGet]
+        public async Task<IActionResult> GetEntries()
         {
-            return View("List", await _context.Entries.ToListAsync());
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var entries = await _context.Entries
+                                        .Where(e => e.ApplicationUserId.Equals(user.Id))
+                                        .ToListAsync();
+
+            return View("List", entries);
         }
 
+        /// <summary>
+        /// Display an article
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
         [Route("article/{slug}", Name = "display")]
-        public async Task<IActionResult> Display(string slug)
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Get(string slug)
         {
-            ViewData["Controller"] = String.Concat(!_environment.IsDevelopment() ? "prod-" : "", this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
-
-            if (slug == null)
-            {
-                return NotFound();
-            }
-
             var article = await _context.Entries
-                .Include(a => a.Author)
+                .Include(a => a.ApplicationUser)
                 .Include(a => a.EntryToTopics)
                 .ThenInclude(et => et.Topic)
                 .FirstOrDefaultAsync(a => a.Slug == slug);
@@ -53,17 +72,13 @@ namespace RNN.Controllers
             // get topic ids
             var topicIds = topics.Select(t => t.Id).ToList();
 
-            var reccomendations = _context.Entries
+            var reccomendations = await _context.Entries
                                           .Include(a => a.EntryToTopics)
                                           .Where(a => a.EntryToTopics.Any(et => topicIds.Contains(et.Topic.Id)))
                                           .Where(a => a.Id != article.Id)
                                           .OrderByDescending(a => a.Date)
-                                          .ToList();
-
-            if (article == null)
-            {
-                return NotFound();
-            }
+                                          .AsNoTracking()
+                                          .ToListAsync();
 
             DisplayArticle model = new DisplayArticle()
             {
@@ -85,66 +100,38 @@ namespace RNN.Controllers
             return View("Index", model);
         }
 
-        // GET: Entries/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var article = await _context.Entries
-                .Include(a => a.Author)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return View(article);
-        }
-
         [Route("Entries/Create")]
         // GET: Entries/Create
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name");
+            //ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name");
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Name");
             return View();
         }
 
-        // POST: Entries/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Entries/Create")]
-        public async Task<IActionResult> Create([Bind("Slug,TitleId,Paragraph,Img,Body,AuthorId,Rank,Id,HeadLine,Url,GroupingId,TopicId")] CreateArticle form)
+        public async Task<IActionResult> Create(CreateArticle form)
         {
             if (ModelState.IsValid)
             {
-                string imageName = String.Concat(Guid.NewGuid().ToString(), Path.GetExtension(form.Img.FileName));
-
-                Entry article = new Entry()
+                var article = new Entry()
                 {
                     HeadLine = form.HeadLine,
                     Slug = GenerateSlug(form.HeadLine),
-                    AuthorId = form.AuthorId,
+                    ApplicationUserId = (await _userManager.GetUserAsync(HttpContext.User)).Id,
                     Body = form.Body,
                     Date = DateTime.Now,
                     Rank = form.Rank,
                     Url = form.Url,
                     Paragraph = form.Paragraph,
-                    Img = imageName
+                    Img = _imageProcessing.ProcessFormImage(form.Img),
+                    PageViews = 0
                 };
 
                 _context.Entries.Add(article);
-                int id = await _context.SaveChangesAsync();
-
-                // save image
-                var uploads = Path.Combine(_environment.WebRootPath, "images", "uploads", imageName);
-                form.Img.CopyTo(new FileStream(uploads, FileMode.Create));
+                await _context.SaveChangesAsync();
 
                 // link topic to article
                 _context.EntryToTopics.Add(new EntryToTopic()
@@ -156,7 +143,7 @@ namespace RNN.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetEntries));
             }
             
             //ViewData["GroupingId"] = new SelectList(_context.Groupings, "Id", "Id", article.GroupingId);
@@ -167,6 +154,7 @@ namespace RNN.Controllers
 
         private static string GenerateSlug(string headline)
         {
+            headline = headline.Trim();
             Regex rgx = new Regex("[^a-zA-Z0-9 ]");
             headline = rgx.Replace(headline, "");
             headline = headline.Replace(' ', '-');
@@ -188,10 +176,14 @@ namespace RNN.Controllers
             {
                 return NotFound();
             }
-
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name", article.AuthorId);
             
-            return View(article);
+            return View(new EditArticle() 
+            {
+                HeadLine = article.HeadLine,
+                Url = article.Url,
+                Body = article.Body,
+                Paragraph = article.Paragraph
+            });
         }
 
         // POST: Entries/Edit/5
@@ -200,9 +192,9 @@ namespace RNN.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Entries/Edit/{id}")]
-        public async Task<IActionResult> Edit(int id, [Bind("TitleId,Paragraph,Slug,Img,Body,AuthorId,Rank,Id,HeadLine,Url,Date,GroupingId")] Entry article)
+        public async Task<IActionResult> Edit(int id, EditArticle form)
         {
-            if (id != article.Id)
+            if (id != form.Id)
             {
                 return NotFound();
             }
@@ -211,77 +203,39 @@ namespace RNN.Controllers
             {
                 try
                 {
+                    var article = await _context.Entries.FirstOrDefaultAsync(e => e.Id == id);
+
+                    if (article == null)
+                        return NotFound();
+
+                    article.HeadLine = form.HeadLine;
+                    article.Paragraph = form.Paragraph;
+                    article.Slug = GenerateSlug(form.HeadLine);
+                    article.Url = form.Url;
+                    article.Body = form.Body;
+
+                    if(form.Img != null)
+                    {
+                        article.Img = _imageProcessing.ProcessFormImage(form.Img);
+                    }
+
                     var entry = _context.Entry(article);
                     entry.State = EntityState.Modified;
-                    entry.Property(p => p.PageViews).IsModified = false;
-                    entry.Property(p => p.Id).IsModified = false;
-                    entry.Property(p => p.Date).IsModified = false;
 
-                    //_context.Update(article);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
-                    if (!ArticleExists(article.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(GetEntries));
             }
 
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", article.AuthorId);
-
-            return View(article);
+            return RedirectToAction(nameof(GetEntries));
         }
 
-        // GET: Entries/Delete/5
-        [Route("Entries/Delete/{id}")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            //var articleToTopics = await _context.EntryToTopics.Where(et => et.EntryId == id.Value);
-
-
-            var article = await _context.Entries.FindAsync(id);
-            _context.Entries.Remove(article);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var article = await _context.Entries
-            //    .Include(a => a.Grouping)
-            //    .Include(a => a.Author)
-            //    .Include(a => a.Title)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (article == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(article);
-        }
-
-        // POST: Entries/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var article = await _context.Entries.FindAsync(id);
-        //    _context.Entries.Remove(article);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        private bool ArticleExists(int id)
+        private bool Exists(int id)
         {
             return _context.Entries.Any(e => e.Id == id);
         }

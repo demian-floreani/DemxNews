@@ -14,5 +14,37 @@
   {
     "outputFile": "wwwroot/css/message.css",
     "inputFile": "wwwroot/css/message.less"
+  },
+  {
+    "outputFile": "wwwroot/css/topics.css",
+    "inputFile": "wwwroot/css/topics.less"
+  },
+  {
+    "outputFile": "wwwroot/css/register.css",
+    "inputFile": "wwwroot/css/register.less"
+  },
+  {
+    "outputFile": "wwwroot/css/listentries.css",
+    "inputFile": "wwwroot/css/listentries.less"
+  },
+  {
+    "outputFile": "wwwroot/css/index.css",
+    "inputFile": "wwwroot/css/index.less"
+  },
+  {
+    "outputFile": "wwwroot/css/displayentry.css",
+    "inputFile": "wwwroot/css/displayentry.less"
+  },
+  {
+    "outputFile": "wwwroot/css/home-get.css",
+    "inputFile": "wwwroot/css/home-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/entries-get.css",
+    "inputFile": "wwwroot/css/entries-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/entries-getentries.css",
+    "inputFile": "wwwroot/css/entries-getentries.less"
   }
 ]

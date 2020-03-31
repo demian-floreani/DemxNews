@@ -8,7 +8,7 @@ namespace RNN.Models.ViewModels
 {
     public class IndexViewModel
     {
-        public List<Topic> Trending { get; set; }
+        public IEnumerable<Topic> Trending { get; set; }
         public IEnumerable<GroupingViewComponent> Groupings { get; set; }
     }
 }  

@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RNN.Controllers.Common;
 using RNN.Models;
 using RNN.Models.ViewModels.ViewComponents;
 
 namespace RNN.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly IHostingEnvironment _environment;
         private readonly RNNContext _context;
 
-        public HomeController(RNNContext context, IHostingEnvironment environment)
+        public HomeController(  RNNContext context, 
+                                IHostingEnvironment environment) : base (environment)
         {
             _context = context;
-            _environment = environment;
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("/")]
+        public async Task<IActionResult> Get()
         {
-            ViewData["Controller"] = String.Concat(!_environment.IsDevelopment() ? "prod-" : "", this.ControllerContext.ActionDescriptor.ControllerName, ".min.css");
-
             Models.ViewModels.IndexViewModel viewModel = new Models.ViewModels.IndexViewModel()
             {
                 // get topics with most mentions
@@ -37,7 +38,7 @@ namespace RNN.Controllers
                     .OrderByDescending(group => group.Count())
                     .Select(group => group.Key)
                     .Take(5)
-                    .ToList()
+                    .AsNoTracking()
             };
 
             var layouts = new List<List<int>>() 
@@ -49,17 +50,18 @@ namespace RNN.Controllers
                 new List<int>() { 24, 7, 7, 48, 5, 48  }
             };
 
-            var articles = _context.Entries
+            var articles = await _context.Entries
                                    .Include(a => a.EntryToTopics)
                                    .ThenInclude(at => at.Topic)
-                                   .ToList();
+                                   .AsNoTracking()
+                                   .ToListAsync();
 
             viewModel.Groupings = GroupArticles(articles.OrderByDescending(a => RankHalfTime(a.Rank, a.Date)), layouts);
 
             return View("Index", viewModel);
         }
 
-        public static List<GroupingViewComponent> GroupArticles(IEnumerable<Entry> entries, List<List<int>> layouts)
+        private static List<GroupingViewComponent> GroupArticles(IEnumerable<Entry> entries, List<List<int>> layouts)
         {
             List<GroupingViewComponent> groupingViews = new List<GroupingViewComponent>();
 
@@ -104,7 +106,7 @@ namespace RNN.Controllers
             return (double) rank - (Math.Pow(magicNum, (DateTime.Now - date).TotalHours) - 1d);
         }
 
-        public static List<RowViewComponent> ArrangeArticles(IEnumerable<Entry> articles, List<int> layout)
+        private static List<RowViewComponent> ArrangeArticles(IEnumerable<Entry> articles, List<int> layout)
         {
             LinkedList<Entry> list = new LinkedList<Entry>(articles);
             var head = list.First;

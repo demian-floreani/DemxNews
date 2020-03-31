@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using RNN.Models.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,8 +15,8 @@ namespace RNN.Models
         public string Paragraph { get; set; }
         public string Img { get; set; }
         public string Body { get; set; }
-        public int? AuthorId { get; set; }
-        public Author Author { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public int Rank { get; set; }
         public string HeadLine { get; set; }
         public string Url { get; set; }

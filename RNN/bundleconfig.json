@@ -1,9 +1,9 @@
 [
   {
-    "outputFileName": "wwwroot/css/prod-entries.min.css",
+    "outputFileName": "wwwroot/css/prod-displayentry.min.css",
     "inputFiles": [
       "wwwroot/css/global.min.css",
-      "wwwroot/css/entries.min.css"
+      "wwwroot/css/displayentry.min.css"
     ],
     "minify": {
       "enabled": true,
@@ -11,10 +11,10 @@
     }
   },
   {
-    "outputFileName": "wwwroot/css/prod-home.min.css",
+    "outputFileName": "wwwroot/css/prod-index.min.css",
     "inputFiles": [
       "wwwroot/css/global.min.css",
-      "wwwroot/css/home.min.css"
+      "wwwroot/css/index.min.css"
     ],
     "minify": {
       "enabled": true,
@@ -26,6 +26,28 @@
     "inputFiles": [
       "wwwroot/css/global.min.css",
       "wwwroot/css/message.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/prod-topics.min.css",
+    "inputFiles": [
+      "wwwroot/css/global.min.css",
+      "wwwroot/css/topics.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/prod-register.min.css",
+    "inputFiles": [
+      "wwwroot/css/global.min.css",
+      "wwwroot/css/register.min.css"
     ],
     "minify": {
       "enabled": true,

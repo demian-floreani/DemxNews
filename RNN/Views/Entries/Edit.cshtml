@@ -1,14 +1,10 @@
-﻿@model RNN.Models.Entry
-
-@{
-    ViewData["Title"] = "Edit";
-}
+﻿@model RNN.Models.ViewModels.EditArticle
 
 <h2>Manage Content</h2>
 
 <div class="row">
     <div class="col-sm-6">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="HeadLine" class="control-label"></label>
@@ -21,41 +17,21 @@
                 <span asp-validation-for="Paragraph" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Img" class="control-label"></label>
                 <input asp-for="Img" class="form-control" />
                 <span asp-validation-for="Img" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body"></textarea>
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthorId" class="control-label"></label>
-                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="AuthorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rank" class="control-label"></label>
-                <input asp-for="Rank" class="form-control" />
-                <span asp-validation-for="Rank" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>
                 <input asp-for="Url" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="Body" class="control-label"></label>
+                <textarea asp-for="Body"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -71,3 +47,5 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>tinymce.init({ selector: 'textarea', plugins: 'link' /*, menubar: 'insert', toolbar: 'link'*/ });</script>
 }
+
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>

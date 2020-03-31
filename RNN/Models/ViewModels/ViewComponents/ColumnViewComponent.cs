@@ -11,6 +11,7 @@ namespace RNN.Models.ViewModels.ViewComponents
         public int Width { get; set; }
         public IEnumerable<RowViewComponent> Rows { get; set; }
         public IEnumerable<ViewComponent> Components { get; set; }
+        public bool HasComponents => this.Components.Any();
 
         public async Task<IViewComponentResult> InvokeAsync(ColumnViewComponent component)
         {
