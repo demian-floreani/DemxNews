@@ -5,7 +5,6 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RNN.Models.Identity;
@@ -16,12 +15,10 @@ namespace RNN.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -54,10 +51,10 @@ namespace RNN.Areas.Identity.Pages.Account
                     values: new { code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                //await _emailSender.SendEmailAsync(
+                //    Input.Email,
+                //    "Reset Password",
+                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

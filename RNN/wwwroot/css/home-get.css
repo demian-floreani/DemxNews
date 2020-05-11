@@ -1,4 +1,4 @@
-﻿.vertical-block header {
+.vertical-block header {
   font-size: 20px;
 }
 .vertical-narrow-block header {
@@ -73,10 +73,10 @@
 }
 @media (min-width: 1200px) {
   .horizontal-large-block header {
-    font-size: 32px;
+    font-size: 28px;
   }
   .vertical-block header {
-    font-size: 28px;
+    font-size: 26px;
   }
   .vertical-narrow-block header {
     font-size: 24px;
@@ -181,7 +181,7 @@
   margin-right: 15px;
 }
 .horizontal-large-block header {
-  color: black;
+  color: #000000;
   font-style: italic;
   font-family: 'Merriweather', serif;
   padding-top: 5px;
@@ -219,10 +219,13 @@
 }
 .vertical-block > header {
   padding: 5px;
-  color: black;
+  color: #000000;
+  font-style: italic;
+  font-family: 'Merriweather', serif;
 }
 .vertical-block > header > span {
-  font-family: 'Merriweather', serif;
+  display: block;
+  line-height: 1.35;
 }
 .vertical-block > img {
   width: 100%;
@@ -242,11 +245,13 @@
 }
 .vertical-narrow-block > header {
   padding: 5px;
-  color: black;
-  /*color: @color;*/
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  color: #000000;
 }
 .vertical-narrow-block > header > span {
-  font-family: 'Merriweather', serif;
+  display: block;
+  line-height: 1.35;
 }
 .vertical-narrow-block > img {
   width: 100%;
@@ -271,10 +276,14 @@
   width: 100%;
 }
 .horizontal-block header {
-  color: black;
+  color: #000000;
   font-family: 'Merriweather', serif;
   padding-top: 5px;
   font-style: italic;
+}
+.horizontal-block header > span {
+  display: block;
+  line-height: 1.35;
 }
 /*******/
 .highlight {

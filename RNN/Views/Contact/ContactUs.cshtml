@@ -1,0 +1,35 @@
+﻿@model RNN.Models.Message
+
+<h1>Contact Us</h1>
+<br />
+
+<p><i>Renegade News</i> is a brand new startup commited to delivering <mark>real news</mark> on <mark>important issues</mark>.</p>
+
+<p>If you're interested in contributing write a message in the form below.</p>
+
+<p>We're looking forward to hearing from you!</p>
+
+<form method="post" data-ajax="true" asp-action="OnPost" asp-controller="Message" data-ajax-method="post" data-ajax-complete="completed">
+    <div class="row">
+        <div class="col-sm-3"><b>Your name</b></div>
+        <div class="col-sm-9"><input class="text-input" type="text" name="name" /><br></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><b>Contact e-mail</b></div>
+        <div class="col-sm-9"><input class="text-input" type="email" name="email" /><br></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><b>Write your message</b></div>
+        <div class="col-sm-9"><textarea rows="5" class="text-input" name="Text"></textarea><br></div>
+    </div>
+    <input type="submit" />
+</form>
+
+@section scripts {
+    <script src="~/lib/jquery.unobtrusive-ajax/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        completed = function (xhr) {
+            alert('Message sent!');
+        };
+    </script>
+}

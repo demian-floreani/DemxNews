@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -20,11 +19,11 @@ namespace RNN.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment hostingEnvironment,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger//,
@@ -68,8 +67,6 @@ namespace RNN.Areas.Identity.Pages.Account
 
         public void OnGet(string returnUrl = null)
         {
-            ViewData["Page"] = String.Concat(!_hostingEnvironment.IsDevelopment() ? "prod-" : "", "register.min.css");
-
 
             ReturnUrl = returnUrl;
         }

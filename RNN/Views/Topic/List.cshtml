@@ -1,0 +1,27 @@
+﻿@model IEnumerable<RNN.Models.Topic>
+
+@{
+    ViewData["Title"] = "Topic List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Link</th>
+        </tr>
+
+        @foreach (var topic in Model)
+        {
+            <tr>
+                <td>@topic.Name</td>
+                <td>@ViewData["Url"]/articles/topic/@topic.Id</td>
+            </tr>
+        }
+    </thead>
+</table>
+
+

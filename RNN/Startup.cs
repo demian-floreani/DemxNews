@@ -6,14 +6,23 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using RNN.Models;
 using RNN.Services;
 using Microsoft.AspNetCore.Identity;
 using RNN.Models.Identity;
+using RNN.Services.Impl;
+using RNN.Data.Repositories;
+using RNN.Data;
+using RNN.Data.Repositories.Impl;
+using RNN.Data.Impl;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using RNN.Rules;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace RNN
 {
@@ -29,6 +38,9 @@ namespace RNN
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // dotnet core 3.0
+            services.AddControllersWithViews();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -36,14 +48,27 @@ namespace RNN
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddDbContextPool<RNNContext>(options => options
+            //    .UseMySql(Configuration.GetConnectionString("RNNContextMySql"), mySqlOptions => mySqlOptions
+            //        .ServerVersion(new Version(8, 0, 18), ServerType.MySql)));
 
             services.AddDbContext<RNNContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RNNContext")));
 
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<RNNContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<RNNContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+                options.LoginPath = "/Login/";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -66,31 +91,28 @@ namespace RNN
                 options.User.RequireUniqueEmail = false;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            services.AddScoped<IImageProcessingService, ImageProcessingService>();
+            services.AddScoped<ISitemapService, SitemapService>();
 
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
+            // repos
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<IEntryToTopicRepository, EntryToTopicRepository>();
 
-            services.AddMvc(options => {
-                options.Filters.Add(new RequireWwwAttribute
-                {
-                    IgnoreLocalhost = true,
-                    Permanent = true
-                });
-            });
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IEntryService, EntryService>();
+            services.AddScoped<ITopicService, TopicService>();
 
-            services.AddSingleton<IImageProcessingService, ImageProcessingService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var options = new RewriteOptions();
+            options.Rules.Add(new RedirectToWwwRule());
+            app.UseRewriter(options);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -105,14 +127,23 @@ namespace RNN
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            // dotnet core 3.0
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
 
         }
     }

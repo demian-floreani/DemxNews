@@ -2,7 +2,8 @@
 @using RNN.Controllers
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
@@ -15,25 +16,22 @@
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.HeadLine)</th>
-            <th>Rank</th>
-            <th>Degraded</th>
-            <th>Views</th>
-
-            <th></th>
+            <th><b>Title</b></th>
+            <th><b>Views</b></th>
+            <th><b>Published</b></th>
+            <th><b>Pinned</b></th>
+            <th><b>Actions</b></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.HeadLine)</td>
-                <td>@item.Rank</td>
-                <td>@HomeController.RankHalfTime(item.Rank, item.Date)</td>
+                <td>@item.HeadLine</td>
                 <td>@item.PageViews</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                </td>
+                <td>@item.IsPublished</td>
+                <td>@item.IsPinned</td>
+                <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
             </tr>
         }
     </tbody>

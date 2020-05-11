@@ -98,11 +98,11 @@
 
 @media (min-width: 1200px) {
     .horizontal-large-block header {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .vertical-block header {
-        font-size: 28px;
+        font-size: 26px;
     }
 
     .vertical-narrow-block header {
@@ -231,11 +231,10 @@
 }
 
 .horizontal-large-block header {
-    color: black;
+    color: #000000;
     font-style: italic;
     font-family: @merriweather;
     padding-top: 5px;
-
 }
 
 .horizontal-large-block header span {
@@ -280,11 +279,14 @@
 
 .vertical-block > header {
     padding: 5px;
-    color: black;
+    color: #000000;
+    font-style: italic;
+    font-family: @merriweather;
 }
 
 .vertical-block > header > span {
-    font-family: @merriweather;
+    display: block;
+    line-height: 1.35;
 }
 
 .vertical-block > img {
@@ -310,12 +312,14 @@
 
 .vertical-narrow-block > header {
     padding: 5px;
-    color: black;
-    /*color: @color;*/
+    font-family: @merriweather;
+    font-style: italic;
+    color: #000000;
 }
 
 .vertical-narrow-block > header > span {
-    font-family: @merriweather;
+    display: block;
+    line-height: 1.35;
 }
 
 .vertical-narrow-block > img {
@@ -348,10 +352,15 @@
 }
 
 .horizontal-block header {
-    color: black;
+    color: #000000;
     font-family: @merriweather;
     padding-top: 5px;
     font-style: italic;
+}
+
+.horizontal-block header > span {
+    display: block;
+    line-height: 1.35;
 }
 
 /*******/

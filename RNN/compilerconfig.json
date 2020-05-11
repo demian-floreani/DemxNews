@@ -40,11 +40,47 @@
     "inputFile": "wwwroot/css/home-get.less"
   },
   {
-    "outputFile": "wwwroot/css/entries-get.css",
-    "inputFile": "wwwroot/css/entries-get.less"
+    "outputFile": "wwwroot/css/article-get.css",
+    "inputFile": "wwwroot/css/article-get.less"
   },
   {
     "outputFile": "wwwroot/css/entries-getentries.css",
     "inputFile": "wwwroot/css/entries-getentries.less"
+  },
+  {
+    "outputFile": "wwwroot/css/register-get.css",
+    "inputFile": "wwwroot/css/register-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/topics-get.css",
+    "inputFile": "wwwroot/css/topics-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/entries-create.css",
+    "inputFile": "wwwroot/css/entries-create.less"
+  },
+  {
+    "outputFile": "wwwroot/css/message-get.css",
+    "inputFile": "wwwroot/css/message-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/staticpages-getcontactus.css",
+    "inputFile": "wwwroot/css/staticpages-getcontactus.less"
+  },
+  {
+    "outputFile": "wwwroot/css/contact-get.css",
+    "inputFile": "wwwroot/css/contact-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/login-get.css",
+    "inputFile": "wwwroot/css/login-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/article-getbytopic.css",
+    "inputFile": "wwwroot/css/article-getbytopic.less"
+  },
+  {
+    "outputFile": "wwwroot/css/topic-get.css",
+    "inputFile": "wwwroot/css/topic-get.less"
   }
 ]

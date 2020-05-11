@@ -1,19 +1,31 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using RNN.Controllers.Common;
+using RNN.Data;
+using RNN.Data.Repositories;
+using RNN.Exceptions;
+using RNN.Messaging;
 using RNN.Models;
 using RNN.Models.Identity;
+using RNN.Models.Services.SitemapService;
 using RNN.Models.ViewModels;
+using RNN.Models.ViewModels.Containers;
+using RNN.Models.ViewModels.Forms;
+using RNN.Models.ViewModels.Pages;
 using RNN.Models.ViewModels.ViewComponents;
 using RNN.Services;
 
@@ -22,222 +34,242 @@ namespace RNN.Controllers
     [Authorize]
     public class EntriesController : BaseController
     {
-        private readonly RNNContext _context;
-        private readonly IImageProcessingService _imageProcessing;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEntryService _entryService;
+        private readonly ITopicService _topicService;
+        private readonly ISitemapService _sitemapService;
+        private readonly IConfiguration _configuration;
 
         public EntriesController(
-            RNNContext context, 
-            IHostingEnvironment environment,
-            IImageProcessingService imageProcessing,
-            UserManager<ApplicationUser> userManager) : base(environment)
+            IWebHostEnvironment environment,
+            UserManager<ApplicationUser> userManager,
+            IEntryService entryService,
+            ITopicService topicService,
+            ISitemapService sitemapService,
+            IConfiguration configuration) : base(environment)
         {
+            _entryService = entryService;
+            _topicService = topicService;
             _userManager = userManager;
-            _context = context;
-            _imageProcessing = imageProcessing;
+            _sitemapService = sitemapService;
+            _configuration = configuration;
         }
 
-        [Route("Entries/List")]
+        /// <summary>
+        /// List articles belonging to a user
+        /// </summary>
+        /// <returns></returns>
+        [Route("entries/list")]
         [HttpGet]
         public async Task<IActionResult> GetEntries()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            var entries = await _context.Entries
-                                        .Where(e => e.ApplicationUserId.Equals(user.Id))
-                                        .ToListAsync();
+            var entries = await _entryService.GetEntriesByUserAsync(user.Id);
 
             return View("List", entries);
         }
 
-        /// <summary>
-        /// Display an article
-        /// </summary>
-        /// <param name="slug"></param>
-        /// <returns></returns>
-        [Route("article/{slug}", Name = "display")]
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Get(string slug)
-        {
-            var article = await _context.Entries
-                .Include(a => a.ApplicationUser)
-                .Include(a => a.EntryToTopics)
-                .ThenInclude(et => et.Topic)
-                .FirstOrDefaultAsync(a => a.Slug == slug);
-
-            // find Entries with similar topics
-            // get topics linked to article
-            var topics = article.EntryToTopics.Select(et => et.Topic);
-            // get topic ids
-            var topicIds = topics.Select(t => t.Id).ToList();
-
-            var reccomendations = await _context.Entries
-                                          .Include(a => a.EntryToTopics)
-                                          .Where(a => a.EntryToTopics.Any(et => topicIds.Contains(et.Topic.Id)))
-                                          .Where(a => a.Id != article.Id)
-                                          .OrderByDescending(a => a.Date)
-                                          .AsNoTracking()
-                                          .ToListAsync();
-
-            DisplayArticle model = new DisplayArticle()
-            {
-                Article = article,
-                Topics = topics,
-                Reccomendations = reccomendations.Select(r => ReccomendationBlockViewComponent.ToViewModel(r))
-            };
-
-            ViewData["OGTitle"] = article.HeadLine;
-            ViewData["OGDescription"] = article.Paragraph;
-            ViewData["OGImage"] = "https://www.renegadenews.net/images/uploads/" + article.Img;
-            ViewData["OGUrl"] = "https://www.renegadenews.net/Article/" + article.Slug;
-
-            // update page view
-            article.PageViews++;
-            _context.Entry(article).Property(p => p.PageViews).IsModified = true;
-            await _context.SaveChangesAsync();
-
-            return View("Index", model);
-        }
-
         [Route("Entries/Create")]
-        // GET: Entries/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name");
-            ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Name");
+            var topics = _topicService
+                .GetAllTopics()
+                .Select(t => new TopicSelectItem()
+                {
+                    Id = t.Id,
+                    Name = t.Name
+                });
+
+            ViewData["TopicItems"] = new SelectList(topics, "Id", "Name");
+
+            ViewData["TopicDataList"] = topics;
+
+            ViewData["IncludeJQuery"] = true;
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Entries/Create")]
-        public async Task<IActionResult> Create(CreateArticle form)
+        public async Task<IActionResult> OnCreate(
+            [FromForm] CreateArticle form)
         {
             if (ModelState.IsValid)
             {
-                var article = new Entry()
-                {
-                    HeadLine = form.HeadLine,
-                    Slug = GenerateSlug(form.HeadLine),
-                    ApplicationUserId = (await _userManager.GetUserAsync(HttpContext.User)).Id,
-                    Body = form.Body,
-                    Date = DateTime.Now,
-                    Rank = form.Rank,
-                    Url = form.Url,
-                    Paragraph = form.Paragraph,
-                    Img = _imageProcessing.ProcessFormImage(form.Img),
-                    PageViews = 0
-                };
+                string user = (await _userManager.GetUserAsync(HttpContext.User)).Id;
 
-                _context.Entries.Add(article);
-                await _context.SaveChangesAsync();
+                Entry article = await _entryService.CreateEntryAsync(form, user);
 
-                // link topic to article
-                _context.EntryToTopics.Add(new EntryToTopic()
+                return RedirectToRoute(new
                 {
-                    TopicId = form.TopicId.Value,
-                    EntryId = article.Id,
-                    IsPrimary = true
+                    controller = this.ControllerContext.ActionDescriptor.ControllerName,
+                    action = nameof(Edit),
+                    id = article.Id
+                });
+            }
+
+            return RedirectToAction(nameof(Create));
+        }
+
+
+        /// <summary>
+        /// Get page to modify an an article
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("entries/edit/{id}")]
+        public async Task<IActionResult> Edit(
+            [FromRoute] int id)
+        {
+            var article = await _entryService.GetEntryByIdAsync(id);
+
+            if (article == default)
+            {
+                throw new AppException(ExceptionType.ARTICLE_NOT_FOUND_BY_ID);
+            }
+
+            ViewData["Topics"] = article.EntryToTopics.Select(et => et.Topic);
+
+            var topics = _topicService
+                .GetAllTopics()
+                .Select(t => new TopicSelectItem()
+                {
+                    Id = t.Id,
+                    Name = t.Name
                 });
 
-                await _context.SaveChangesAsync();
+            var selected = article
+                .EntryToTopics
+                .FirstOrDefault(et => et.IsPrimary)?
+                .Topic;
 
-                return RedirectToAction(nameof(GetEntries));
-            }
-            
-            //ViewData["GroupingId"] = new SelectList(_context.Groupings, "Id", "Id", article.GroupingId);
-            //ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", article.AuthorId);
-            //ViewData["TitleId"] = new SelectList(_context.Titles, "Id", "Id", article.TitleId);
-            return View();
-        }
+            ViewData["TopicItems"] = new SelectList(topics, "Id", "Name", selected?.Id);
+            ViewData["TopicDataList"] = topics;
+            ViewData["IsPublished"] = article.IsPublished;
+            ViewData["IsPinned"] = article.IsPinned;
+            ViewData["IncludeJQuery"] = true;
 
-        private static string GenerateSlug(string headline)
-        {
-            headline = headline.Trim();
-            Regex rgx = new Regex("[^a-zA-Z0-9 ]");
-            headline = rgx.Replace(headline, "");
-            headline = headline.Replace(' ', '-');
-            return headline.ToLower();
-        }
-
-        [Route("Entries/Edit/{id}")]
-        // GET: Entries/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            return View(new EditArticle()
             {
-                return NotFound();
-            }
-
-            var article = await _context.Entries.FindAsync(id);
-
-            if (article == null)
-            {
-                return NotFound();
-            }
-            
-            return View(new EditArticle() 
-            {
+                Id = article.Id,
                 HeadLine = article.HeadLine,
                 Url = article.Url,
                 Body = article.Body,
-                Paragraph = article.Paragraph
+                Paragraph = article.Paragraph,
+                ImgUrl = article.Img
             });
         }
 
-        // POST: Entries/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Modify an existing article
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Entries/Edit/{id}")]
-        public async Task<IActionResult> Edit(int id, EditArticle form)
+        public async Task<IActionResult> OnEdit(
+            [FromForm] EditArticle form)
         {
-            if (id != form.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var slug = await _entryService.UpdateEntryAsync(form);
+
+                return RedirectToRoute(new
                 {
-                    var article = await _context.Entries.FirstOrDefaultAsync(e => e.Id == id);
-
-                    if (article == null)
-                        return NotFound();
-
-                    article.HeadLine = form.HeadLine;
-                    article.Paragraph = form.Paragraph;
-                    article.Slug = GenerateSlug(form.HeadLine);
-                    article.Url = form.Url;
-                    article.Body = form.Body;
-
-                    if(form.Img != null)
-                    {
-                        article.Img = _imageProcessing.ProcessFormImage(form.Img);
-                    }
-
-                    var entry = _context.Entry(article);
-                    entry.State = EntityState.Modified;
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-                return RedirectToAction(nameof(GetEntries));
+                    controller = "Entries",
+                    action = nameof(EntriesController.Edit),
+                    id = form.Id
+                });
             }
 
             return RedirectToAction(nameof(GetEntries));
         }
 
-        private bool Exists(int id)
+        /// <summary>
+        /// Adds a new topic to entry. Create topic if it doesn't exist.
+        /// </summary>
+        /// <param name="request"></param>
+        [HttpPost]
+        public async Task<string> AddTopic(
+            [FromBody] AddTopicToEntryRequest request)
         {
-            return _context.Entries.Any(e => e.Id == id);
+            await _entryService.AddTopicAsync(request.EntryId, request.Topic, request.SetPrimary);
+            return request.Topic;
+        }
+
+        [HttpPut]
+        [Route("article/publish")]
+        public async Task Publish(int article)
+        {
+            await _entryService.Publish(article);
+
+            await GenerateSitemap();
+
+            //_sitemapService.PingGoogle();
+        }
+
+        private async Task GenerateSitemap()
+        {
+            var sitemapPath = Path.Combine(_hostingEnvironment.WebRootPath, "sitemap.xml");
+
+            var sitemap = _sitemapService.GenerateSitemap((await _entryService.GetPublishedEntries()).Select(e =>
+            new Page()
+            {
+                Url = string.Concat("/article/", e.Slug),
+                LastModified = e.LastModified
+            }));
+
+            if (sitemap != null)
+            {
+                sitemap.Save(sitemapPath);
+            }
+        }
+
+        [HttpPut]
+        [Route("article/unpublish")]
+        public async Task Unpublish(int article)
+        {
+            await _entryService.Unpublish(article);
+        }
+
+        [HttpGet]
+        [Route("article/{article}/topics/")]
+        public async Task<IEnumerable<string>> GetTopics(int article)
+        {
+            var topics = (await _entryService.GetEntryTopics(article));
+
+            return topics.Select(et => et.Name);
+        }
+
+        [Route("article/pin")]
+        public async Task Pin(int article)
+        {
+            await _entryService.Pin(article);
+        }
+
+        [HttpPut]
+        [Route("article/unpin")]
+        public async Task UnPin(int article)
+        {
+            await _entryService.UnPin(article);
+        }
+
+        [HttpPost]
+        [Route("article/body/save")]
+        public async Task SaveBodyAsync(
+            [FromBody] SynchBodyRequest request)
+        {
+            
+            //var entry = await _entryRepository
+            //    .FindBy(e => e.Id == request.EntryId)
+            //    .SingleOrDefaultAsync();
+
+            //_entryRepository.Entry(entry).Property(p => p.Body).IsModified = true;
+
+            //await _entryRepository.SaveChangesAsync();
         }
     }
 }

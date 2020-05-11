@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RNN.Models.ViewModels.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace RNN.Models.ViewModels.ViewComponents
         public string Title { get; set; }
         public string Name { get; set; }
         public IEnumerable<RowViewComponent> Grid { get; set; }
-        //public IEnumerable<RowViewComponent> RightGrid { get; set; }
 
         public static GroupingViewComponent ToViewModel(GroupingViewModel model)
         {
@@ -19,8 +19,7 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Name = model.Name,
                 Title = model.Title,
-                Grid = model.Grid,
-                //RightGrid = model.RightGrid
+                Grid = model.Grid
             };
         }
 

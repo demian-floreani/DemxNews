@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 
 namespace RNN.Controllers.Common
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
-        private IHostingEnvironment _hostingEnvironment { get; set; }
+        protected IWebHostEnvironment _hostingEnvironment { get; set; }
 
-        public BaseController(IHostingEnvironment environment)
+        public BaseController(IWebHostEnvironment environment)
         {
             _hostingEnvironment = environment;
         }
@@ -24,9 +26,10 @@ namespace RNN.Controllers.Common
 
             var controllerActionDescriptor = (ControllerActionDescriptor) context.ActionDescriptor;
 
-            string uniquePage = String.Join(    "-", 
-                                                controllerActionDescriptor.ControllerName,
-                                                controllerActionDescriptor.ActionName);
+            string uniquePage = String.Concat(
+                controllerActionDescriptor.ControllerName, 
+                "-", 
+                controllerActionDescriptor.ActionName);
 
             var cssPage = String.Concat(uniquePage, ".min.css");
 
@@ -35,6 +38,17 @@ namespace RNN.Controllers.Common
                                 String.Concat("prod-", cssPage);    // production
 
             ViewData["IsLoggedIn"] = User.Identity.IsAuthenticated;
+
+            if (Request.Cookies["ShowModal"] == null)
+            {
+                ViewData["ShowModal"] = true;
+                var option = new CookieOptions();
+                option.Expires = DateTime.Now.AddMinutes(10);
+                Response.Cookies.Append("ShowModal", "false", option);
+            }
+
+            ViewData["IncludeJQuery"] = false;
+            ViewData["IncludeDisqus"] = false;
         }
     }
 }

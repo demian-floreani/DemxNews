@@ -1,9 +1,13 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Renegade News</title>
+
+    <title>@ViewData["Title"] | Renegade News</title>
+    <meta name="description" content="@ViewData["Description"]">
+
+    <link rel="icon" href="~/images/favicon/favicon.ico" type="image/x-icon">
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css" />
@@ -11,33 +15,94 @@
         <link rel="stylesheet" href="~/css/@ViewData["Page"]" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/@ViewData["Page"]" />
     </environment>
 
-    <!-- custom fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            $(".close").click(function () { $(".modal").hide(); });
+        });
+    </script>
 
-    <!-- for facebook sharing -->
-    <meta property="og:title" content="@ViewData["OGTitle"]" />
+    <!-- custom fonts -->
+    <link rel="preconnect stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i|Merriweather&display=swap">
+
+    <!-- for facebook & twitter sharing -->
+    <meta property="og:title" content="@ViewData["Title"]" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="@ViewData["OGDescription"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
     <meta property="og:image" content="@ViewData["OGImage"]" />
     <meta property="og:url" content="@ViewData["OGUrl"]" />
+
+    <meta name="twitter:url" content="@ViewData["OGUrl"]" />
+    <meta name="twitter:image" content="@ViewData["OGImage"]" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:description" content="@ViewData["Description"]" />
+    <meta name="twitter:creator" content="@@RNNOnline">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script defer src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.4.1/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+    </environment>
+
+    @if ((bool)ViewData["IncludeDisqus"] == true)
+    {
+        <script defer type="text/javascript">
+            window.onload = function () {
+                var refButton = document.getElementById("show-comments");
+
+                refButton.onclick = function () {
+                    var disqus_config = function () {
+                        this.callbacks.onIdentify = [function (id) {
+                        }];
+                    };
+
+                    (function () { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://rnn.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                }
+            };
+        </script>
+    }
+
+    <script defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
+    <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-159386801-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-159386801-1');
+    </script>
 </head>
 <body>
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <div class="fb-like" data-href="https://www.facebook.com/rnnonline/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
-
-                <a href="/Login/"><span class="contribute">Log In</span></a>
 
                 @if ((bool)ViewData["IsLoggedIn"])
                 {
@@ -45,6 +110,7 @@
                 }
                 else
                 {
+                    <a href="/Login/"><span class="contribute">Log In</span></a>
                     <a href="/Register/"><span class="contribute">Contribute</span></a>
                 }
             </div>
@@ -59,7 +125,7 @@
             <div class="col-sm-6">
                 <a asp-controller="Home" asp-action="Index">
                     <div class="banner">
-                        <img src="~/images/banner/R.png">
+                        <img class="header-logo" src="~/images/banner/R.png" alt="site header banner">
                         <span>Straight. Real. News.</span>
                     </div>
                 </a>
@@ -69,27 +135,41 @@
         @RenderBody()
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    <div class="container">
+        <div class="row footer">
+            <div class="col-sm-3 footer-column">
+                <img class="footer-logo" src="~/images/banner/R.png" alt="site footer banner">
+            </div>
+            <div class="col-sm-6 centre-column footer-column">
+                <a class="footer-link" href="/about/">About us</a>
+                <a class="footer-link" href="/privacy/">Privacy policy</a>
+                <a class="footer-link" href="/contact/">Contact us</a>
+            </div>
+            <div class="col-sm-3 footer-column">
+                <a href="https://twitter.com/RNNOnline?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@("Follow @RNNOnline")</a>
+            </div>
+        </div>
+    </div>
+
+    @if ((bool)ViewData["ShowModal"] == true)
+    {
+        @*<div id="myModal" class="modal">
+                <div class="modal-content">
+                    <header><h1><i>Your source for Populist News & Opinion</i></h1><span class="close">&times;</span></header>
+
+                    <p></p>
+
+                    <p>Renegade News provides independent, counter-culture insight in current affairs and politics.</p>
+
+                    <p></p>
+
+                    <p>We also use cookies, to provide you with the best user expericence. By continuing to use the site you agree with this.</p>
+                </div>
+            </div>*@
+    }
 
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>

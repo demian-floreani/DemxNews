@@ -1,5 +1,5 @@
-﻿
-@{
+﻿@{
+    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <div class="col-md-4">
         <section>
             <form method="post">
-                <h4>Use a local account to log in.</h4>
+                <h4>Log into your writer's account.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -34,13 +34,13 @@
                     <button type="submit" class="btn btn-default">Log in</button>
                 </div>
                 @*<div class="form-group">
-                    <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                </div>*@
+                        <p>
+                            <a asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        </p>
+                    </div>*@
             </form>
         </section>
     </div>

@@ -1,51 +1,274 @@
-﻿@model RNN.Models.ViewModels.EditArticle
+﻿@model RNN.Models.ViewModels.Forms.EditArticle
+@using RNN.Models.ViewModels.Containers
 
-<h2>Manage Content</h2>
+@{
+    ViewData["Title"] = "Edit Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<div class="row">
-    <div class="col-sm-6">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HeadLine" class="control-label"></label>
-                <input asp-for="HeadLine" class="form-control" />
-                <span asp-validation-for="HeadLine" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Paragraph" class="control-label"></label>
-                <input asp-for="Paragraph" class="form-control" />
-                <span asp-validation-for="Paragraph" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Img" class="control-label"></label>
-                <input asp-for="Img" class="form-control" />
-                <span asp-validation-for="Img" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body"></textarea>
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#add-topic-button").click(function ()
+        {
+            var request = { "Topic": $("#add-topic-input").val(), "EntryId": @Model.Id, "SetPrimary": false };
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddTopic", "Entries")",
+                data: JSON.stringify(request),
+                dataType: "text",
+                contentType: 'application/json',
+                success: function (msg) {
+                    $.ajax({
+                        type: "Get",
+                        url: "/article/@Model.Id/topics/",
+                        dataType: "json",
+                        success: function (result) {
+                            $("#topic-list").empty();
+
+                            var index;
+                            for (index = 0; index < result.length; ++index) {
+                                $("#topic-list").append("<div class='topic'>" + result[index] + "</div> ");
+                            }
+
+                            $("#add-topic-input").val("");
+                        },
+                        error: function (req, status, error) {
+                            alert(error);
+                        }
+                    });
+                },
+                error: function (req, status, error) {
+                    alert("error2" + error);
+                }
+            });
+        });
+
+        $("#publish-button").click(function ()
+        {
+            $.ajax({
+                type: "PUT",
+                url: "@Url.Action("Publish", "Entries")",
+                data: {
+                    article: @Model.Id
+                },
+                success: function (msg) {
+                    location.reload();
+                },
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        });
+
+        $("#unpublish-button").click(function ()
+        {
+            $.ajax({
+                type: "PUT",
+                url: "@Url.Action("Unpublish", "Entries")",
+                data: {
+                    article: @Model.Id
+                },
+                success: function (msg) {
+                    location.reload();
+                },
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        });
+
+        $("#pin-button").click(function ()
+        {
+            $.ajax({
+                type: "PUT",
+                url: "@Url.Action("Pin", "Entries")",
+                data: {
+                    article: @Model.Id
+                },
+                success: function (msg) {
+                    location.reload();
+                },
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        });
+
+        $("#unpin-button").click(function ()
+        {
+            $.ajax({
+                type: "PUT",
+                url: "@Url.Action("UnPin", "Entries")",
+                data: {
+                    article: @Model.Id
+                },
+                success: function (msg) {
+                    location.reload();
+                },
+                error: function (req, status, error) {
+                    alert(error);
+                }
+            });
+        });
+        @*setInterval(function () {
+            $.ajax({
+                method: "POST",
+                url: "/article/body/save",
+                data: JSON.stringify({ "Body": $("#Body").html(), "EntryId": @Model.Id }),
+                contentType: "application/json",
+                success: function (msg) {
+                },
+                error: function (req, status, error) {
+                    //alert(error.responseText);
+                }
+            });
+        }, 5000);*@
+
+    });
+</script>
+
+<form asp-action="OnEdit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Review your content</h2>
+            @if ((int)ViewData["IsPinned"] != 1)
+            {
+                <button type="button" id="pin-button" class="btn btn-default submit-button">Pin</button>
+            }
+            else
+            {
+                <button type="button" id="unpin-button" class="btn btn-default submit-button">Un Pin</button>
+            }
+
+            @if (!(bool)ViewData["IsPublished"])
+            {
+                <input type="submit" value="Save Draft" class="btn btn-default submit-button" />
+                <button type="button" id="publish-button" class="btn btn-default submit-button">Publish</button>
+            }
+            else
+            {
+                <input type="submit" value="Save Changes" class="btn btn-default submit-button" />
+                <button type="button" id="unpublish-button" class="btn btn-default submit-button">Unpublish</button>
+            }
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row row-equal opinion-header-row">
+        <div class="col-xs-12 col-md-8 middle-column">
+            <header>
+                <input asp-for="HeadLine" class="edit-mode-headline-input" />
+                <input asp-for="Paragraph" class="edit-mode-paragraph-input" />
+            </header>
+        </div>
+        <div class="d-none d-sm-none d-md-block col-md-4 opinion-page-side-header">
+            <select asp-for="PrimaryTopic" asp-items="ViewBag.TopicItems" class="edit-mode-select"></select>
+            <section></section>
+            <section></section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8 middle-column">
+            <article>
+                <p class="source">Sourced from <input asp-for="Url" class="edit-mode-url-input" /></p>
+
+                <div class="row image-block">
+                    <div class="col-sm-3">
+                        <span>Pick the image for this article.</span>
+                    </div>
+                    <div class="col-sm-9">
+                        <input asp-for="Img" class="edit-mode-img-input" />
+                    </div>
+                </div>
+
+                @if (Model.Img != null)
+                {
+                    <img src="~/images/uploads/@Model.ImgUrl" />
+                }
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea id="Body" name="Body">@Model.Body</textarea>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <div class="row side-block">
+                <div class="col-sm-12">
+                    <mark><span>Topics</span></mark>
+
+                    <div class="inner">
+                        <div id="topic-list">
+                            @foreach (var topic in ViewData["Topics"] as IEnumerable<Topic>)
+                            {
+                                <div class="topic">@topic.Name</div>
+                            }
+                        </div>
+
+                        <input type="text" list="topics" id="add-topic-input" class="edit-mode-topic-input" placeholder="Add topic" />
+                        <datalist id="topics">
+                            @foreach (var topic in ViewData["TopicDataList"] as IEnumerable<TopicSelectItem>)
+                            {
+                                <option value="@topic.Name" />
+                            }
+                        </datalist>
+                        <button type="button" id="add-topic-button">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row side-block">
+                    <div class="col-sm-12">
+                        <mark><span>Enjoy our content?</span></mark>
+
+                        <div class="inner">
+                            <p>We strive to provide a common-sense perspective of today's current events. If you, like us, love straight, unbiased news, please consider donating.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row side-block">
+                    <div class="col-sm-12">
+                        <mark><span>Spread the word</span></mark>
+
+                        <div class="inner">
+                            <div class="fb-like" data-href="https://www.renegadenews.net/article/@(Model.Article.Slug)" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
+                        </div>
+                    </div>
+                </div>*@
+
+            @*@if (Model.Reccomendations.Any())
+                {
+                    <div class="row side-block">
+
+                        <div class="col-sm-12">
+                            <div class="text-block">
+                                <mark><span>More like this</span></mark>
+                            </div>
+                        </div>
+
+                        @foreach (var r in Model.Reccomendations)
+                        {
+                            @await Component.InvokeAsync(typeof(ReccomendationBlockViewComponent), new { component = r })
+                        }
+                    </div>
+                }*@
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>tinymce.init({ selector: 'textarea', plugins: 'link' /*, menubar: 'insert', toolbar: 'link'*/ });</script>
+    <script>
+    tinymce.init({
+            selector: 'textarea',
+            plugins: ['link', 'code']
+        });</script>
 }
 
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+

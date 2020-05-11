@@ -1,0 +1,7 @@
+﻿@model IEnumerable<RNN.Models.ViewModels.ViewComponents.ReccomendationBlockViewComponent>
+@using RNN.Models.ViewModels.ViewComponents
+
+@foreach (var r in Model)
+{
+    @await Component.InvokeAsync(typeof(ReccomendationBlockViewComponent), new { component = r })
+}

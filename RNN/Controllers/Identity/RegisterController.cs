@@ -19,7 +19,7 @@ namespace RNN.Controllers.Identity
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public RegisterController(  IHostingEnvironment environment,
+        public RegisterController(  IWebHostEnvironment environment,
                                     UserManager<ApplicationUser> userManager,
                                     SignInManager<ApplicationUser> signInManager) : base (environment)
         {
@@ -35,7 +35,8 @@ namespace RNN.Controllers.Identity
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> OnPost(Register form)
+        public async Task<IActionResult> OnPost(
+            [FromForm] Register form)
         {
             string returnUrl = Url.Content("~/");
 
@@ -55,7 +56,6 @@ namespace RNN.Controllers.Identity
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
-
             }
 
             return View("Index");

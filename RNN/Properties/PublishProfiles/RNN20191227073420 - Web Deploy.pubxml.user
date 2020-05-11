@@ -13,9 +13,4 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <Value>Server=tcp:rnndbserver.database.windows.net,1433%3bInitial Catalog=RNNDB%3bPersist Security Info=False%3bUser ID=demx9%3bPassword=~Repubblica1%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
-  <ItemGroup>
-    <EFMigrations Include="RNN.Models.RNNContext">
-      <Value>Server=tcp:rnndbserver.database.windows.net,1433%3bInitial Catalog=RNNDB%3bPersist Security Info=False%3bUser ID=demx9%3bPassword=~Repubblica1%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
-    </EFMigrations>
-  </ItemGroup>
 </Project>

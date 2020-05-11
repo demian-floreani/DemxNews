@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNN", "RNN\RNN.csproj", "{F5D5634B-BF50-49C0-90AE-95F7FE5A51C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RNN", "RNN\RNN.csproj", "{F5D5634B-BF50-49C0-90AE-95F7FE5A51C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		LessCompiler = f5d5634b-bf50-49c0-90ae-95f7fe5a51c0
 		SolutionGuid = {F80F5668-1534-40C9-A12D-630D7878FB71}
 	EndGlobalSection
 EndGlobal

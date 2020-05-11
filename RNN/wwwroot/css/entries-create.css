@@ -1,0 +1,198 @@
+.opinion-header-row {
+  background-color: #FC7416;
+}
+.opinion-page-side-header {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.opinion-page-side-header h3 {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  font-style: italic;
+  margin-top: 20px;
+}
+.opinion-page-side-header > section {
+  margin-bottom: 2px;
+  border-bottom: 1px solid #cccccc;
+}
+.opinion-page-header {
+  border-left: 1px solid #cccccc;
+  padding: 15px;
+}
+header > h3 {
+  color: azure;
+  font-size: 32px;
+  margin-top: 10px;
+  font-family: 'Merriweather', serif;
+  line-height: 1.2;
+}
+header > p {
+  color: #ffffff;
+  font-size: 18px;
+  font-family: 'Merriweather', serif;
+}
+article {
+  margin-top: 10px;
+}
+article > img {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+article > p {
+  font-size: 18px;
+}
+.source {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.middle-column {
+  /*border-left: 1px solid #cccccc;*/
+  border-right: 1px solid #cccccc;
+}
+/*******/
+#disqus_thread {
+  margin-top: 15px;
+}
+.post-tag {
+  color: #FC7416;
+  font-weight: bolder;
+  margin-right: 2px;
+}
+.post-tag:hover {
+  cursor: pointer;
+}
+.post-span-divider {
+  /*font-size: 20px;*/
+  padding-left: 1px;
+  padding-right: 2px;
+  color: #FC7416;
+  display: inline-block;
+  transform: scale(1.6);
+}
+/*** posts ***/
+.post {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.post > a > span {
+  color: #000000;
+}
+.post > a > span:hover {
+  color: #FC7416;
+}
+.topic {
+  color: white;
+  background-color: #FC7416;
+  font-family: 'Merriweather', serif;
+  font-size: 20px;
+  padding: 2px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+/* global */
+.vertical-block-column {
+  /*padding-left: 10px;
+    padding-right: 10px;*/
+  margin-bottom: 10px;
+}
+.vertical-block {
+  background-color: #eff5f5;
+}
+.vertical-block:hover {
+  background-color: #e0ebeb;
+  cursor: pointer;
+}
+.vertical-block > header {
+  padding: 5px;
+  color: #000000;
+  font-size: 18px;
+}
+.vertical-block > header > span {
+  font-family: 'Merriweather', serif;
+}
+.vertical-block > img {
+  width: 100%;
+}
+.text-block {
+  margin-bottom: 15px;
+}
+mark {
+  background-color: yellow;
+  font-size: 24px;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 15px;
+  /*display: block;*/
+  width: 100%;
+}
+.side-block {
+  margin-top: 15px;
+}
+.inner {
+  margin-top: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.inner > p {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+/* edit mode */
+input {
+  display: block;
+}
+.edit-mode-headline-input {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+.edit-mode-paragraph-input {
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.edit-mode-url-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.edit-mode-select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 30px;
+}
+.submit-button {
+  float: right;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+h2 {
+  font-size: 24px;
+  display: inline-block;
+}
+.add-topic {
+  display: block;
+}
+.edit-mode-topic-input {
+  display: inline-block;
+}
+.edit-mode-img-input {
+  display: block;
+  width: 100%;
+}
+.image-block {
+  margin-bottom: 20px;
+}
+.edit-mode-topic-input {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

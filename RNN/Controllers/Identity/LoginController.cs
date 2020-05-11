@@ -18,7 +18,7 @@ namespace RNN.Controllers.Identity
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public LoginController(     IHostingEnvironment environment, 
+        public LoginController(     IWebHostEnvironment environment, 
                                     SignInManager<ApplicationUser> signInManager) : base(environment)
         {
             _signInManager = signInManager;
@@ -31,8 +31,12 @@ namespace RNN.Controllers.Identity
         }
 
         [HttpPost]
-        public async Task<IActionResult> OnPost(Login form)
+        public async Task<IActionResult> OnPost(
+            [FromForm] Login form)
         {
+
+            var list = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             var returnUrl = Url.Content("~/");
 
             if (ModelState.IsValid)

@@ -1,0 +1,104 @@
+﻿@model RNN.Models.ViewModels.Pages.DisplayArticle
+@*@if ((bool)Model.ViewModelData["IsAuthor"])
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="/entries/edit/@Model.Article.Id">Edit this article</a>
+            </div>
+        </div>
+    }*@
+
+<div class="row row-equal opinion-header-row">
+    <div class="col-xs-12 col-md-8 middle-column">
+        <header>
+            <h1>@Model.Article.HeadLine</h1>
+            <p>@Model.Article.Paragraph</p>
+        </header>
+    </div>
+    <div class="d-none d-sm-none d-md-block col-md-4 opinion-page-side-header">
+        <h3>@Model.Article.EntryToTopics.First(et => et.IsPrimary == true).Topic.Name</h3>
+        <section></section>
+        <section></section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-8 middle-column">
+        <article>
+            @if (!String.IsNullOrEmpty(Model.Article.Url))
+            {
+                var host = new Uri(Model.Article.Url).Host;
+                <p class="source">Sourced from <a href="@Model.Article.Url" target="_blank">@host</a></p>
+            }
+
+            <img class="article-img" src="~/images/uploads/@Model.Article.Img" alt="article image" />
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.Raw(@Model.Article.Body)
+                </div>
+            </div>
+
+            <div class="row comments">
+                <div class="col-md-12">
+                    <button id="show-comments" class="btn">Load Comments</button>
+                    <div id="disqus_thread"></div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <div class="row side-block">
+            <div class="col-sm-12">
+                <mark><span>Topics</span></mark>
+
+                <div class="inner">
+                    @foreach (var t in Model.Topics)
+                    {
+                        <div class="topic">@t.Name</div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row side-block">
+                <div class="col-sm-12">
+                    <mark><span>Enjoy our content?</span></mark>
+
+                    <div class="inner">
+                        <p>We strive to provide a common-sense perspective of today's current events. If you, like us, love straight, unbiased news, consider subscribing to our newsletter below.</p>
+                    
+                        <input placeholder="Your email" class="newsletter" type="email" /><button id="add-email" class="btn" value="Add"></button>
+                    </div>
+                </div>
+        </div>*@
+
+        <div class="row side-block">
+            <div class="col-sm-12">
+                <mark><span>Spread the word</span></mark>
+
+                <div class="inner">
+                    @*<div class="fb-like" data-href="https://www.renegadenews.net/article/@(Model.Article.Slug)" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>*@
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row side-block">
+
+            <div class="col-sm-12">
+                <div class="text-block">
+                    <mark><span>More like this</span></mark>
+                </div>
+            </div>
+
+            <div id="reccomendations"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#reccomendations").load('/article/@Model.Article.Id/reccomendations');
+    });
+</script>
