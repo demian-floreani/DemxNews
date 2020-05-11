@@ -118,7 +118,7 @@ namespace RNN.Services
         {
             return _entryRepository
                 .FindBy(e => e.IsPublished)
-                .OrderBy(e => e.IsPinned)
+                .OrderByDescending(e => e.IsPinned)
                     .ThenByDescending(e => e.Date)
                 .Take(top)
                 .SelectMany(e => e.EntryToTopics)

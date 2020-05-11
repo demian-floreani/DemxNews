@@ -50,6 +50,7 @@ namespace RNN.Controllers
                 .GroupBy(t => t)
                 .OrderByDescending(g => g.Count())
                 .Select(g => g.Key)
+                .Take(5)
                 .ToList();
 
             var groups = GroupArticles(
