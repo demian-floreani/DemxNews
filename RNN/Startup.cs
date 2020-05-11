@@ -48,12 +48,9 @@ namespace RNN
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDbContextPool<RNNContext>(options => options
-            //    .UseMySql(Configuration.GetConnectionString("RNNContextMySql"), mySqlOptions => mySqlOptions
-            //        .ServerVersion(new Version(8, 0, 18), ServerType.MySql)));
-
-            services.AddDbContext<RNNContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("RNNContext")));
+            services.AddDbContextPool<RNNContext>(options => options
+                .UseMySql(Configuration.GetConnectionString("RNNContextMySql"), mySqlOptions => mySqlOptions
+                    .ServerVersion(new Version(8, 0, 18), ServerType.MySql)));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<RNNContext>()
