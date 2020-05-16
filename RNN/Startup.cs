@@ -116,9 +116,9 @@ namespace RNN
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            var options = new RewriteOptions();
-            options.Rules.Add(new RedirectToWwwRule());
-            app.UseRewriter(options);
+            //var options = new RewriteOptions();
+            //options.Rules.Add(new RedirectToWwwRule());
+            //app.UseRewriter(options);
 
             if (env.IsDevelopment())
             {
