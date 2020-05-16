@@ -12,9 +12,9 @@ namespace RNN.Data.Impl
     {
         private readonly DbSet<T> _set;
 
-        public Repository(RNNContext context)
+        public Repository(IUnitOfWork unit)
         {
-            _set = context.Set<T>();
+            _set = unit.GetContext().Set<T>();
         }
 
         public async Task Create(T entity)

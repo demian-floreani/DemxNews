@@ -23,6 +23,7 @@ using RNN.Rules;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace RNN
 {
@@ -101,11 +102,20 @@ namespace RNN
             services.AddScoped<ITopicService, TopicService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            IServiceProvider serviceProvider)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             var options = new RewriteOptions();
             options.Rules.Add(new RedirectToWwwRule());
             app.UseRewriter(options);
@@ -120,7 +130,6 @@ namespace RNN
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -141,6 +150,9 @@ namespace RNN
             //        name: "default",
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
+
+            var db = serviceProvider.GetService<RNNContext>();
+            db.Database.Migrate();
 
         }
     }

@@ -10,17 +10,17 @@ namespace RNN.Data.Impl
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private RNNContext _entryRepository { get; set; }
+        private RNNContext _context { get; set; }
         private IDbContextTransaction transaction { get; set; }
 
         public UnitOfWork(RNNContext context)
         {
-            _entryRepository = context;
+            _context = context;
         }
 
         public async Task<IDbContextTransaction> BeginTransaction()
         {
-            return await _entryRepository.Database.BeginTransactionAsync();
+            return await _context.Database.BeginTransactionAsync();
         }
 
         //public void CommitTransaction()
@@ -31,7 +31,12 @@ namespace RNN.Data.Impl
         public async Task Commit()
         {
 
-            await _entryRepository.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+
+        public RNNContext GetContext()
+        {
+            return _context;
         }
     }
 }

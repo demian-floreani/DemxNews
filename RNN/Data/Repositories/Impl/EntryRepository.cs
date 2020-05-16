@@ -10,6 +10,6 @@ namespace RNN.Data.Repositories.Impl
 {
     public class EntryRepository : Repository<Entry>, IEntryRepository
     {
-        public EntryRepository(RNNContext context) : base(context) { }
+        public EntryRepository(IUnitOfWork uow) : base(uow) { }
     }
 }

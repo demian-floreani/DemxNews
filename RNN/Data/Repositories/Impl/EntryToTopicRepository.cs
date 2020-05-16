@@ -11,7 +11,7 @@ namespace RNN.Data.Repositories.Impl
 {
     public class EntryToTopicRepository : Repository<EntryToTopic>, IEntryToTopicRepository
     {
-        public EntryToTopicRepository(RNNContext context) : base(context) { }
+        public EntryToTopicRepository(IUnitOfWork uow) : base(uow) { }
 
         public async Task<EntryToTopic> FindByKey(int entry, int topic)
         {

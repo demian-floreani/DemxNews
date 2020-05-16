@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RNN.Controllers.Common;
 using RNN.Data.Repositories;
 using RNN.Models.ViewModels.Data;
@@ -19,10 +20,14 @@ namespace RNN.Controllers
     public class HomeController : BaseController
     {
         private readonly IArticleService _articleService;
+        private readonly ILogger<HomeController> _logger;
+
 
         public HomeController(  IArticleService articleService,
+                                ILogger<HomeController> logger,
                                 IWebHostEnvironment environment) : base (environment)
         {
+            _logger = logger;
             _articleService = articleService;
         }
 
@@ -34,9 +39,9 @@ namespace RNN.Controllers
             ViewData["Description"] = "Latest news, populist opinion and analysis from Renegade News";
             
             var layout = new List<int>() { 
-                9, 3,
-                5, 7, 7,
-                7, 7, 5,
+                9, 3,          
+                5, 7, 7,        
+                7, 7, 5,       
                 5, 7, 7,
                 7, 7, 5,
                 5, 7, 7 };
@@ -53,8 +58,12 @@ namespace RNN.Controllers
                 .Take(5)
                 .ToList();
 
+            var entries = await _articleService.GetHeadlineArticles(layout.Count());
+
+            //_logger.LogWarning("Number of entries: {num}", entries.Count());
+
             var groups = GroupArticles(
-                await _articleService.GetHeadlineArticles(layout.Count()), 
+                entries, 
                 groupings, 
                 layout);
 

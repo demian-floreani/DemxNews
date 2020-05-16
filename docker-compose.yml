@@ -1,0 +1,44 @@
+version: "3.7"
+ 
+services:
+  reverseproxy:
+    build:
+      context: ./Nginx
+      dockerfile: Nginx.Dockerfile
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - rnnapp
+    networks:
+      main:
+  db:
+    image: mysql:8.0.17
+    environment:
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_DATABASE: RNN
+    ports:
+      - "3308:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: always
+    networks:
+      main:
+ 
+  rnnapp:
+     depends_on:
+       - db
+     build:
+       context: .
+       dockerfile: Dockerfile
+     expose:
+       - "5000"
+     restart: always
+     networks:
+       main:
+        
+networks:
+  main:        
+        
+volumes:
+    dbdata:

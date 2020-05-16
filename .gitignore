@@ -1,4 +1,7 @@
 ﻿/.vs
 /RNN/bin/Debug/netcoreapp2.1
+/RNN/bin/Debug/netcoreapp3.1
 /RNN/bin/Release/netcoreapp2.1
+/RNN/bin/Release/netcoreapp3.1
 /RNN/obj/
+/publish/

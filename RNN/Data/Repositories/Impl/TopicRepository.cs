@@ -9,7 +9,7 @@ namespace RNN.Data.Repositories.Impl
 {
     public class TopicRepository : Repository<Topic>, ITopicRepository
     {
-        public TopicRepository(RNNContext context) : base(context) { }
+        public TopicRepository(IUnitOfWork uow) : base(uow) { }
 
     }
 }

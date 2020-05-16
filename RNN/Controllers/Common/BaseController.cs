@@ -31,7 +31,7 @@ namespace RNN.Controllers.Common
                 "-", 
                 controllerActionDescriptor.ActionName);
 
-            var cssPage = String.Concat(uniquePage, ".min.css");
+            var cssPage = String.Concat(uniquePage, ".min.css").ToLower();
 
             ViewData["Page"] =  _hostingEnvironment.IsDevelopment() ?
                                 cssPage :                           // development
