@@ -21,6 +21,8 @@ namespace RNN.Models
 
         public DbSet<Message> Messages { get; set; }
 
+        public DbSet<Newsletter> Newsletters { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -87,7 +87,7 @@
     <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-159386801-1"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-159386801-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -104,12 +104,10 @@
             <div class="col-sm-12">
                 <div class="fb-like" data-href="https://www.facebook.com/rnnonline/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
 
-                @if ((bool)ViewData["IsLoggedIn"])
-                {
+                @if ((bool)ViewData["IsLoggedIn"]) {
                     <a href="/Entries/List/"><span class="contribute">Manage Content</span></a>
                 }
-                else
-                {
+                else {
                     <a href="/Login/"><span class="contribute">Log In</span></a>
                     <a href="/Register/"><span class="contribute">Contribute</span></a>
                 }

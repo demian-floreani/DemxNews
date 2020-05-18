@@ -40,7 +40,11 @@ namespace RNN
         public void ConfigureServices(IServiceCollection services)
         {
             // dotnet core 3.0
-            services.AddControllersWithViews();
+            var builder = services.AddControllersWithViews();
+
+#if DEBUG
+            builder.AddRazorRuntimeCompilation();
+#endif
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -96,10 +100,12 @@ namespace RNN
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<IEntryToTopicRepository, EntryToTopicRepository>();
+            services.AddScoped<INewsletterRepository, NewsletterRepository>();
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IEntryService, EntryService>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<INewsletterService, NewsletterService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -144,16 +150,9 @@ namespace RNN
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
 
-            //var db = serviceProvider.GetService<RNNContext>();
-            //db.Database.Migrate();
-
+            var db = serviceProvider.GetService<RNNContext>();
+            db.Database.Migrate();
         }
     }
 }
