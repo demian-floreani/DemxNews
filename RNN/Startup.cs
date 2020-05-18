@@ -151,8 +151,8 @@ namespace RNN
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
 
-            var db = serviceProvider.GetService<RNNContext>();
-            db.Database.Migrate();
+            //var db = serviceProvider.GetService<RNNContext>();
+            //db.Database.Migrate();
 
         }
     }

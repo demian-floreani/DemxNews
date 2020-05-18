@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using RNN.Data;
 using RNN.Data.Repositories;
@@ -206,7 +207,29 @@ namespace RNN.Services.Impl
 
             if (topicId == default)
             {
+                var existing = await _entryToTopicRepository
+                    .FindByKey(article.Id, form.PrimaryTopic.Value);
 
+                if (existing != null)
+                {
+                    existing.IsPrimary = true;
+                    _entryToTopicRepository.Update(existing, "IsPrimary");
+                }
+                else
+                {
+                    // what happens if article doesn't have a primary topic
+                    // get the form primary topic and set it
+                    var primaryTopic = new EntryToTopic()
+                    {
+                        EntryId = article.Id,
+                        TopicId = form.PrimaryTopic.Value,
+                        IsPrimary = true
+                    };
+
+                    await _entryToTopicRepository.Create(primaryTopic);
+                }
+
+                await _unitOfWork.Commit();
             }
             else if (topicId.Value != form.PrimaryTopic.Value)
             {
@@ -221,14 +244,11 @@ namespace RNN.Services.Impl
 
                         primaryTopic.IsPrimary = false;
 
-                        //_entryRepository.Entry(primaryTopic).Property(p => p.IsPrimary).IsModified = true;
                         _entryToTopicRepository.Update(primaryTopic, new HashSet<string>() { "IsPrimary" });
 
                         // does this article already have this topic ?
                         var newPrimaryTopic = await _entryToTopicRepository
                             .FindByKey(article.Id, form.PrimaryTopic.Value);
-                        //.FindBy(et => et.EntryId == article.Id &&
-                        //             et.TopicId == form.PrimaryTopic.Value)
 
                         if (newPrimaryTopic == default)
                         {
@@ -243,7 +263,6 @@ namespace RNN.Services.Impl
                         {
                             newPrimaryTopic.IsPrimary = true;
                             _entryToTopicRepository.Update(newPrimaryTopic, new HashSet<string>() { "IsPrimary" });
-                            //_entryRepository.Entry(newPrimaryTopic).Property(p => p.IsPrimary).IsModified = true;
                         }
 
                         await _unitOfWork.Commit();
