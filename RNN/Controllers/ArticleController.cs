@@ -43,8 +43,6 @@ namespace RNN.Controllers
 
             var article = await _articleService.GetArticleBySlugAsync(slug);
 
-            //await _entryService.IncreasePageViews(article);
-
             ViewData["Title"] = article.HeadLine;
             ViewData["Description"] = article.Paragraph;
             ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img);
@@ -109,6 +107,14 @@ namespace RNN.Controllers
             var list = _articleService.GetArticlesByTopicAsync(topicId);
 
             return View("Topic", (await list).Select(e => HorizontalMediumBlockViewComponent.ToViewModel(e, false)).ToList());
+        }
+
+        [HttpPut]
+        [Route("article/{id}/viewed")]
+        public async Task IncreaseViews(
+            [FromRoute] int id)
+        {
+            await _articleService.IncreaseViews(id);
         }
     }
 }

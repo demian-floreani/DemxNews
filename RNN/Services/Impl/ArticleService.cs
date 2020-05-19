@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RNN.Data;
 using RNN.Data.Repositories;
 using RNN.Models;
 using RNN.Models.ViewModels.Data;
@@ -12,12 +13,15 @@ namespace RNN.Services
 {
     public class ArticleService : IArticleService
     {
-        private IEntryRepository _entryRepository { get; set; }
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEntryRepository _entryRepository;
 
         public ArticleService(
+            IUnitOfWork unitOfWork,
             IEntryRepository entryRepository)
         {
             _entryRepository = entryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Task<Entry> GetArticleBySlugAsync(string slug)
@@ -124,6 +128,18 @@ namespace RNN.Services
                 .SelectMany(e => e.EntryToTopics)
                 .Select(et => et.Topic)
                 .ToListAsync();
+        }
+
+        public async Task IncreaseViews(int id)
+        {
+            var article = _entryRepository
+                .FindBy(a => a.Id == id)
+                .FirstOrDefault();
+
+            article.PageViews++;
+
+            _entryRepository.Update(article, "PageViews");
+            await _unitOfWork.Commit();
         }
     }
 }

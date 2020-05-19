@@ -2,7 +2,7 @@
   {
     "outputFileName": "wwwroot/css/prod-displayentry.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/displayentry.min.css"
     ],
@@ -14,7 +14,7 @@
   {
     "outputFileName": "wwwroot/css/prod-home-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/home-get.min.css"
     ],
@@ -26,7 +26,7 @@
   {
     "outputFileName": "wwwroot/css/prod-contact-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/contact-get.min.css"
     ],
@@ -38,7 +38,7 @@
   {
     "outputFileName": "wwwroot/css/prod-staticpages-getabout.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/staticpages-getabout.min.css"
     ],
@@ -50,7 +50,7 @@
   {
     "outputFileName": "wwwroot/css/prod-staticpages-getprivacy.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/staticpages-getprivacy.min.css"
     ],
@@ -74,7 +74,7 @@
   {
     "outputFileName": "wwwroot/css/prod-register-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/register-get.min.css"
     ],
@@ -86,7 +86,7 @@
   {
     "outputFileName": "wwwroot/css/prod-login-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/login-get.min.css"
     ],
@@ -98,7 +98,7 @@
   {
     "outputFileName": "wwwroot/css/prod-article-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/article-get.min.css"
     ],
@@ -110,7 +110,7 @@
   {
     "outputFileName": "wwwroot/css/prod-entries-getentries.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/entries-getentries.min.css"
     ],
@@ -122,7 +122,7 @@
   {
     "outputFileName": "wwwroot/css/prod-article-getbytopic.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/article-getbytopic.min.css"
     ],
@@ -134,7 +134,7 @@
   {
     "outputFileName": "wwwroot/css/prod-entries-edit.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/entries-edit.min.css"
     ],
@@ -146,7 +146,7 @@
   {
     "outputFileName": "wwwroot/css/prod-entries-create.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/entries-create.min.css"
     ],
@@ -158,7 +158,7 @@
   {
     "outputFileName": "wwwroot/css/prod-topics-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/topics-get.min.css"
     ],
@@ -170,7 +170,7 @@
   {
     "outputFileName": "wwwroot/css/prod-topic-get.min.css",
     "inputFiles": [
-      "wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
+      //"wwwroot/lib/bootstrap-4.4.1-dist/css/bootstrap.min.css",
       "wwwroot/css/global.min.css",
       "wwwroot/css/topic-get.min.css"
     ],

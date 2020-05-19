@@ -24,6 +24,7 @@ namespace RNN.Controllers
         }
 
         [HttpPost]
+        [Route("newsletter/add")]
         public async Task OnPost(
             [FromBody] AddNewsletterRequest request)
         {
