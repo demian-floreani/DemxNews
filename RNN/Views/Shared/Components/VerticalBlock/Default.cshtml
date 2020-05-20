@@ -6,7 +6,10 @@
 
     <a asp-route="display" asp-route-slug="@Model.Slug">
         <div class="vertical-block">
-            <img src="~/images/uploads/@Model.Img" />
+            <picture>
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.WebP">
+                <img class="article-img" src="~/images/uploads/@Model.Img-tiny.WebP" alt="">
+            </picture>
             <header><span>@Model.HeadLine</span></header>
         </div>
     </a>

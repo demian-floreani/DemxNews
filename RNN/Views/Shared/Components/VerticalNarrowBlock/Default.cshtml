@@ -5,7 +5,9 @@
     <div class="seperator"></div>
     <a asp-route="display" asp-route-slug="@Model.Slug">
         <div class="vertical-narrow-block">
-            <img src="~/images/uploads/@Model.Img" />
+            <picture>
+                <img src="~/images/uploads/@Model.Img-tiny.WebP" alt="">
+            </picture>
             <header><span>@Model.HeadLine</span></header>
         </div>
     </a>

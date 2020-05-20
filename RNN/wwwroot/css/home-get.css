@@ -176,7 +176,7 @@
   background-color: #e0ebeb;
   cursor: pointer;
 }
-.horizontal-large-block img {
+.horizontal-large-block picture > img {
   width: 100%;
   margin-right: 15px;
 }
@@ -227,7 +227,7 @@
   display: block;
   line-height: 1.35;
 }
-.vertical-block > img {
+.vertical-block > picture > img {
   width: 100%;
 }
 /***********/
@@ -253,7 +253,7 @@
   display: block;
   line-height: 1.35;
 }
-.vertical-narrow-block > img {
+.vertical-narrow-block > picture > img {
   width: 100%;
 }
 /***********/
@@ -272,7 +272,7 @@
   padding-right: 10px;
   margin-bottom: 10px;
 }
-.horizontal-block img {
+.horizontal-block picture > img {
   width: 100%;
 }
 .horizontal-block header {

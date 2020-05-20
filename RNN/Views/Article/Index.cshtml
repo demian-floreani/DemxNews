@@ -32,7 +32,20 @@
                 <p class="source">Sourced from <a href="@Model.Article.Url" target="_blank">@host</a></p>
             }
 
-            <img class="article-img" src="~/images/uploads/@Model.Article.Img" alt="article image" />
+            <!--
+                        < 509    (small)      375
+                576:    509      (medium)     510
+                768:    449      (medium)     510
+                992:    608      (large)      730
+                1200:   729      (large)      730
+            -->
+
+            @*<img class="article-img" src="~/images/uploads/@Model.Article.Img" alt="article image" />*@
+            <picture>
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP">
+                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP">
+                <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.WebP" alt="@Model.Article.Paragraph">
+            </picture>
 
             <div class="row">
                 <div class="col-sm-12">
@@ -67,7 +80,7 @@
                     <mark><span>Enjoy our content?</span></mark>
 
                     <div class="inner">
-                        <p>If you, like us, love straight, unbiased news, subscribe to our newsletter below.</p>
+                        <p>If you love straight, unbiased news, subscribe to our newsletter below.</p>
                     
                         <input placeholder="Subscribe with your email" class="newsletter" type="email" id="email-input" /><button id="add-email" class="btn" value="Add">Sign Me Up!</button>
                     </div>

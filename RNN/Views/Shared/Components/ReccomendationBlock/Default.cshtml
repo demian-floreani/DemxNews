@@ -1,20 +1,10 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.ReccomendationBlockViewComponent
 
-@*<div class="row vertical-block-row">*@
-    <div class="col-xs-4 col-md-12 vertical-block-column">
-        @*<div class="prefix">@Model.Title</div>*@
-        @*<mark><span>@Model.Topic</span></mark>*@
-        <a asp-route="display" asp-route-slug="@Model.Slug">
-            <div class="vertical-block">
-                <img src="~/images/uploads/@Model.Img" />
-                <header>
-                    @*@if (Model.Topic != null)
-                    {
-                        <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                    }*@
-                    <span>@Model.HeadLine</span>
-                </header>
-            </div>
-        </a>
-    </div>
-@*</div>*@
+<div class="col-xs-4 col-md-12 vertical-block-column">
+    <a asp-route="display" asp-route-slug="@Model.Slug">
+        <div class="vertical-block">
+            <img class="article-img" src="~/images/uploads/@Model.Img-tiny.WebP" alt="reccomendation to article">
+            <header><span>@Model.HeadLine</span></header>
+        </div>
+    </a>
+</div>
