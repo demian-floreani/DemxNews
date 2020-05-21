@@ -25,37 +25,9 @@ namespace RNN.Services.Impl
             string identifier = String.Concat(Guid.NewGuid().ToString());
             string uploadPath = Path.Combine(_environment.WebRootPath, "images", "uploads");
 
-            //var fileName = Path.Combine(_environment.WebRootPath, "images", "uploads", imageName);
-
-            //SaveFormFileAsJpg(file, fileName);
-            //Compress(fileName);
-
             ResizeImageToMultipleViewSizes(file, uploadPath, identifier);
 
             return identifier;
-        }
-
-        private void SaveFormFileAsJpg(IFormFile file, string output)
-        {
-            using (MagickImage image = new MagickImage(file.OpenReadStream()))
-            {
-                try
-                {
-                    image.Resize(new MagickGeometry()
-                    {
-                        Width = 600,
-                        IgnoreAspectRatio = false
-                    });
-                    image.Format = MagickFormat.WebP;
-                    image.Write(output);
-                }
-                catch (Exception ex)
-                {
-                    var ms = ex.Message;
-                }
-            }
-
-            //ResizeImageToMultipleViewSizes(output);
         }
 
         private void ResizeImageToMultipleViewSizes(IFormFile file, string uploadPath, string identifier)
@@ -68,19 +40,27 @@ namespace RNN.Services.Impl
 
             using (MagickImage image = new MagickImage(file.OpenReadStream()))
             {
-                if (image.Width > 510)
+                if (image.Width > 540)
                 {
                     // create image for medium devices
-                    ResizeTo(image, 510, "medium", uploadPath, identifier);
+                    ResizeTo(image, 540, "medium", uploadPath, identifier);
+                }
+                else
+                {
+                    Save(image, "medium", uploadPath, identifier);
                 }
             }
 
             using (MagickImage image = new MagickImage(file.OpenReadStream()))
             {
-                if (image.Width > 730)
+                if (image.Width > 720)
                 {
                     // create image for large devices
-                    ResizeTo(image, 730, "large", uploadPath, identifier);
+                    ResizeTo(image, 720, "large", uploadPath, identifier);
+                }
+                else
+                {
+                    Save(image, "large", uploadPath, identifier);
                 }
             }
 
@@ -94,6 +74,12 @@ namespace RNN.Services.Impl
                 IgnoreAspectRatio = false
             });
 
+            Save(image, device, uploadPath, identifier);
+        }
+
+        private void Save(MagickImage image, string device, string uploadPath, string identifier)
+        {
+            image.Format = MagickFormat.WebP;
             image.Write(Path.Combine(uploadPath, String.Format("{0}-{1}.WebP", identifier, device)));
         }
 
