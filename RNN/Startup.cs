@@ -42,14 +42,14 @@ namespace RNN
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure Compression level
-            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
+            //services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
 
-            // Add Response compression services
-            services.AddResponseCompression(options =>
-            {
-                options.Providers.Add<GzipCompressionProvider>();
-                options.EnableForHttps = true;
-            });
+            //// Add Response compression services
+            //services.AddResponseCompression(options =>
+            //{
+            //    options.Providers.Add<GzipCompressionProvider>();
+            //    options.EnableForHttps = true;
+            //});
 
             // dotnet core 3.0
             var builder = services.AddControllersWithViews();
@@ -129,7 +129,7 @@ namespace RNN
             IWebHostEnvironment env,
             IServiceProvider serviceProvider)
         {
-            app.UseResponseCompression();
+            //app.UseResponseCompression();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
