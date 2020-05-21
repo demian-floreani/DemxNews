@@ -6,7 +6,8 @@
     <a asp-route="display" asp-route-slug="@Model.Slug">
         <div class="vertical-narrow-block">
             <picture>
-                <img src="~/images/uploads/@Model.Img-tiny.WebP" alt="">
+                <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                <img src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
             </picture>
             <header><span>@Model.HeadLine</span></header>
         </div>

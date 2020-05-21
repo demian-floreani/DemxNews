@@ -3,7 +3,11 @@
 <div class="col-xs-4 col-md-12 vertical-block-column">
     <a asp-route="display" asp-route-slug="@Model.Slug">
         <div class="vertical-block">
-            <img class="article-img" src="~/images/uploads/@Model.Img-tiny.WebP" alt="reccomendation to article">
+            <picture>
+                <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="reccomendation to article">
+            </picture>
+            
             <header><span>@Model.HeadLine</span></header>
         </div>
     </a>
