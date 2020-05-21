@@ -32,11 +32,17 @@ namespace RNN.Services.Impl
 
         private void SaveFormFileAsJpg(IFormFile file, string output)
         {
-            using (MagickImage image = new MagickImage(file.OpenReadStream()))
+            using (var stream = new FileStream(output, FileMode.Create))
             {
-                image.Format = MagickFormat.Jpg;
-                image.Write(output);
+                file.CopyTo(stream);
             }
+            //File.WriteAllBytes(output, file.);
+
+            //using (MagickImage image = new MagickImage(file.OpenReadStream()))
+            //{
+            //    image.Format = MagickFormat.Jpg;
+            //    image.Write(output);
+            //}
         }
 
         private static void Compress(string file)
