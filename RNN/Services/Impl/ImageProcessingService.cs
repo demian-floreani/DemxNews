@@ -35,52 +35,49 @@ namespace RNN.Services.Impl
             using (MagickImage image = new MagickImage(file.OpenReadStream()))
             {
                 // create image for small devices
-                ResizeTo(image, 375, "tiny", uploadPath, identifier);
-            }
+                Save(image.Clone(), "tiny", uploadPath, identifier, MagickFormat.WebP, 375);
+                Save(image.Clone(), "tiny", uploadPath, identifier, MagickFormat.Jpg, 375);
 
-            using (MagickImage image = new MagickImage(file.OpenReadStream()))
-            {
                 if (image.Width > 540)
                 {
                     // create image for medium devices
-                    ResizeTo(image, 540, "medium", uploadPath, identifier);
+                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.WebP, 540);
+                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.Jpg, 540);
                 }
                 else
                 {
-                    Save(image, "medium", uploadPath, identifier);
+                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.WebP);
+                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.Jpg);
                 }
-            }
 
-            using (MagickImage image = new MagickImage(file.OpenReadStream()))
-            {
                 if (image.Width > 720)
                 {
-                    // create image for large devices
-                    ResizeTo(image, 720, "large", uploadPath, identifier);
+                    // create image for medium devices
+                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.WebP, 720);
+                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.Jpg, 720);
                 }
                 else
                 {
-                    Save(image, "large", uploadPath, identifier);
+                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.WebP);
+                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.Jpg);
                 }
             }
-
         }
 
-        private void ResizeTo(MagickImage image, int width, string device, string uploadPath, string identifier)
+        private void Save(IMagickImage image, string device, string uploadPath, string identifier, MagickFormat format, int? size = null)
         {
-            image.Resize(new MagickGeometry()
+            image.Format = format;
+
+            if(size != null)
             {
-                Width = width,
-                IgnoreAspectRatio = false
-            });
+                image.Resize(new MagickGeometry()
+                {
+                    Width = size.Value,
+                    IgnoreAspectRatio = false
+                });
+            }
 
-            Save(image, device, uploadPath, identifier);
-        }
-
-        private void Save(MagickImage image, string device, string uploadPath, string identifier)
-        {
-            image.Format = MagickFormat.WebP;
-            image.Write(Path.Combine(uploadPath, String.Format("{0}-{1}.WebP", identifier, device)));
+            image.Write(Path.Combine(uploadPath, String.Format("{0}-{1}.{2}", identifier, device, format.ToString())));
         }
 
         private static void Compress(string file)

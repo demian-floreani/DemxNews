@@ -41,11 +41,18 @@
             -->
 
             @*<img class="article-img" src="~/images/uploads/@Model.Article.Img" alt="article image" />*@
-            <picture>
-                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP">
-                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP">
-                <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.WebP" alt="@Model.Article.Paragraph">
-            </picture>
+        <picture>
+            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP" type="image/webp">
+            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.Jpg" type="image/jpeg">
+
+            <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP" type="image/webp">
+            <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.Jpg" type="image/jpeg">
+
+            <source srcset="~/images/uploads/@Model.Article.Img-tiny.WebP" type="image/webp">
+            <source srcset="~/images/uploads/@Model.Article.Img-tiny.Jpg" type="image/jpeg">
+
+            <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.Jpg" alt="">
+        </picture>
 
             <div class="row">
                 <div class="col-sm-12">
