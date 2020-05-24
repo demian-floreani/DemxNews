@@ -126,9 +126,9 @@
 
 <script defer>
     (function () {
-        ajax("GET", "/article/@Model.Article.Id/reccomendations", null, function (response) {
-            document.getElementById("reccomendations").innerHTML = response;
-        });
+
+        // load reccomendations async
+        load("/article/@Model.Article.Id/reccomendations", "reccomendations");
 
         document.getElementById("add-email").onclick = function () {
             var value = document.getElementById("email-input").value;
@@ -141,13 +141,14 @@
 
             var message = { "Email": value };
 
-            ajax("POST", "/newsletter/add", message, function () {
+            post("/newsletter/add", message, function () {
                 alert("Subscribed!");
             });
         }
 
-        ajax("PUT", "/article/@Model.Article.Id/viewed", null, null);
-
+        // increase page views
+        put("/article/@Model.Article.Id/viewed");
+        
         document.getElementById("show-comments").onclick = function () {
             var disqus_config = function () {
                 this.callbacks.onIdentify = [function (id) {
@@ -167,26 +168,4 @@
         var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
     }
-
-    function ajax(method, url, body, callback) {
-        var request = new XMLHttpRequest();
-
-        if (callback != null) {
-            request.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    callback(this.responseText);
-                }
-            };
-        }
-
-        request.open(method, url, true);
-
-        if (body != null) {
-            request.setRequestHeader("Content-Type", "application/json");
-            request.send(JSON.stringify(body));
-        }
-        else
-            request.send();
-    }
-
 </script>

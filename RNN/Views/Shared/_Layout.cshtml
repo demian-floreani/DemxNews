@@ -39,6 +39,9 @@
     <script defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
     <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+    <!-- include ajax functionality -->
+    <script src="~/js/ajax.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     @*<script src="https://www.googletagmanager.com/gtag/js?id=UA-159386801-1"></script>
         <script>
@@ -48,8 +51,10 @@
 
             gtag('config', 'UA-159386801-1');
         </script>*@
-
-
+    
+    <script defer>
+        load("/home/footer", "footer");
+    </script>
 </head>
 <body>
     <div id="fb-root"></div>
@@ -59,10 +64,12 @@
             <div class="col-sm-12">
                 <div class="fb-like" data-href="https://www.facebook.com/rnnonline/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
 
-                @if ((bool)ViewData["IsLoggedIn"]) {
+                @if ((bool)ViewData["IsLoggedIn"])
+                {
                     <a href="/Entries/List/"><span class="contribute">Manage Content</span></a>
                 }
-                else {
+                else
+                {
                     <a href="/Login/"><span class="contribute">Log In</span></a>
                     <a href="/Register/"><span class="contribute">Contribute</span></a>
                 }
@@ -88,37 +95,23 @@
         @RenderBody()
     </div>
 
-    <div class="container">
-        <div class="row footer">
-            <div class="col-sm-3 footer-column">
-                <img class="footer-logo" src="~/images/banner/R.png" alt="site footer banner">
-            </div>
-            <div class="col-sm-6 centre-column footer-column">
-                <a class="footer-link" href="/about/">About us</a>
-                <a class="footer-link" href="/privacy/">Privacy policy</a>
-                <a class="footer-link" href="/contact/">Contact us</a>
-            </div>
-            <div class="col-sm-3 footer-column">
-                <a href="https://twitter.com/RNNOnline?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@("Follow @RNNOnline")</a>
-            </div>
-        </div>
-    </div>
+    <div class="container" id="footer"></div>
 
     @if ((bool)ViewData["ShowModal"] == true)
     {
         @*<div id="myModal" class="modal">
-                <div class="modal-content">
-                    <header><h1><i>Your source for Populist News & Opinion</i></h1><span class="close">&times;</span></header>
+                            <div class="modal-content">
+                                <header><h1><i>Your source for Populist News & Opinion</i></h1><span class="close">&times;</span></header>
+            <div class="col-sm-6 centre-column footer-column">
+                                <p></p>
 
-                    <p></p>
+                                <p>Renegade News provides independent, counter-culture insight in current affairs and politics.</p>
 
-                    <p>Renegade News provides independent, counter-culture insight in current affairs and politics.</p>
+                                <p></p>
 
-                    <p></p>
-
-                    <p>We also use cookies, to provide you with the best user expericence. By continuing to use the site you agree with this.</p>
-                </div>
-            </div>*@
+                                <p>We also use cookies, to provide you with the best user expericence. By continuing to use the site you agree with this.</p>
+                            </div>
+                        </div>*@
     }
 
     @RenderSection("Scripts", required: false)

@@ -73,6 +73,13 @@ namespace RNN.Controllers
             return PartialView("GroupingPartial", group);
         }
 
+        [HttpGet]
+        [Route("/home/footer")]
+        public IActionResult Footer()
+        {
+            return PartialView("FooterPartial");
+        }
+
         private static GroupingViewComponent GroupArticles(
             List<BasicArticle> entries, 
             IEnumerable<int> layout)
