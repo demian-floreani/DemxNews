@@ -8,6 +8,23 @@ using System.Threading.Tasks;
 
 namespace RNN.Data.Impl
 {
+    public class EditTracker<T>
+    {
+        private HashSet<string> _fields;
+
+        public EditTracker()
+        {
+            _fields = new HashSet<string>();
+        }
+
+        public void Track<P>(Expression<Func<T, P>> propertyExpression)
+        {
+            _fields.Add((propertyExpression.Body as MemberExpression).Member.Name);
+        }
+
+        public ISet<string> Fields => _fields;
+    }
+
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> _set;
@@ -39,34 +56,29 @@ namespace RNN.Data.Impl
             return queryable;
         }
 
-        public void Update(T entity, string property)
+        public void Update<P>(T entity, Expression<Func<T, P>> propertyExpression)
         {
             var tracker = _set.Attach(entity);
-           
+
+            var member = (propertyExpression.Body as MemberExpression).Member.Name;
+
             var modify = tracker
                 .Properties
-                .FirstOrDefault(p => p.Metadata.Name == property);
+                .FirstOrDefault(p => p.Metadata.Name == member);
 
             modify.IsModified = true;
         }
 
-        public void Update(T entity, HashSet<string> properties)
+        public void Update(T entity, EditTracker<T> tracker)
         {
-            var tracker = _set.Attach(entity);
+            var set = tracker.Fields;
 
-            var modify = tracker
+            var props = _set.Attach(entity)
                 .Properties
-                .Where(p => properties.Contains(p.Metadata.Name));
+                .Where(p => set.Contains(p.Metadata.Name));
 
-            foreach (var p in modify) 
-            {
+            foreach (var p in props)
                 p.IsModified = true;
-            }
-        }
-
-        public void Update(T entity)
-        {
-            _set.Update(entity);
         }
     }
 }

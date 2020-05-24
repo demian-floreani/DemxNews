@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using RNN.Data;
+using RNN.Data.Impl;
 using RNN.Data.Repositories;
+using RNN.Data.Repositories.Impl;
 using RNN.Exceptions;
 using RNN.Models;
 using RNN.Models.Identity;
@@ -16,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -117,23 +122,7 @@ namespace RNN.Services.Impl
                 }
             }
         }
-
-        private static void UpdateSitemap(string url)
-        {
-            XmlDocument document = new XmlDocument();
-            //HttpContext.Current.Server.MapPath("~/image/turnon.bmp");
-
-            
-
-            document.Load("sitemap.xml");
-
-            XmlElement el = document.CreateElement("");
-
-            XmlNodeList nodes = document.SelectNodes("/url/");
-
-            //nodes.Pare
-        }
-
+        
         private static string GenerateSlug(string headline)
         {
             headline = headline.Trim();
@@ -150,53 +139,50 @@ namespace RNN.Services.Impl
                 .Include(e => e.EntryToTopics)
                 .FirstOrDefaultAsync();
 
+            var tracker = new EditTracker<Entry>();
+
             if (article == default)
                 throw new AppException(ExceptionType.ARTICLE_NOT_FOUND);
 
             try
             {
-                HashSet<string> fields = new HashSet<string>();
-
                 article.LastModified = DateTime.Now;
-                fields.Add("LastModified");
+                tracker.Track(article => article.LastModified);
 
                 if (article.HeadLine != form.HeadLine)
                 {
                     article.HeadLine = form.HeadLine;
                     article.Slug = GenerateSlug(form.HeadLine);
-                    fields.Add("HeadLine");
-                    fields.Add("Slug");
+                    tracker.Track(e => e.HeadLine);
+                    tracker.Track(e => e.Slug);
                 }
 
                 if (article.Paragraph != form.Paragraph)
                 {
                     article.Paragraph = form.Paragraph;
-                    fields.Add("Paragraph");
+                    tracker.Track(e => e.Paragraph);
                 }
 
                 if (article.Url != form.Url)
                 {
                     article.Url = form.Url;
-                    fields.Add("Url");
+                    tracker.Track(e => e.Url);
                 }
 
                 if (article.Body != form.Body)
                 {
                     article.Body = form.Body;
-                    fields.Add("Body");
+                    tracker.Track(e => e.Body);
                 }
 
                 if (form.Img != null)
                 {
                     article.Img = _imageProcessingService.ProcessFormImage(form.Img);
-                    fields.Add("Img");
+                    tracker.Track(e => e.Img);
                 }
 
-                if (fields.Any())
-                {
-                    _entryRepository.Update(article, fields);
-                    await _unitOfWork.Commit();
-                }
+                _entryRepository.Update(article, tracker);
+                await _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
@@ -213,7 +199,7 @@ namespace RNN.Services.Impl
                 if (existing != null)
                 {
                     existing.IsPrimary = true;
-                    _entryToTopicRepository.Update(existing, "IsPrimary");
+                    _entryToTopicRepository.Update(existing, e => e.IsPrimary);
                 }
                 else
                 {
@@ -244,7 +230,7 @@ namespace RNN.Services.Impl
 
                         primaryTopic.IsPrimary = false;
 
-                        _entryToTopicRepository.Update(primaryTopic, new HashSet<string>() { "IsPrimary" });
+                        _entryToTopicRepository.Update(primaryTopic, e => e.IsPrimary);
 
                         // does this article already have this topic ?
                         var newPrimaryTopic = await _entryToTopicRepository
@@ -262,7 +248,7 @@ namespace RNN.Services.Impl
                         else
                         {
                             newPrimaryTopic.IsPrimary = true;
-                            _entryToTopicRepository.Update(newPrimaryTopic, new HashSet<string>() { "IsPrimary" });
+                            _entryToTopicRepository.Update(newPrimaryTopic, e => e.IsPrimary);
                         }
 
                         await _unitOfWork.Commit();
@@ -397,7 +383,7 @@ namespace RNN.Services.Impl
 
             entity.IsPublished = true;
 
-            _entryRepository.Update(entity, new HashSet<string>() { "IsPublished" });
+            _entryRepository.Update(entity, e => e.IsPublished);
 
             await _unitOfWork.Commit();
         }
@@ -410,7 +396,7 @@ namespace RNN.Services.Impl
 
             entity.IsPublished = false;
 
-            _entryRepository.Update(entity, new HashSet<string>() { "IsPublished" });
+            _entryRepository.Update(entity, e => e.IsPublished);
 
             await _unitOfWork.Commit();
         }
@@ -423,7 +409,7 @@ namespace RNN.Services.Impl
 
             entity.IsPinned = 1;
 
-            _entryRepository.Update(entity, new HashSet<string>() { "IsPinned" });
+            _entryRepository.Update(entity, e => e.IsPinned);
 
             await _unitOfWork.Commit();
         }
@@ -436,7 +422,7 @@ namespace RNN.Services.Impl
 
             entity.IsPinned = 0;
 
-            _entryRepository.Update(entity, new HashSet<string>() { "IsPinned" });
+            _entryRepository.Update(entity, e => e.IsPinned);
 
             await _unitOfWork.Commit();
         }
@@ -444,7 +430,7 @@ namespace RNN.Services.Impl
         public async Task IncreasePageViews(Entry entry)
         {
             entry.PageViews++;
-            _entryRepository.Update(entry, "PageViews");
+            _entryRepository.Update(entry, e => e.PageViews);
             await _unitOfWork.Commit();
         }
 

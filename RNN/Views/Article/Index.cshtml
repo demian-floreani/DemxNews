@@ -1,5 +1,4 @@
 ﻿@model RNN.Models.ViewModels.Pages.DisplayArticle
-
 @*@if ((bool)Model.ViewModelData["IsAuthor"])
     {
         <div class="row">
@@ -39,20 +38,18 @@
                 992:    608      (large)      730
                 1200:   729      (large)      730
             -->
+            <picture>
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP" type="image/webp">
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.Jpg" type="image/jpeg">
 
-            @*<img class="article-img" src="~/images/uploads/@Model.Article.Img" alt="article image" />*@
-        <picture>
-            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP" type="image/webp">
-            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.Jpg" type="image/jpeg">
+                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP" type="image/webp">
+                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.Jpg" type="image/jpeg">
 
-            <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP" type="image/webp">
-            <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.Jpg" type="image/jpeg">
+                <source srcset="~/images/uploads/@Model.Article.Img-tiny.WebP" type="image/webp">
+                <source srcset="~/images/uploads/@Model.Article.Img-tiny.Jpg" type="image/jpeg">
 
-            <source srcset="~/images/uploads/@Model.Article.Img-tiny.WebP" type="image/webp">
-            <source srcset="~/images/uploads/@Model.Article.Img-tiny.Jpg" type="image/jpeg">
-
-            <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.Jpg" alt="">
-        </picture>
+                <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.Jpg" alt="">
+            </picture>
 
             <div class="row">
                 <div class="col-sm-12">
@@ -83,15 +80,15 @@
         </div>
 
         <div class="row side-block">
-                <div class="col-sm-12">
-                    <mark><span>Enjoy our content?</span></mark>
+            <div class="col-sm-12">
+                <mark><span>Enjoy our content?</span></mark>
 
-                    <div class="inner">
-                        <p>If you love straight, unbiased news, subscribe to our newsletter below.</p>
-                    
-                        <input placeholder="Subscribe with your email" class="newsletter" type="email" id="email-input" /><button id="add-email" class="btn" value="Add">Sign Me Up!</button>
-                    </div>
+                <div class="inner">
+                    <p>If you love straight, unbiased news, subscribe to our newsletter below.</p>
+
+                    <input placeholder="Subscribe with your email" class="newsletter" type="email" id="email-input" /><button id="add-email" class="btn" value="Add">Sign Me Up!</button>
                 </div>
+            </div>
         </div>
 
         <div class="row side-block">
@@ -100,6 +97,16 @@
 
                 <div class="inner">
                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row side-block">
+            <div class="col-sm-12">
+                <mark><span>Tip us</span></mark>
+
+                <div class="inner">
+                    <p>Do you have a news story from your country exposing the globalists? We'd love to hear. Follow <a href="/contact/" target="_blank">this link</a> to write us about it.</p>
                 </div>
             </div>
         </div>
@@ -119,17 +126,11 @@
 
 <script defer>
     (function () {
-        var getReccomendationsAsync = new XMLHttpRequest();
-        getReccomendationsAsync.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("reccomendations").innerHTML = this.responseText;
-            }
-        };
-        getReccomendationsAsync.open("GET", "/article/@Model.Article.Id/reccomendations", true);
-        getReccomendationsAsync.send();
+        ajax("GET", "/article/@Model.Article.Id/reccomendations", null, function (response) {
+            document.getElementById("reccomendations").innerHTML = response;
+        });
 
-        var button = document.getElementById("add-email");
-        button.onclick = function () {
+        document.getElementById("add-email").onclick = function () {
             var value = document.getElementById("email-input").value;
 
             if (value == null || value == "" || !isEmail(value)) {
@@ -140,25 +141,52 @@
 
             var message = { "Email": value };
 
-            var addNewsletterRequestAsync = new XMLHttpRequest();
-            addNewsletterRequestAsync.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert("Subscribed!");
-                }
-            };
-            addNewsletterRequestAsync.open("POST", "/newsletter/add", true);
-            addNewsletterRequestAsync.setRequestHeader("Content-Type", "application/json");
-            addNewsletterRequestAsync.send(JSON.stringify(message));
+            ajax("POST", "/newsletter/add", message, function () {
+                alert("Subscribed!");
+            });
         }
 
-        var increasePageViews = new XMLHttpRequest();
-        increasePageViews.open("PUT", "/article/@Model.Article.Id/viewed", true);
-        increasePageViews.send();
+        ajax("PUT", "/article/@Model.Article.Id/viewed", null, null);
+
+        document.getElementById("show-comments").onclick = function () {
+            var disqus_config = function () {
+                this.callbacks.onIdentify = [function (id) {
+                }];
+            };
+
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://rnn.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
     })();
 
     function isEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
+    }
+
+    function ajax(method, url, body, callback) {
+        var request = new XMLHttpRequest();
+
+        if (callback != null) {
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    callback(this.responseText);
+                }
+            };
+        }
+
+        request.open(method, url, true);
+
+        if (body != null) {
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify(body));
+        }
+        else
+            request.send();
     }
 
 </script>

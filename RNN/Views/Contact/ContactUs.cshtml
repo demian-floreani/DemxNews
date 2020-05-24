@@ -1,11 +1,18 @@
 ﻿@model RNN.Models.Message
 
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+</script>
+
 <h1>Contact Us</h1>
 <br />
 
 <p><i>Renegade News</i> is a brand new startup commited to delivering <mark>real news</mark> on <mark>important issues</mark>.</p>
 
-<p>If you're interested in contributing write a message in the form below.</p>
+<p>To contact us for tips or general enquieries, use the form below.</p>
 
 <p>We're looking forward to hearing from you!</p>
 
@@ -16,12 +23,13 @@
     </div>
     <div class="row">
         <div class="col-sm-3"><b>Contact e-mail</b></div>
-        <div class="col-sm-9"><input class="text-input" type="email" name="email" /><br></div>
+        <div class="col-sm-9"><input class="text-input" type="text" name="email" /><br></div>
     </div>
     <div class="row">
-        <div class="col-sm-3"><b>Write your message</b></div>
+        <div class="col-sm-3"><b>Write your message*</b></div>
         <div class="col-sm-9"><textarea rows="5" class="text-input" name="Text"></textarea><br></div>
     </div>
+    <p>*These fields are required</p>
     <input type="submit" />
 </form>
 

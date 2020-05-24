@@ -4,7 +4,8 @@
 <div class="row trending-container-row">
     <div class="col-sm-12 trending-container-column">
         <div class="trending-container">
-            @foreach (var subject in Model.Trending) {
+            @foreach (var subject in Model.Trending)
+            {
                 <a asp-route="topiclist" asp-route-topicId="@subject.Id"><span>@subject.Name</span></a>
             }
         </div>
@@ -12,11 +13,51 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-12">
-        @foreach (var grouping in Model.Groupings) {
-            @await Component.InvokeAsync(typeof(GroupingViewComponent), new { component = grouping })
-        }
-    </div>
+<div id="groupings">
+    @await Component.InvokeAsync(typeof(GroupingViewComponent), new { component = Model.Grouping })  
 </div>
 
+<script defer>
+    // headline articles offset
+    var offset = 5;
+    var loading = false;
+
+    (function () {
+        window.onload = function () {
+            window.onscroll = function () {
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 80) {
+                    if (!this.loading) {
+                        this.loading = true;
+                        ajax("GET", "/home/load/" + this.offset, null, function (response) {
+                            document.getElementById("groupings").insertAdjacentHTML('beforeend', response);
+
+                            offset += 6;
+                            loading = false;
+                        });
+                    }
+                }
+            }
+        }
+    })();
+
+    function ajax(method, url, body, callback) {
+        var request = new XMLHttpRequest();
+
+        if (callback != null) {
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    callback(this.responseText);
+                }
+            };
+        }
+
+        request.open(method, url, true);
+
+        if (body != null) {
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify(body));
+        }
+        else
+            request.send();
+    }
+</script>

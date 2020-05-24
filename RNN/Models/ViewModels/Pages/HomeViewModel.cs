@@ -9,6 +9,6 @@ namespace RNN.Models.ViewModels.Pages
     public class HomeViewModel
     {
         public IEnumerable<Topic> Trending { get; set; }
-        public IEnumerable<GroupingViewComponent> Groupings { get; set; }
+        public GroupingViewComponent Grouping { get; set; }
     }
 }  

@@ -52,7 +52,7 @@ namespace RNN.Services.Impl
 
                 if (image.Width > 720)
                 {
-                    // create image for medium devices
+                    // create image for large devices
                     Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.WebP, 720);
                     Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.Jpg, 720);
                 }
@@ -77,7 +77,14 @@ namespace RNN.Services.Impl
                 });
             }
 
-            image.Write(Path.Combine(uploadPath, String.Format("{0}-{1}.{2}", identifier, device, format.ToString())));
+            string path = Path.Combine(uploadPath, String.Format("{0}-{1}.{2}", identifier, device, format.ToString()));
+
+            image.Write(path);
+
+            if(format == MagickFormat.Jpg)
+            {
+                Compress(path);
+            }    
         }
 
         private static void Compress(string file)
@@ -88,7 +95,7 @@ namespace RNN.Services.Impl
                 IgnoreUnsupportedFormats = true
             };
 
-            optimizer.LosslessCompress(file);
+            optimizer.Compress(file);
         }
     }
 }

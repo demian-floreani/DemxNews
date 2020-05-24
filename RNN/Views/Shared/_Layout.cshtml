@@ -19,12 +19,6 @@
         <link rel="stylesheet" href="~/css/@ViewData["Page"]" />
     </environment>
 
-    @*<script>
-        $(document).ready(function () {
-            $(".close").click(function () { $(".modal").hide(); });
-        });
-    </script>*@
-
     <!-- custom fonts -->
     <link rel="preconnect stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i|Merriweather&display=swap">
 
@@ -42,41 +36,20 @@
     <meta name="twitter:creator" content="@@RNNOnline">
     <meta name="twitter:card" content="summary_large_image">
 
-    @if ((bool)ViewData["IncludeDisqus"] == true)
-    {
-        <script defer type="text/javascript">
-            window.onload = function () {
-                var refButton = document.getElementById("show-comments");
-
-                refButton.onclick = function () {
-                    var disqus_config = function () {
-                        this.callbacks.onIdentify = [function (id) {
-                        }];
-                    };
-
-                    (function () { // DON'T EDIT BELOW THIS LINE
-                        var d = document, s = d.createElement('script');
-                        s.src = 'https://rnn.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-                }
-            };
-        </script>
-    }
-
     <script defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
     <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     @*<script src="https://www.googletagmanager.com/gtag/js?id=UA-159386801-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
 
-        gtag('config', 'UA-159386801-1');
-    </script>*@
+            gtag('config', 'UA-159386801-1');
+        </script>*@
+
+
 </head>
 <body>
     <div id="fb-root"></div>
@@ -95,8 +68,8 @@
                 }
             </div>
         </div>
-
     </div>
+
     <div class="container outer-box">
         <div class="row row-equal">
             <div class="col-sm-3">
@@ -149,7 +122,5 @@
     }
 
     @RenderSection("Scripts", required: false)
-
-
 </body>
 </html>

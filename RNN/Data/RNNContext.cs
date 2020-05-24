@@ -41,7 +41,7 @@ namespace RNN.Models
                 .HasOne(pt => pt.Topic)
                 .WithMany(t => t.EntryToTopics)
                 .HasForeignKey(bc => bc.TopicId);
-
+            
             Seed.SeedDatabase(modelBuilder);
         }
 

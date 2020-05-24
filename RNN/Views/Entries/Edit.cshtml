@@ -141,22 +141,21 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>Review your content</h2>
-            @if ((int)ViewData["IsPinned"] != 1)
-            {
+
+            <button type="button" id="preview-button" class="btn btn-default submit-button">Preview</button>
+
+            @if ((int)ViewData["IsPinned"] != 1) {
                 <button type="button" id="pin-button" class="btn btn-default submit-button">Pin</button>
             }
-            else
-            {
+            else {
                 <button type="button" id="unpin-button" class="btn btn-default submit-button">Un Pin</button>
             }
 
-            @if (!(bool)ViewData["IsPublished"])
-            {
+            @if (!(bool)ViewData["IsPublished"]) {
                 <input type="submit" value="Save Draft" class="btn btn-default submit-button" />
                 <button type="button" id="publish-button" class="btn btn-default submit-button">Publish</button>
             }
-            else
-            {
+            else {
                 <input type="submit" value="Save Changes" class="btn btn-default submit-button" />
                 <button type="button" id="unpublish-button" class="btn btn-default submit-button">Unpublish</button>
             }

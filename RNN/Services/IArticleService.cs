@@ -14,7 +14,7 @@ namespace RNN.Services.Impl
         Task<List<BasicArticle>> GetReccomendedArticlesAsync(List<int> topics, int exclude, int similarity = 2);
         Task<List<BasicArticle>> GetArticlesByTopicAsync(int topic);
         Task<List<Topic>> GetArticleTopics(int article);
-        Task<List<BasicArticle>> GetHeadlineArticles(int top);
+        Task<List<BasicArticle>> GetHeadlineArticles(int top, int offset = 0);
         Task<List<Topic>> GetHeadlineTopics(int top);
         Task IncreaseViews(int article);
     }

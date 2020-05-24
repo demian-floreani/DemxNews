@@ -47,7 +47,6 @@ namespace RNN.Controllers
             ViewData["Description"] = article.Paragraph;
             ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img);
             ViewData["OGUrl"] = string.Concat("https://www.renegadenews.net/article/", article.Slug);
-            ViewData["IncludeDisqus"] = true;
 
             var topics = article
                 .EntryToTopics
@@ -58,7 +57,7 @@ namespace RNN.Controllers
                 Article = article,
                 Topics = topics
             };
-
+            
             //model.ViewModelData.Add("IsAuthor", user != null ? user == article.ApplicationUserId : false);
             model.ViewModelData.Add("IsAuthor", false);
 

@@ -93,12 +93,13 @@ namespace RNN.Services
             return task;
         }
 
-        public Task<List<BasicArticle>> GetHeadlineArticles(int top)
+        public Task<List<BasicArticle>> GetHeadlineArticles(int top, int offset)
         {
             var task = _entryRepository
                 .FindBy(e => e.IsPublished)
                 .OrderByDescending(a => a.IsPinned)
                     .ThenByDescending(a => a.Date)
+                .Skip(offset)
                 .Take(top)
                 .AsNoTracking()
                 .Select(e => new BasicArticle
@@ -138,7 +139,7 @@ namespace RNN.Services
 
             article.PageViews++;
 
-            _entryRepository.Update(article, "PageViews");
+            _entryRepository.Update(article, e => e.PageViews);
             await _unitOfWork.Commit();
         }
     }
