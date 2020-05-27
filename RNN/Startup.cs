@@ -26,6 +26,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using System.Globalization;
 
 namespace RNN
 {
@@ -150,7 +151,21 @@ namespace RNN
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+                OnPrepareResponse = (context) =>
+                {
+                    var headers = context.Context.Response.GetTypedHeaders();
+                    headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromDays(30)
+                    };
+
+                }
+            });
+
             app.UseCookiePolicy();
 
             app.UseRouting();
