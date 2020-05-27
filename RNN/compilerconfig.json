@@ -82,5 +82,9 @@
   {
     "outputFile": "wwwroot/css/topic-get.css",
     "inputFile": "wwwroot/css/topic-get.less"
+  },
+  {
+    "outputFile": "wwwroot/css/media.css",
+    "inputFile": "wwwroot/css/media.less"
   }
 ]

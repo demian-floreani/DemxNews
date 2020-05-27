@@ -13,6 +13,13 @@ namespace RNN.Services.Impl
 {
     public class ImageProcessingService : IImageProcessingService
     {
+        private Dictionary<int, string> _breakpoints = new Dictionary<int, string>()
+        {
+            { 375, "tiny" },
+            { 540, "medium" },
+            { 720, "large" }
+        };
+
         private IWebHostEnvironment _environment { get; set; }
 
         public ImageProcessingService(IWebHostEnvironment environment)
@@ -22,7 +29,7 @@ namespace RNN.Services.Impl
 
         public string ProcessFormImage(IFormFile file)
         {
-            string identifier = String.Concat(Guid.NewGuid().ToString());
+            string identifier = Guid.NewGuid().ToString();
             string uploadPath = Path.Combine(_environment.WebRootPath, "images", "uploads");
 
             ResizeImageToMultipleViewSizes(file, uploadPath, identifier);
@@ -34,32 +41,18 @@ namespace RNN.Services.Impl
         {
             using (MagickImage image = new MagickImage(file.OpenReadStream()))
             {
-                // create image for small devices
-                Save(image.Clone(), "tiny", uploadPath, identifier, MagickFormat.WebP, 375);
-                Save(image.Clone(), "tiny", uploadPath, identifier, MagickFormat.Jpg, 375);
-
-                if (image.Width > 540)
+                foreach(var entry in _breakpoints)
                 {
-                    // create image for medium devices
-                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.WebP, 540);
-                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.Jpg, 540);
-                }
-                else
-                {
-                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.WebP);
-                    Save(image.Clone(), "medium", uploadPath, identifier, MagickFormat.Jpg);
-                }
-
-                if (image.Width > 720)
-                {
-                    // create image for large devices
-                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.WebP, 720);
-                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.Jpg, 720);
-                }
-                else
-                {
-                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.WebP);
-                    Save(image.Clone(), "large", uploadPath, identifier, MagickFormat.Jpg);
+                    if(image.Width > entry.Key)
+                    {
+                        Save(image.Clone(), entry.Value, uploadPath, identifier, MagickFormat.WebP, entry.Key);
+                        Save(image.Clone(), entry.Value, uploadPath, identifier, MagickFormat.Jpg, entry.Key);
+                    }
+                    else
+                    {
+                        Save(image.Clone(), entry.Value, uploadPath, identifier, MagickFormat.WebP);
+                        Save(image.Clone(), entry.Value, uploadPath, identifier, MagickFormat.Jpg);
+                    }
                 }
             }
         }
@@ -95,7 +88,7 @@ namespace RNN.Services.Impl
                 IgnoreUnsupportedFormats = true
             };
 
-            optimizer.Compress(file);
+            optimizer.LosslessCompress(file);
         }
     }
 }

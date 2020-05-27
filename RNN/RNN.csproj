@@ -20,6 +20,7 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\entries-edit.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\listentries.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\login-get.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\media.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\message.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\topic-get.css" />
   </ItemGroup>
