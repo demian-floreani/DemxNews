@@ -6,6 +6,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: ['link', 'code']
+    });
+</script>
+
 <form asp-action="OnCreate" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-12">
@@ -111,15 +120,3 @@
         </div>
     </div>
 </form>
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: ['link', 'code']
-        });</script>
-}
-
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
