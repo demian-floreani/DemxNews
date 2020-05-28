@@ -13,6 +13,8 @@
         integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
 </script>
 
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#add-topic-button").click(function ()
@@ -132,7 +134,13 @@
             });
         }, 5000);*@
 
+        tinymce.init({
+            selector: 'textarea',
+            plugins: ['link', 'code']
+        });
+
     });
+
 </script>
 
 <form asp-action="OnEdit" enctype="multipart/form-data">
@@ -222,7 +230,7 @@
                                 <option value="@topic.Name" />
                             }
                         </datalist>
-                        <button type="button" id="add-topic-button">Add</button>
+                        <button type="button" class="btn" id="add-topic-button">Add</button>
                     </div>
                 </div>
             </div>
@@ -267,14 +275,6 @@
     </div>
 </form>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-    tinymce.init({
-            selector: 'textarea',
-            plugins: ['link', 'code']
-        });</script>
-}
 
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
 

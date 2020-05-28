@@ -59,13 +59,13 @@
 }
 @media (min-width: 992px) {
   .horizontal-large-block header {
-    font-size: 26px;
+    font-size: 24px;
   }
   .vertical-block header {
     font-size: 24px;
   }
   .vertical-narrow-block header {
-    font-size: 22px;
+    font-size: 20px;
   }
   .horizontal-block header {
     font-size: 20px;
