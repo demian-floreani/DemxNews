@@ -94,6 +94,10 @@
     .horizontal-block header {
         font-size: 20px;
     }
+
+    .featured img {
+        width: auto !important;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -468,4 +472,41 @@ mark {
 
 .trending-container a:hover {
     cursor: pointer;
+}
+
+.featured {
+    text-align: center;
+    margin-bottom: 5px;
+    border-bottom: 1px solid gray;
+}
+
+.featured header {
+    font-size: 28px;
+    color: red;
+}
+
+.featured header h1 {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.featured p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #000000;
+}
+
+.featured img {
+              width: 100%;
+          }
+
+.featured:hover {
+    background-color: #e0ebeb;
+    cursor: pointer;
+}
+
+.featured-block-column {
+    padding-left: 10px;
+    padding-right: 10px;
 }

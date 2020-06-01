@@ -35,11 +35,12 @@ namespace RNN.Controllers
             ViewData["Title"] = "Populist News & Opinion from Renegade News";
             ViewData["Description"] = "Latest news, populist opinion and analysis from Renegade News";
 
-            var layout = new List<int>() {
-                9, 3,
-                5, 7, 7 };    
+            var layout = new List<int>() 
+            {
+                9, 3, 5, 7, 7 
+            };    
 
-            var trending = (await _articleService.GetHeadlineTopics(5))
+            var trending = (await _articleService.GetHeadlineTopics(layout.Count()))
                 .GroupBy(t => t)
                 .OrderByDescending(g => g.Count())
                 .Select(g => g.Key)
@@ -52,8 +53,11 @@ namespace RNN.Controllers
                 entries, 
                 layout);
 
+            var featured = await _articleService.GetFeaturedArticle();
+
             HomeViewModel model = new HomeViewModel()
             {
+                Featured = featured != null ? FeaturedBlockViewComponent.ToViewModel(featured) : null,
                 Trending = trending,
                 Grouping = group
             };
@@ -80,7 +84,7 @@ namespace RNN.Controllers
             return PartialView("FooterPartial");
         }
 
-        private static GroupingViewComponent GroupArticles(
+        private GroupingViewComponent GroupArticles(
             List<BasicArticle> entries, 
             IEnumerable<int> layout)
         {
@@ -100,7 +104,10 @@ namespace RNN.Controllers
                         columns.Add(new ColumnViewComponent()
                         {
                             Width = block,
-                            Components = new List<ViewComponent>() { VerticalNarrowBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) },
+                            Components = new List<ViewComponent>() 
+                            { 
+                                VerticalNarrowBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) 
+                            },
                             Rows = null
                         });
 
@@ -110,7 +117,10 @@ namespace RNN.Controllers
                     case 9:
                         columns.Add(new ColumnViewComponent() {
                             Width = block,
-                            Components = new List<ViewComponent>() { HorizontalLargeBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) },
+                            Components = new List<ViewComponent>() 
+                            { 
+                                HorizontalLargeBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) 
+                            },
                             Rows = null
                         });
 
@@ -122,7 +132,10 @@ namespace RNN.Controllers
                         columns.Add(new ColumnViewComponent()
                         {
                             Width = block,
-                            Components = new List<ViewComponent>() { VerticalBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) },
+                            Components = new List<ViewComponent>() 
+                            { 
+                                VerticalBlockViewComponent.ToViewModel(entries[i], columns.Count > 0) 
+                            },
                             Rows = null
                         });
 

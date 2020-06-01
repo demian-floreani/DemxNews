@@ -39,7 +39,6 @@
     <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <!-- include ajax functionality -->
-    @*<script src="~/js/ajax.js"></script>*@
     <script>
         function get(n, t) { ajax("GET", n, null, t) } function post(n, t, e) { ajax("POST", n, t, e) } function put(n, t, e) { ajax("PUT", n, t, e) } function load(n, t, e) { get(n, function (n) { document.getElementById(t).innerHTML = n, null != e && e() }) } function append(n, t, e) { get(n, function (n) { document.getElementById(t).insertAdjacentHTML("beforeend", n), null != e && e() }) } function ajax(n, t, e, a) { var o = new XMLHttpRequest; null !== a && (o.onreadystatechange = function () { 4 === this.readyState && 200 === this.status && a(this.responseText) }), o.open(n, t, !0), null !== e ? (o.setRequestHeader("Content-Type", "application/json"), o.send(JSON.stringify(e))) : o.send() }
     </script>
@@ -99,8 +98,8 @@
 
     <div class="container" id="page-footer"></div>
 
-    @if ((bool)ViewData["ShowModal"] == true)
-    {
+    @*@if ((bool)ViewData["ShowModal"] == true)
+    {*@
         @*<div id="myModal" class="modal">
                             <div class="modal-content">
                                 <header><h1><i>Your source for Populist News & Opinion</i></h1><span class="close">&times;</span></header>
@@ -114,7 +113,7 @@
                                 <p>We also use cookies, to provide you with the best user expericence. By continuing to use the site you agree with this.</p>
                             </div>
                         </div>*@
-    }
+    @*}*@
 
 </body>
 </html>

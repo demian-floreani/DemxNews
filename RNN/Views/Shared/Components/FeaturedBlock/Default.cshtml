@@ -1,0 +1,24 @@
+﻿@model RNN.Models.ViewModels.ViewComponents.FeaturedBlockViewComponent
+
+
+    <a asp-route="display" asp-route-slug="@Model.Slug">
+        <div class="row featured">
+            <div class="col-sm-12 featured-block-column">
+                <header>
+                    <h1><i>@Model.HeadLine</i></h1>
+                </header>
+
+                <picture>
+                    <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-large.WebP" type="image/webp">
+                    <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-large.Jpg" type="image/jpeg">
+                    <source srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
+                    <img class="article-img" src="~/images/uploads/@Model.Img-medium.Jpg" alt="">
+                </picture>
+
+                <section>
+                    <p>@Model.Paragraph</p>
+                </section>
+            </div>
+        </div>
+    </a>
+

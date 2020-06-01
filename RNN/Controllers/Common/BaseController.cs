@@ -39,16 +39,13 @@ namespace RNN.Controllers.Common
 
             ViewData["IsLoggedIn"] = User.Identity.IsAuthenticated;
 
-            if (Request.Cookies["ShowModal"] == null)
-            {
-                ViewData["ShowModal"] = true;
-                var option = new CookieOptions();
-                option.Expires = DateTime.Now.AddMinutes(10);
-                Response.Cookies.Append("ShowModal", "false", option);
-            }
-
-            ViewData["IncludeJQuery"] = false;
-            ViewData["IncludeDisqus"] = false;
+            //if (Request.Cookies["ShowModal"] == null)
+            //{
+            //    ViewData["ShowModal"] = true;
+            //    var option = new CookieOptions();
+            //    option.Expires = DateTime.Now.AddMinutes(10);
+            //    Response.Cookies.Append("ShowModal", "false", option);
+            //}
         }
     }
 }

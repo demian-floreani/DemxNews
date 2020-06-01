@@ -13,6 +13,11 @@
     </div>
 </div>
 
+@if(Model.Featured != null)
+{
+    @await Component.InvokeAsync(typeof(FeaturedBlockViewComponent), new { component = Model.Featured })
+}
+
 <div id="groupings">
     @await Component.InvokeAsync(typeof(GroupingViewComponent), new { component = Model.Grouping })  
 </div>

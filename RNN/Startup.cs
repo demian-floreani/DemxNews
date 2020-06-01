@@ -19,7 +19,6 @@ using RNN.Data.Repositories.Impl;
 using RNN.Data.Impl;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
-using RNN.Rules;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -136,10 +135,6 @@ namespace RNN
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
-            //var options = new RewriteOptions();
-            //options.Rules.Add(new RedirectToWwwRule());
-            //app.UseRewriter(options);
 
             if (env.IsDevelopment())
             {

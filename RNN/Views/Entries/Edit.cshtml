@@ -120,28 +120,17 @@
                 }
             });
         });
-        @*setInterval(function () {
-            $.ajax({
-                method: "POST",
-                url: "/article/body/save",
-                data: JSON.stringify({ "Body": $("#Body").html(), "EntryId": @Model.Id }),
-                contentType: "application/json",
-                success: function (msg) {
-                },
-                error: function (req, status, error) {
-                    //alert(error.responseText);
-                }
-            });
-        }, 5000);*@
 
         tinymce.init({
             selector: 'textarea',
+            height: '480',
             plugins: ['link', 'code']
         });
-
     });
 
 </script>
+
+
 
 <form asp-action="OnEdit" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
@@ -150,20 +139,33 @@
         <div class="col-sm-12">
             <h2>Review your content</h2>
 
-            <button type="button" id="preview-button" class="btn btn-default submit-button">Preview</button>
+            @*<button type="button" id="preview-button" class="btn btn-default submit-button">Preview</button>*@
 
-            @if ((int)ViewData["IsPinned"] != 1) {
+            @if ((bool) ViewData["IsFeatured"])
+            {
+                <button type="button" id="unfeature-button" class="btn btn-default submit-button">Un Feature</button>
+            }
+            else
+            {
+                <button type="button" id="feature-button" class="btn btn-default submit-button">Feature</button>
+            }
+
+            @if ((int)ViewData["IsPinned"] != 1)
+            {
                 <button type="button" id="pin-button" class="btn btn-default submit-button">Pin</button>
             }
-            else {
+            else
+            {
                 <button type="button" id="unpin-button" class="btn btn-default submit-button">Un Pin</button>
             }
 
-            @if (!(bool)ViewData["IsPublished"]) {
+            @if (!(bool)ViewData["IsPublished"])
+            {
                 <input type="submit" value="Save Draft" class="btn btn-default submit-button" />
                 <button type="button" id="publish-button" class="btn btn-default submit-button">Publish</button>
             }
-            else {
+            else
+            {
                 <input type="submit" value="Save Changes" class="btn btn-default submit-button" />
                 <button type="button" id="unpublish-button" class="btn btn-default submit-button">Unpublish</button>
             }
@@ -234,43 +236,6 @@
                     </div>
                 </div>
             </div>
-
-            @*<div class="row side-block">
-                    <div class="col-sm-12">
-                        <mark><span>Enjoy our content?</span></mark>
-
-                        <div class="inner">
-                            <p>We strive to provide a common-sense perspective of today's current events. If you, like us, love straight, unbiased news, please consider donating.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row side-block">
-                    <div class="col-sm-12">
-                        <mark><span>Spread the word</span></mark>
-
-                        <div class="inner">
-                            <div class="fb-like" data-href="https://www.renegadenews.net/article/@(Model.Article.Slug)" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div>
-                        </div>
-                    </div>
-                </div>*@
-
-            @*@if (Model.Reccomendations.Any())
-                {
-                    <div class="row side-block">
-
-                        <div class="col-sm-12">
-                            <div class="text-block">
-                                <mark><span>More like this</span></mark>
-                            </div>
-                        </div>
-
-                        @foreach (var r in Model.Reccomendations)
-                        {
-                            @await Component.InvokeAsync(typeof(ReccomendationBlockViewComponent), new { component = r })
-                        }
-                    </div>
-                }*@
         </div>
     </div>
 </form>
@@ -278,3 +243,27 @@
 
 
 
+<script>
+    window.onload = function () {
+        var unfeature = document.getElementById("unfeature-button");
+
+        if (unfeature) {
+            unfeature.addEventListener("click", function () {
+                put("/article/@Model.Id/unfeature", null, function () {
+                    location.reload();
+                });
+            });
+        }
+
+        var feature = document.getElementById("feature-button");
+
+        if (feature) {
+            feature.addEventListener("click", function () {
+                put("/article/@Model.Id/feature", null, function () {
+                    location.reload();
+                });
+            });
+        }
+
+    }
+</script>

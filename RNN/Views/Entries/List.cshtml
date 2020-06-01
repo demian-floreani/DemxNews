@@ -20,19 +20,21 @@
             <th><b>Views</b></th>
             <th><b>Published</b></th>
             <th><b>Pinned</b></th>
+            <th><b>Featured</b></th>
             <th><b>Actions</b></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.HeadLine</td>
-                <td>@item.PageViews</td>
-                <td>@item.IsPublished</td>
-                <td>@item.IsPinned</td>
-                <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
-            </tr>
+        <tr>
+            <td>@item.HeadLine</td>
+            <td>@item.PageViews</td>
+            <td>@item.IsPublished</td>
+            <td>@item.IsPinned</td>
+            <td>@item.IsFeatured</td>
+            <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
+        </tr>
         }
     </tbody>
 </table>

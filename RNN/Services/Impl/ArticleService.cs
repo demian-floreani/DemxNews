@@ -4,7 +4,6 @@ using RNN.Data.Repositories;
 using RNN.Models;
 using RNN.Models.ViewModels.Data;
 using RNN.Services.Impl;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -96,7 +95,8 @@ namespace RNN.Services
         public Task<List<BasicArticle>> GetHeadlineArticles(int top, int offset)
         {
             var task = _entryRepository
-                .FindBy(e => e.IsPublished)
+                .FindBy(e => e.IsPublished &&
+                             !e.IsFeatured)
                 .OrderByDescending(a => a.IsPinned)
                     .ThenByDescending(a => a.Date)
                 .Skip(offset)
@@ -141,6 +141,23 @@ namespace RNN.Services
 
             _entryRepository.Update(article, e => e.PageViews);
             await _unitOfWork.Commit();
+        }
+
+        public Task<BasicArticle> GetFeaturedArticle()
+        {
+            var task = _entryRepository
+                .FindBy(a => a.IsFeatured &&
+                             a.IsPublished)
+                .Select(e => new BasicArticle()
+                {
+                    HeadLine = e.HeadLine,
+                    Img = e.Img,
+                    Paragraph = e.Paragraph,
+                    Slug = e.Slug
+                })
+                .FirstOrDefaultAsync();
+
+            return task;
         }
     }
 }

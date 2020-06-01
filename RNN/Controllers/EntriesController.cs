@@ -86,7 +86,6 @@ namespace RNN.Controllers
 
             ViewData["TopicDataList"] = topics;
 
-            ViewData["IncludeJQuery"] = true;
 
             return View();
         }
@@ -150,7 +149,7 @@ namespace RNN.Controllers
             ViewData["TopicDataList"] = topics;
             ViewData["IsPublished"] = article.IsPublished;
             ViewData["IsPinned"] = article.IsPinned;
-            ViewData["IncludeJQuery"] = true;
+            ViewData["IsFeatured"] = article.IsFeatured;
 
             return View(new EditArticle()
             {
@@ -207,20 +206,18 @@ namespace RNN.Controllers
             await _entryService.Publish(article);
 
             await GenerateSitemap();
-
-            //_sitemapService.PingGoogle();
         }
 
         private async Task GenerateSitemap()
         {
             var sitemapPath = Path.Combine(_hostingEnvironment.WebRootPath, "sitemap.xml");
 
-            var sitemap = _sitemapService.GenerateSitemap((await _entryService.GetPublishedEntries()).Select(e =>
-            new Page()
-            {
-                Url = string.Concat("/article/", e.Slug),
-                LastModified = e.LastModified
-            }));
+            var sitemap = _sitemapService.GenerateSitemap((await _entryService.GetPublishedEntries())
+                .Select(e => new Page()
+                {
+                    Url = string.Concat("/article/", e.Slug),
+                    LastModified = e.LastModified
+                }));
 
             if (sitemap != null)
             {
@@ -244,6 +241,7 @@ namespace RNN.Controllers
             return topics.Select(et => et.Name);
         }
 
+        [HttpPut]
         [Route("article/pin")]
         public async Task Pin(int article)
         {
@@ -255,6 +253,22 @@ namespace RNN.Controllers
         public async Task UnPin(int article)
         {
             await _entryService.UnPin(article);
+        }
+
+        [HttpPut]
+        [Route("article/{id}/feature")]
+        public async Task Feature(
+            [FromRoute] int id)
+        {
+            await _entryService.Feature(id);
+        }
+
+        [HttpPut]
+        [Route("article/{id}/unfeature")]
+        public async Task UnFeature(
+            [FromRoute] int id)
+        {
+            await _entryService.UnFeature(id);
         }
 
         [HttpPost]

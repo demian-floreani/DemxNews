@@ -1,30 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using RNN.Data;
 using RNN.Data.Impl;
 using RNN.Data.Repositories;
-using RNN.Data.Repositories.Impl;
 using RNN.Exceptions;
 using RNN.Models;
-using RNN.Models.Identity;
-using RNN.Models.ViewModels;
 using RNN.Models.ViewModels.Data;
 using RNN.Models.ViewModels.Forms;
-using RNN.Models.ViewModels.ViewComponents;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace RNN.Services.Impl
 {
@@ -423,6 +410,32 @@ namespace RNN.Services.Impl
             entity.IsPinned = 0;
 
             _entryRepository.Update(entity, e => e.IsPinned);
+
+            await _unitOfWork.Commit();
+        }
+
+        public async Task Feature(int article)
+        {
+            var entity = await _entryRepository
+                .FindBy(e => e.Id == article)
+                .FirstOrDefaultAsync();
+
+            entity.IsFeatured = true;
+
+            _entryRepository.Update(entity, e => e.IsFeatured);
+
+            await _unitOfWork.Commit();
+        }
+
+        public async Task UnFeature(int article)
+        {
+            var entity = await _entryRepository
+                .FindBy(e => e.Id == article)
+                .FirstOrDefaultAsync();
+
+            entity.IsFeatured = false;
+
+            _entryRepository.Update(entity, e => e.IsFeatured);
 
             await _unitOfWork.Commit();
         }

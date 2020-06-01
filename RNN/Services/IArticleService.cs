@@ -17,5 +17,6 @@ namespace RNN.Services.Impl
         Task<List<BasicArticle>> GetHeadlineArticles(int top, int offset = 0);
         Task<List<Topic>> GetHeadlineTopics(int top);
         Task IncreaseViews(int article);
+        Task<BasicArticle> GetFeaturedArticle();
     }
 }

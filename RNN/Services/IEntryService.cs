@@ -42,6 +42,10 @@ namespace RNN.Services
 
         Task UnPin(int article);
 
+        Task Feature(int article);
+
+        Task UnFeature(int article);
+
         Task<List<BasicArticle>> GetPublishedEntries();
 
         Task<List<Topic>> GetEntryTopics(int article);
