@@ -168,6 +168,12 @@ namespace RNN.Services.Impl
                     tracker.Track(e => e.Img);
                 }
 
+                if(form.Caption != null)
+                {
+                    article.Caption = form.Caption;
+                    tracker.Track(e => e.Caption);
+                }
+
                 _entryRepository.Update(article, tracker);
                 await _unitOfWork.Commit();
             }

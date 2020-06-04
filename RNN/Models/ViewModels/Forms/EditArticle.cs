@@ -16,5 +16,6 @@ namespace RNN.Models.ViewModels.Forms
         public string Body { get; set; }
         public string Url { get; set; }
         public int? PrimaryTopic { get; set; }
+        public string Caption { get; set; }
     }
 }

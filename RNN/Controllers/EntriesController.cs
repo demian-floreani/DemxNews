@@ -158,7 +158,8 @@ namespace RNN.Controllers
                 Url = article.Url,
                 Body = article.Body,
                 Paragraph = article.Paragraph,
-                ImgUrl = article.Img
+                ImgUrl = article.Img,
+                Caption = article.Caption
             });
         }
 

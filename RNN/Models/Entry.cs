@@ -26,6 +26,7 @@ namespace RNN.Models
         public int IsPinned { get; set; }
         public DateTime LastModified { get; set; }
         public bool IsFeatured { get; set; }
+        public string Caption { get; set; }
         public ICollection<EntryToTopic> EntryToTopics { get; set; }
     }
 }

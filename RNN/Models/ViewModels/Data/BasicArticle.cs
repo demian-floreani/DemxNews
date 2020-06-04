@@ -14,5 +14,6 @@ namespace RNN.Models.ViewModels.Data
         public string HeadLine { get; set; }
         public DateTime LastModified { get; set; }
         public string PrimaryTopic { get; set; }
+        public string Caption { get; set; }
     }
 }

@@ -153,7 +153,8 @@ namespace RNN.Services
                     HeadLine = e.HeadLine,
                     Img = e.Img,
                     Paragraph = e.Paragraph,
-                    Slug = e.Slug
+                    Slug = e.Slug,
+                    Caption = e.Caption
                 })
                 .FirstOrDefaultAsync();
 

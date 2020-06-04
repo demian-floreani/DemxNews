@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using RNN.Controllers.Common;
 using RNN.Models;
 using RNN.Models.ViewModels.Pages;
@@ -19,14 +21,17 @@ namespace RNN.Controllers
     {
         private readonly ITopicService _topicService;
         private readonly IArticleService _articleService;
+        private readonly IMemoryCache _cache;
 
         public ArticleController(
             IWebHostEnvironment environment,
             IArticleService articleService,
-            ITopicService topicService) :base(environment)
+            ITopicService topicService,
+            IMemoryCache cache) :base(environment)
         {
             _topicService = topicService;
             _articleService = articleService;
+            _cache = cache;
         }
 
         /// <summary>
@@ -39,9 +44,14 @@ namespace RNN.Controllers
         public async Task<IActionResult> Get(
             [FromRoute] string slug)
         {
-            //var user = User.Identity.IsAuthenticated ? (await _userManager.GetUserAsync(HttpContext.User)).Id : null;
+            // get article from cache
+            if(!_cache.TryGetValue<Entry>(slug, out Entry article))
+            {
+                article = await _articleService.GetArticleBySlugAsync(slug);
+                _cache.Set(slug, article);
+            }    
 
-            var article = await _articleService.GetArticleBySlugAsync(slug);
+            //var user = User.Identity.IsAuthenticated ? (await _userManager.GetUserAsync(HttpContext.User)).Id : null;
 
             ViewData["Title"] = article.HeadLine;
             ViewData["Description"] = article.Paragraph;

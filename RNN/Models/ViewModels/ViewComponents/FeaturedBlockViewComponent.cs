@@ -14,6 +14,7 @@ namespace RNN.Models.ViewModels.ViewComponents
         public string Paragraph { get; set; }
         public string Img { get; set; }
         public string Topic { get; set; }
+        public string Caption { get; set; }
 
         public static FeaturedBlockViewComponent ToViewModel(BasicArticle model)
         {
@@ -23,11 +24,12 @@ namespace RNN.Models.ViewModels.ViewComponents
                 HeadLine = model.HeadLine,
                 Paragraph = model.Paragraph,
                 Img = model.Img,
-                Topic = model.PrimaryTopic
+                Topic = model.PrimaryTopic,
+                Caption = model.Caption
             };
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(FeaturedBlockViewComponent component)
+        public IViewComponentResult Invoke(FeaturedBlockViewComponent component)
         {
             return View(component);
         }

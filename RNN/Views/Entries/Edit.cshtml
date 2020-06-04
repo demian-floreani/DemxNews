@@ -189,7 +189,9 @@
     <div class="row">
         <div class="col-xs-12 col-md-8 middle-column">
             <article>
-                <p class="source">Sourced from <input asp-for="Url" class="edit-mode-url-input" /></p>
+                <p class="source">Sourced from <input asp-for="Url" class="edit-mode-url-input" value="@Model.Url" /></p>
+
+                <p class="source">Caption <input asp-for="Caption" class="edit-mode-url-input" value="@Model.Caption" /></p>
 
                 <div class="row image-block">
                     <div class="col-sm-3">
@@ -240,10 +242,12 @@
     </div>
 </form>
 
-
-
-
 <script>
+    function getElement(id)
+    {
+        return document.getElementById(id);
+    }
+
     window.onload = function () {
         var unfeature = document.getElementById("unfeature-button");
 
