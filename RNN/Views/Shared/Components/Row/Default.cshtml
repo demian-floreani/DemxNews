@@ -2,7 +2,7 @@
 @using RNN.Models.ViewModels.ViewComponents
 
 @foreach (var row in Model) {
-    <div class="row">
+    <div class="row grid-row">
        @foreach(var column in row.Columns) {
             <div class="col-md-@column.Width">
                 @if (column.Rows != null) {

@@ -1,30 +1,62 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.HorizontalMediumBlockViewComponent
 
-@*<div class="row horizontal-block-row">*@
-    <div class="col-sm-12 horizontal-block-column @(Model.HasBorder ? "block-border" : "")">
-        @*<div class="prefix">@Model.Title</div>*@
-        <mark><span>@Model.Topic</span></mark>
-        <div class="seperator"></div>
-        <a asp-route="display" asp-route-slug="@Model.Slug">
-            <div class="horizontal-block">
-                <div class="row">
-                    <div class="col-sm-6 left-column">
-                        <picture>
-                            <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
-                            <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
-                        </picture>
-                    </div>
-                    <div class="col-sm-6 right-column">
+<a asp-route="display" asp-route-slug="@Model.Slug" style="width:100%">
+    <div class="horizontal-block">
+        <div class="col-sm-12 horizontal-block-column @(Model.HasBorder ? "block-border" : "")">
+            <div class="row">
+                <!-- display in larger -->
+                <div class="d-sm-block d-none col-sm-6 left-column">
+                    <picture>
+                        <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                        <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
+                    </picture>
+                </div>
+                <!-- display in smaller -->
+                <div class="d-block d-sm-none d-md-none d-lg-none col-sm-6 left-column">
+                    <header>
+                        <mark><span class="mark-span">@Model.Topic</span></mark><span>@Model.HeadLine</span>
+                    </header>
+                </div>
+
+                <!-- display in smaller -->
+                <div class="d-block d-sm-none d-md-none d-lg-none col-sm-6 right-column">
+                    <picture>
+                        <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                        <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
+                    </picture>
+                </div>
+                <!-- display in larger -->
+                <div class="d-none d-sm-block d-md-block d-lg-block col-sm-6 right-column">
+                    <div class="flex-container">
                         <header>
-                            @*@if (Model.Topic != null)
-                            {
-                                <span class="post-tag">@Model.Topic</span><span class="post-span-divider">/</span>
-                            }*@
-                            <span>@Model.HeadLine</span>
+                            <mark><span class="mark-span">@Model.Topic</span></mark><span>@Model.HeadLine</span>
                         </header>
+
+                        <section class="d-block d-sm-none d-md-none d-lg-none d-xl-block">
+                            @Model.Paragraph
+                        </section>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
-@*</div>*@
+</a>
+
+        @*<div class="col-sm-12 horizontal-block-column @(Model.HasBorder ? "block-border" : "")">
+            <mark><span>@Model.Topic</span></mark>
+            <div class="seperator"></div>
+            <a asp-route="display" asp-route-slug="@Model.Slug">
+                <div class="horizontal-block">
+                    <div class="row">
+                        <div class="col-sm-6 left-column">
+
+                        </div>
+                        <div class="col-sm-6 right-column">
+                            <header>
+                                <span>@Model.HeadLine</span>
+                            </header>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>*@

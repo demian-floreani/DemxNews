@@ -2,20 +2,108 @@
 @color: #d75f0f;
 @background: #f5f5f5;
 
+.featured-section {
+    /*margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid darkgray;*/
+}
+
+header {
+    color: #000000;
+    padding: 5px;
+    font-style: italic;
+    font-family: @merriweather;
+}
+
+section {
+    color: #000000;
+    padding: 5px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+mark {
+    font-size: 1rem;
+}
+
+.horizontal-large-block-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.horizontal-block-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.vertical-block-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.vertical-narrow-block-column {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .vertical-block header {
-    font-size: 20px;
+    font-size: 1rem;
 }
 
 .vertical-narrow-block header {
-    font-size: 20px;
+    font-size: 1.4rem;
+}
+
+.vertical-narrow-block section {
+    font-size: 1rem;
 }
 
 .horizontal-large-block header {
-    font-size: 20px;
+    font-size: 1.4rem;
+}
+
+.horizontal-large-block section {
+    font-size: 1rem;
 }
 
 .horizontal-block header {
-    font-size: 20px;
+    font-size: 1.4rem;
+}
+
+.horizontal-block section {
+    font-size: 0.9rem;
+}
+
+.vertical-block header {
+    font-size: 1.4rem;
+}
+
+.featured header h1 {
+    font-size: 1.7rem;
+}
+
+.featured p {
+    font-size: 1rem;
+}
+
+.horizontal-large-block {
+    border-bottom: 1px solid gray;
+}
+
+.vertical-narrow-block {
+    border-bottom: 1px solid gray;
+}
+
+.vertical-block {
+    border-bottom: 1px solid gray;
+}
+
+.horizontal-block {
+    border-bottom: 1px solid gray;
 }
 
 @media (min-width: 576px) {
@@ -47,9 +135,49 @@
     .right-column {
         padding-left: 5px;
     }
+
+    .featured header h1 {
+        font-size: 1.8rem;
+    }
+
+    .featured-block-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 @media (min-width: 768px) {
+    .horizontal-large-block {
+        border-bottom: none;
+    }
+
+    .vertical-narrow-block {
+        border-bottom: none;
+    }
+
+    .vertical-block {
+        border-bottom: none;
+    }
+
+    .horizontal-block {
+        border-bottom: none;
+    }
+
+    section {
+        padding: 0;
+        padding-top: 5px;
+    }
+
+    header {
+        padding: 0;
+        padding-top: 5px;
+    }
+
+    .featured-section {
+        margin-bottom: 10px;
+        border-bottom: 1px solid darkgray;
+    }
+
     .trending-container {
         display: flex;
         flex-direction: row;
@@ -76,19 +204,51 @@
     .block-border {
         border-left: 1px solid darkgray;
     }
+
+    .featured header h1 {
+        font-size: 1.9rem;
+    }
+
+    .featured p {
+        font-size: 18px;
+    }
+
+    .horizontal-large-block-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .horizontal-block-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .vertical-block-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .vertical-narrow-block-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 @media (min-width: 992px) {
+    .grid-row {
+        margin-bottom: 10px;
+    }
+
     .horizontal-large-block header {
         font-size: 24px;
     }
 
     .vertical-block header {
-        font-size: 24px;
+        font-size: 1.3rem;
     }
 
     .vertical-narrow-block header {
-        font-size: 20px;
+        font-size: 1.20rem;
     }
 
     .horizontal-block header {
@@ -97,6 +257,18 @@
 
     .featured img {
         width: auto !important;
+    }
+
+    .featured header h1 {
+        font-size: 2.2rem;
+    }
+
+    .featured p {
+        font-size: 18px;
+    }
+
+    mark {
+        font-size: 1.2rem;
     }
 }
 
@@ -110,11 +282,23 @@
     }
 
     .vertical-narrow-block header {
-        font-size: 24px;
+        font-size: 1.4rem;
+    }
+
+    .vertical-narrow-block section {
+        font-size: 1rem;
     }
 
     .horizontal-block header {
-        font-size: 22px;
+        font-size: 1.3rem;
+    }
+
+    .featured header h1 {
+        font-size: 2.5rem;
+    }
+
+    .featured p {
+        font-size: 18px;
     }
 }
 
@@ -154,13 +338,6 @@
 .subjects-block {
     border-top: 1px solid black;
     border-bottom: 2px solid black;
-}
-
-.featured-section {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid darkgray;
 }
 
 /*************/
@@ -205,12 +382,6 @@
     margin-bottom: 10px;
 }
 
-.horizontal-large-block-column {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 10px;
-}
-
 .prefix {
     border-bottom: 1px solid @color;
     font-style: italic;
@@ -218,10 +389,6 @@
     color: @color;
     margin-bottom: 5px;
     line-height: 1;
-}
-
-.horizontal-large-block {
-    background-color: @background;
 }
 
 .horizontal-large-block:hover {
@@ -234,24 +401,18 @@
     margin-right: 15px;
 }
 
-.horizontal-large-block header {
+.horizontal-large-block header span {
     color: #000000;
     font-style: italic;
     font-family: @merriweather;
     padding-top: 5px;
-}
-
-.horizontal-large-block header span {
-    display: block;
+    display: inline;
     line-height: 1.35;
 }
 
 .horizontal-large-block section {
-    font-size: 14px;
-    font-family: @merriweather;
     margin-bottom: 5px;
     display: block;
-    color: #000000;
 }
 
 .subject-sub-title {
@@ -267,13 +428,10 @@
 }*/
 
 .vertical-block-column {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .vertical-block {
-    background-color: @background;
 }
 
 .vertical-block:hover {
@@ -281,27 +439,22 @@
     cursor: pointer;
 }
 
-.vertical-block > header {
-    padding: 5px;
+.vertical-block header span {
     color: #000000;
     font-style: italic;
     font-family: @merriweather;
-}
-
-.vertical-block > header > span {
-    display: block;
+    padding-top: 5px;
+    display: inline;
     line-height: 1.35;
 }
 
-.vertical-block > picture > img {
+.vertical-block img {
     width: 100%;
 }
 
 /***********/
 
 .vertical-narrow-block-column {
-    padding-left: 10px;
-    padding-right: 10px;
     margin-bottom: 10px;
 }
 
@@ -314,26 +467,23 @@
     cursor: pointer;
 }
 
-.vertical-narrow-block > header {
-    padding: 5px;
-    font-family: @merriweather;
-    font-style: italic;
+.vertical-narrow-block header span {
     color: #000000;
-}
-
-.vertical-narrow-block > header > span {
-    display: block;
+    font-style: italic;
+    font-family: @merriweather;
+    padding-top: 5px;
+    display: inline;
     line-height: 1.35;
 }
 
-.vertical-narrow-block > picture > img {
+.vertical-narrow-block img {
     width: 100%;
 }
 
 /***********/
 
 .horizontal-block {
-    background-color: @background;
+    /*background-color: @background;*/
 }
 
 .horizontal-block:hover {
@@ -346,24 +496,15 @@
 }
 
 .horizontal-block-column {
-    padding-left: 10px;
-    padding-right: 10px;
     margin-bottom: 10px;
 }
 
-.horizontal-block picture > img {
+.horizontal-block img {
     width: 100%;
 }
 
-.horizontal-block header {
-    color: #000000;
-    font-family: @merriweather;
-    padding-top: 5px;
-    font-style: italic;
-}
-
-.horizontal-block header > span {
-    display: block;
+.horizontal-block header span {
+    display: inline;
     line-height: 1.35;
 }
 
@@ -371,20 +512,6 @@
 .highlight {
     font-size: 20px;
     background-color: yellow;
-}
-
-mark {
-    background-color: @color;
-    font-size: 16px;
-    color: white;
-    font-family: @merriweather;
-    margin-bottom: 5px;
-    display: inline-block;
-    /*width: 100%;*/
-    padding-left: 5px;
-    padding-right: 5px;
-    /*padding-top: 2px;
-    padding-bottom: 2px;*/
 }
 
 .seperator {
@@ -476,24 +603,21 @@ mark {
 
 .featured {
     text-align: center;
-    margin-bottom: 5px;
     border-bottom: 1px solid gray;
 }
 
-.featured header {
-    font-size: 28px;
-    color: red;
-}
-
 .featured header h1 {
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 15px;
+    font-family: 'Merriweather',serif;
+    font-style: italic;
+    color: @color;
+    font-weight: bold;
 }
 
 .featured p {
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 10px;
-    font-size: 18px;
     color: #000000;
 }
 
@@ -507,6 +631,22 @@ mark {
 }
 
 .featured-block-column {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+mark {
+    background-color: @color;
+    color: white;
+    font-family: @merriweather;
+    margin-bottom: 5px;
+    display: inline;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
+}
+
+.mark-span {
+    color: #ffffff !important;
+    font-style: normal !important;
 }

@@ -11,6 +11,7 @@ namespace RNN.Models.ViewModels.ViewComponents
     {
         public string Slug { get; set; }
         public string Title { get; set; }
+        public string Paragraph { get; set; }
         public string HeadLine { get; set; }
         public string Img { get; set; }
         public string Author { get; set; }
@@ -23,6 +24,7 @@ namespace RNN.Models.ViewModels.ViewComponents
             {
                 Slug = model.Slug,
                 HeadLine = model.HeadLine,
+                Paragraph = model.Paragraph,
                 Img = model.Img,
                 Topic = model.PrimaryTopic,
                 HasBorder = hasBorder

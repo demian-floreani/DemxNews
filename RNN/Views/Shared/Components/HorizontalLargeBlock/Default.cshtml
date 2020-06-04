@@ -1,31 +1,27 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.HorizontalLargeBlockViewComponent
 
-@*<div class="row horizontal-large-block-row">*@
-    <div class="col-sm-12 horizontal-large-block-column @(Model.HasBorder ? "block-border" : "")">
-        <mark><span>@Model.Topic</span></mark>
-        <div class="seperator"></div>
-        <a asp-route="display" asp-route-slug="@Model.Slug">
-            <div class="horizontal-large-block">
-                <div class="row row-equal">
-                    <div class="col-sm-8 left-column">
-                        <picture>
-                            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
-                            <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.Jpg" type="image/jpeg">
-                            <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
-                            <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
-                        </picture>
-                    </div>
-                    <div class="col-sm-4 right-column">
-                        <div class="flex-container">
-                            <header>
-                                <span>@Model.HeadLine</span>
-                            </header>
+<a asp-route="display" asp-route-slug="@Model.Slug" style="width: 100%">
+    <div class="horizontal-large-block">
+        <div class="col-sm-12 horizontal-large-block-column @(Model.HasBorder ? "block-border" : "")">
+            <header>
+                <mark><span class="mark-span">@Model.Topic</span></mark><span>@Model.HeadLine</span>
+            </header>
 
-                            <section class="d-none d-sm-none d-md-none d-lg-block">@Model.Paragraph</section>
-                        </div>
-                    </div>
+            <div class="seperator"></div>
+
+            <div class="row">
+                <div class="col-sm-8 left-column">
+                    <picture>
+                        <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
+                        <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.Jpg" type="image/jpeg">
+                        <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                        <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
+                    </picture>
+                </div>
+                <div class="col-sm-4 right-column">
+                    <section>@Model.Paragraph</section>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
-@*</div>*@
+</a>

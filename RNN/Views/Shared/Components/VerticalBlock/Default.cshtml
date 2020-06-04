@@ -1,11 +1,10 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.VerticalBlockViewComponent
 
-<div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "block-border" : "")">
-    <mark><span>@Model.Topic</span></mark>
-    <div class="seperator"></div>
+<a asp-route="display" asp-route-slug="@Model.Slug" style="width: 100%">
+    <div class="vertical-block">
+        <div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "block-border" : "")">
+            <header><mark><span class="mark-span">@Model.Topic</span></mark><span>@Model.HeadLine</span></header>
 
-    <a asp-route="display" asp-route-slug="@Model.Slug">
-        <div class="vertical-block">
             <picture>
                 <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
                 <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.Jpg" type="image/jpeg">
@@ -13,7 +12,26 @@
 
                 <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
             </picture>
-            <header><span>@Model.HeadLine</span></header>
+
+            <section>@Model.Paragraph</section>
         </div>
-    </a>
-</div>
+    </div>
+</a>
+
+    @*<div class="col-sm-12 vertical-block-column @(Model.HasBorder ? "block-border" : "")">
+            <mark><span>@Model.Topic</span></mark>
+            <div class="seperator"></div>
+
+            <a asp-route="display" asp-route-slug="@Model.Slug">
+                <div class="vertical-block">
+                    <picture>
+                        <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
+                        <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-medium.Jpg" type="image/jpeg">
+                        <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+
+                        <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
+                    </picture>
+                    <header><span>@Model.HeadLine</span></header>
+                </div>
+            </a>
+        </div>*@
