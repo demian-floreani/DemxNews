@@ -7,7 +7,46 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  background-color: #f1f1f1;
+}
+p {
+  margin-top: 10px;
+}
+.trending-container::-webkit-scrollbar {
+  display: none;
+}
+.trending-container a {
+  display: inline-block;
+  float: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.trending-container-row {
+  border-top: 1px solid black;
+  border-bottom: 2px solid black;
+}
+.trending-container-column {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.trending-container {
+  overflow: auto;
+  white-space: nowrap;
+}
+.trending-container span {
+  display: inline-block;
+  color: #000;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Merriweather', serif;
+}
+.trending-container a span:hover {
+  color: #FC7416;
+}
+.trending-container a:hover {
+  cursor: pointer;
 }
 .top-row {
   display: flex;

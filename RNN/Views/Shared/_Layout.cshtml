@@ -35,7 +35,7 @@
     <meta name="twitter:creator" content="@@RNNOnline">
     <meta name="twitter:card" content="summary_large_image">
 
-    <script defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>
+    @*<script defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=563553090853853&autoLogAppEvents=1"></script>*@
     <script defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <!-- include ajax functionality -->
@@ -52,18 +52,18 @@
 
             gtag('config', 'UA-159386801-1');
         </script>*@
-    
+
     <script defer>
         load("/home/footer", "page-footer");
     </script>
 </head>
 <body>
-    <div id="fb-root"></div>
+    @*<div id="fb-root"></div>*@
 
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="fb-like" data-href="https://www.facebook.com/rnnonline/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
+                <a href="https://twitter.com/RNNOnline?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@("Follow @RNNOnline")</a>
 
                 @if ((bool)ViewData["IsLoggedIn"])
                 {
@@ -86,12 +86,24 @@
             <div class="col-sm-6">
                 <a asp-controller="Home" asp-action="Index">
                     <div class="banner">
-                        <img class="header-logo" src="~/images/banner/R.png" alt="site header banner">
+                        <img class="header-logo" src="~/images/banner/transparent.png" alt="site header banner">
                         <span>Straight. Real. News.</span>
                     </div>
                 </a>
             </div>
         </div>
+
+        @if (ViewData["Trending"] != null) {
+            <div class="row trending-container-row">
+                <div class="col-sm-12 trending-container-column">
+                    <div class="trending-container">
+                        @foreach (var topic in ViewData["Trending"] as IEnumerable<Topic>) {
+                            <a asp-route="topiclist" asp-route-topicId="@topic.Id"><span>@topic.Name</span></a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
 
         @RenderBody()
     </div>

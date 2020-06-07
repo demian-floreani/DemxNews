@@ -27,7 +27,7 @@ namespace RNN.Controllers
             IWebHostEnvironment environment,
             IArticleService articleService,
             ITopicService topicService,
-            IMemoryCache cache) :base(environment)
+            IMemoryCache cache) : base(environment)
         {
             _topicService = topicService;
             _articleService = articleService;
@@ -45,19 +45,31 @@ namespace RNN.Controllers
             [FromRoute] string slug)
         {
             // get article from cache
-            if(!_cache.TryGetValue<Entry>(slug, out Entry article))
+            if(!_cache.TryGetValue(slug, out Entry article))
             {
                 article = await _articleService.GetArticleBySlugAsync(slug);
                 _cache.Set(slug, article);
-            }    
+            }
 
-            //var user = User.Identity.IsAuthenticated ? (await _userManager.GetUserAsync(HttpContext.User)).Id : null;
+            if (!_cache.TryGetValue("trending", out IEnumerable<Topic> trending))
+            {
+                trending = (await _articleService.GetHeadlineTopics(5))
+                    .GroupBy(t => t)
+                    .OrderByDescending(g => g.Count())
+                    .Select(g => g.Key)
+                    .Take(5)
+                    .ToList();
+
+                _cache.Set("trending", trending, DateTimeOffset.Now.AddDays(1));
+            }
+
+            ViewData["Trending"] = trending;
 
             ViewData["Title"] = article.HeadLine;
             ViewData["Description"] = article.Paragraph;
-            ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img);
+            ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img, "-medium.Jpg");
             ViewData["OGUrl"] = string.Concat("https://www.renegadenews.net/article/", article.Slug);
-
+            
             var topics = article
                 .EntryToTopics
                 .Select(et => et.Topic);
@@ -65,12 +77,11 @@ namespace RNN.Controllers
             DisplayArticle model = new DisplayArticle()
             {
                 Article = article,
-                Topics = topics
+                Topics = topics,
+                Timestamp = article.Date,
+                Author = article.ApplicationUser.DisplayName
             };
-            
-            //model.ViewModelData.Add("IsAuthor", user != null ? user == article.ApplicationUserId : false);
-            model.ViewModelData.Add("IsAuthor", false);
-
+        
             return View("Index", model);
         }
 

@@ -6,6 +6,10 @@
   display: block !important;
 }
 @media (min-width: 576px) {
+  .trending-container {
+    display: flex;
+    overflow-x: auto;
+  }
   .col-sm-12 {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
@@ -48,6 +52,12 @@
   }
 }
 @media (min-width: 768px) {
+  .trending-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
   .col-md-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;

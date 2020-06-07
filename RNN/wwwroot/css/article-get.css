@@ -1,4 +1,4 @@
-.opinion-header-row {
+﻿.opinion-header-row {
   background-color: #FC7416;
 }
 .opinion-page-side-header {
@@ -34,7 +34,7 @@ header > p {
   font-family: 'Merriweather', serif;
 }
 article {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .article-img {
   width: 100%;
@@ -93,9 +93,29 @@ p {
   margin-bottom: 4px;
 }
 /* global */
+.reccomendations-block-column {
+  margin-bottom: 10px;
+}
+.reccomendation-block {
+  background-color: #eff5f5;
+}
+.reccomendation-block:hover {
+  background-color: #e0ebeb;
+  cursor: pointer;
+}
+.reccomendation-block header {
+  padding: 5px;
+  color: #000000;
+  font-size: 18px;
+}
+.reccomendation-block header span {
+  font-family: 'Merriweather', serif;
+}
+.reccomendation-block > picture > img {
+  width: 100%;
+  display: block;
+}
 .vertical-block-column {
-  /*padding-left: 10px;
-    padding-right: 10px;*/
   margin-bottom: 10px;
 }
 .vertical-block {
@@ -168,4 +188,17 @@ mark {
 }
 a {
   color: #FC7416;
+}
+.info {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.timestamp {
+  font-family: 'Merriweather', serif;
+  font-size: 1.05rem;
+  float: right;
+}
+.author {
+  font-family: 'Merriweather', serif;
+  font-size: 1.05rem;
 }

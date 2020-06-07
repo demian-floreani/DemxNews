@@ -1,11 +1,11 @@
 ﻿@model RNN.Models.ViewModels.ViewComponents.ReccomendationBlockViewComponent
 
-<div class="col-xs-4 col-md-12 vertical-block-column">
+<div class="col-xs-4 col-md-12 reccomendation-block-column">
     <a asp-route="display" asp-route-slug="@Model.Slug">
-        <div class="vertical-block">
+        <div class="reccomendation-block">
             <picture>
                 <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
-                <img loading="lazy" class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="reccomendation to article">
+                <img loading="lazy" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="reccomendation to article">
             </picture>
             
             <header><span>@Model.HeadLine</span></header>

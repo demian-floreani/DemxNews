@@ -1,7 +1,7 @@
 ﻿@model RNN.Models.ViewModels.Pages.HomeViewModel
 @using RNN.Models.ViewModels.ViewComponents
 
-<div class="row trending-container-row">
+@*<div class="row trending-container-row">
     <div class="col-sm-12 trending-container-column">
         <div class="trending-container">
             @foreach (var subject in Model.Trending)
@@ -9,9 +9,8 @@
                 <a asp-route="topiclist" asp-route-topicId="@subject.Id"><span>@subject.Name</span></a>
             }
         </div>
-
     </div>
-</div>
+</div>*@
 
 @if(Model.Featured != null)
 {

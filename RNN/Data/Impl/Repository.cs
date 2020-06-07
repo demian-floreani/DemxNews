@@ -46,14 +46,12 @@ namespace RNN.Data.Impl
 
         public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
-            var queryable = _set.Where(predicate);
-            return queryable;
+            return _set.Where(predicate);
         }
 
         public IQueryable<T> QueryAll()
         {
-            var queryable = _set;
-            return queryable;
+            return _set;
         }
 
         public void Update<P>(T entity, Expression<Func<T, P>> propertyExpression)

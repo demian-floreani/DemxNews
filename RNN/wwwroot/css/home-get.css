@@ -80,10 +80,6 @@ mark {
   border-bottom: 1px solid gray;
 }
 @media (min-width: 576px) {
-  .trending-container {
-    display: flex;
-    overflow-x: auto;
-  }
   .vertical-block header {
     font-size: 20px;
   }
@@ -134,12 +130,6 @@ mark {
   .featured-section {
     margin-bottom: 10px;
     border-bottom: 1px solid darkgray;
-  }
-  .trending-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
   }
   .vertical-block header {
     font-size: 20px;
@@ -268,31 +258,6 @@ mark {
   margin-bottom: 5px;
 }
 /***/
-.post-tag {
-  color: #FC7416;
-  font-weight: bolder;
-  margin-right: 2px;
-}
-.post-tag:hover {
-  cursor: pointer;
-}
-.post-span-divider {
-  padding-left: 1px;
-  padding-right: 2px;
-  color: #FC7416;
-  display: inline-block;
-  transform: scale(1.6);
-}
-/*** posts ***/
-.post {
-  margin-bottom: 5px;
-}
-.post > a > span {
-  color: #000000;
-}
-.post > a > span:hover {
-  color: #FC7416;
-}
 .horizontal-large-block-row {
   margin-bottom: 10px;
 }
@@ -305,7 +270,7 @@ mark {
   line-height: 1;
 }
 .horizontal-large-block:hover {
-  background-color: #e0ebeb;
+  background-color: #dae0e0;
   cursor: pointer;
 }
 .horizontal-large-block picture > img {
@@ -374,7 +339,7 @@ mark {
   /*background-color: @background;*/
 }
 .horizontal-block:hover {
-  background-color: #e0ebeb;
+  background-color: #dae0e0;
   cursor: pointer;
 }
 .horizontal-block-row {
@@ -426,42 +391,6 @@ mark {
   background-color: #d75f0f;
   color: white;
 }
-.trending-container::-webkit-scrollbar {
-  display: none;
-}
-.trending-container a {
-  display: inline-block;
-  float: none;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-.trending-container-row {
-  border-top: 1px solid black;
-  border-bottom: 2px solid black;
-}
-.trending-container-column {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.trending-container {
-  overflow: auto;
-  white-space: nowrap;
-}
-.trending-container span {
-  display: inline-block;
-  color: #000;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: 'Merriweather', serif;
-}
-.trending-container a span:hover {
-  color: #FC7416;
-}
-.trending-container a:hover {
-  cursor: pointer;
-}
 .featured {
   text-align: center;
   border-bottom: 1px solid gray;
@@ -483,7 +412,7 @@ mark {
   width: 100%;
 }
 .featured:hover {
-  background-color: #e0ebeb;
+  background-color: #dae0e0;
   cursor: pointer;
 }
 .featured-block-column {

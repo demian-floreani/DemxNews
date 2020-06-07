@@ -75,13 +75,16 @@ namespace RNN.Services.Impl
                         ApplicationUserId = user,
                         Body = form.Body,
                         Date = DateTime.Now,
-                        Rank = form.Rank,
+                        Rank = 0,
                         Url = form.Url,
                         Paragraph = form.Paragraph,
                         Img = form.Img != null ? _imageProcessingService.ProcessFormImage(form.Img) : string.Empty,
                         PageViews = 0,
                         IsPublished = false,
-                        IsPinned = 0
+                        IsPinned = 0,
+                        Caption = String.Empty,
+                        IsFeatured = false,
+                        LastModified = DateTime.Now
                     };
 
                     await _entryRepository.Create(article);
@@ -97,8 +100,6 @@ namespace RNN.Services.Impl
                     }
 
                     transaction.Commit();
-
-                    //UpdateSitemap(article.Slug);
 
                     return article;
                 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -6,9 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using RNN.Controllers.Common;
 using RNN.Data.Repositories;
+using RNN.Models;
 using RNN.Models.ViewModels.Data;
 using RNN.Models.ViewModels.Pages;
 using RNN.Models.ViewModels.ViewComponents;
@@ -21,11 +24,14 @@ namespace RNN.Controllers
     public class HomeController : BaseController
     {
         private readonly IArticleService _articleService;
+        private readonly IMemoryCache _cache;
         
         public HomeController(  IArticleService articleService,
-                                IWebHostEnvironment environment) : base (environment)
+                                IWebHostEnvironment environment,
+                                IMemoryCache cache) : base (environment)
         {
             _articleService = articleService;
+            _cache = cache;
         }
 
         [HttpGet]
@@ -38,19 +44,24 @@ namespace RNN.Controllers
             var layout = new List<int>() 
             {
                 9, 3, 5, 7, 7 
-            };    
+            };
 
-            var trending = (await _articleService.GetHeadlineTopics(layout.Count()))
-                .GroupBy(t => t)
-                .OrderByDescending(g => g.Count())
-                .Select(g => g.Key)
-                .Take(5)
-                .ToList();
+            if (!_cache.TryGetValue("trending", out IEnumerable<Topic> trending))
+            {
+                trending = (await _articleService.GetHeadlineTopics(5))
+                    .GroupBy(t => t)
+                    .OrderByDescending(g => g.Count())
+                    .Select(g => g.Key)
+                    .Take(5)
+                    .ToList();
 
-            var entries = await _articleService.GetHeadlineArticles(layout.Count());
+                _cache.Set("trending", trending, DateTimeOffset.Now.AddDays(1));
+            }
 
+            ViewData["Trending"] = trending;
+            
             var group = GroupArticles(
-                entries, 
+                await _articleService.GetHeadlineArticles(layout.Count()), 
                 layout);
 
             var featured = await _articleService.GetFeaturedArticle();
@@ -58,7 +69,6 @@ namespace RNN.Controllers
             HomeViewModel model = new HomeViewModel()
             {
                 Featured = featured != null ? FeaturedBlockViewComponent.ToViewModel(featured) : null,
-                Trending = trending,
                 Grouping = group
             };
 

@@ -12,5 +12,7 @@ namespace RNN.Models.ViewModels.Pages
     {
         public Entry Article { get; set; }
         public IEnumerable<Topic> Topics { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string Author { get; set; }
     }
 }

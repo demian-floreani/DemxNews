@@ -12,6 +12,7 @@ using RNN.Services;
 
 namespace RNN.Controllers
 {
+    [AllowAnonymous]
     public class NewsletterController : BaseController
     {
         private readonly INewsletterService _service;

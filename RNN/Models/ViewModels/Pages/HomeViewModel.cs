@@ -10,7 +10,6 @@ namespace RNN.Models.ViewModels.Pages
     public class HomeViewModel
     {
         public FeaturedBlockViewComponent Featured { get; set; }
-        public IEnumerable<Topic> Trending { get; set; }
         public GroupingViewComponent Grouping { get; set; }
     }
 }  

@@ -47,7 +47,7 @@ header > p {
 }
 
 article {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .article-img {
@@ -125,9 +125,37 @@ p {
 
 /* global */
 
+.reccomendations-block-column {
+    margin-bottom: 10px;
+}
+
+.reccomendation-block {
+    background-color: #eff5f5;
+}
+
+.reccomendation-block:hover {
+    background-color: #e0ebeb;
+    cursor: pointer;
+}
+
+.reccomendation-block header {
+    padding: 5px;
+    color: #000000;
+    font-size: 18px;
+}
+
+.reccomendation-block header span {
+    font-family: @merriweather;
+}
+
+.reccomendation-block > picture > img {
+    width: 100%;
+    display: block;
+}
+
+
+
 .vertical-block-column {
-    /*padding-left: 10px;
-    padding-right: 10px;*/
     margin-bottom: 10px;
 }
 
@@ -216,4 +244,20 @@ mark {
 
 a {
     color: @color;
+}
+
+.info {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.timestamp {
+    font-family: @merriweather;
+    font-size: 1.05rem;
+    float: right;
+}
+
+.author {
+    font-family: @merriweather;
+    font-size: 1.05rem;
 }
