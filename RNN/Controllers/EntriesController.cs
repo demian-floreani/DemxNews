@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using RNN.Controllers.Common;
 using RNN.Data;
@@ -39,6 +40,7 @@ namespace RNN.Controllers
         private readonly ITopicService _topicService;
         private readonly ISitemapService _sitemapService;
         private readonly IConfiguration _configuration;
+        private readonly IMemoryCache _cache;
 
         public EntriesController(
             IWebHostEnvironment environment,
@@ -46,13 +48,15 @@ namespace RNN.Controllers
             IEntryService entryService,
             ITopicService topicService,
             ISitemapService sitemapService,
-            IConfiguration configuration) : base(environment)
+            IConfiguration configuration,
+            IMemoryCache cache) : base(environment)
         {
             _entryService = entryService;
             _topicService = topicService;
             _userManager = userManager;
             _sitemapService = sitemapService;
             _configuration = configuration;
+            _cache = cache;
         }
 
         /// <summary>
@@ -176,6 +180,8 @@ namespace RNN.Controllers
             if (ModelState.IsValid)
             {
                 var slug = await _entryService.UpdateEntryAsync(form);
+
+                _cache.Remove(slug);
 
                 return RedirectToRoute(new
                 {
