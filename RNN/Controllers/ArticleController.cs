@@ -67,7 +67,7 @@ namespace RNN.Controllers
 
             ViewData["Title"] = article.HeadLine;
             ViewData["Description"] = article.Paragraph;
-            ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img, "-medium.Jpg");
+            ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img);
             ViewData["OGUrl"] = string.Concat("https://www.renegadenews.net/article/", article.Slug);
             
             var topics = article

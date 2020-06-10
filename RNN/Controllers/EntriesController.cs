@@ -90,7 +90,6 @@ namespace RNN.Controllers
 
             ViewData["TopicDataList"] = topics;
 
-
             return View();
         }
 
