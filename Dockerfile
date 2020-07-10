@@ -14,6 +14,8 @@ RUN dotnet publish -c Release ./RNN/RNN.csproj -o /publish/
 
 WORKDIR /publish
 
+#COPY ../uploads/. /publish/wwwroot/images/uploads/
+
 ENV ASPNETCORE_URLS http://*:5000
 
 ENTRYPOINT ["dotnet", "RNN.dll"]
