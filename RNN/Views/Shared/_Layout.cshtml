@@ -61,18 +61,22 @@
     @*<div id="fb-root"></div>*@
 
     <div class="container">
-        <div class="top-banner">
-            <a href="https://twitter.com/RNNOnline?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@("Follow @RNNOnline")</a>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="top-banner">
+                    <a href="https://twitter.com/RNNOnline?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@("Follow @RNNOnline")</a>
 
-            @if ((bool)ViewData["IsLoggedIn"])
-            {
-                <a href="/Entries/List/"><span class="contribute">Manage Content</span></a>
-            }
-            else
-            {
-                <a href="/Login/"><span class="contribute">Log In</span></a>
-                <a href="/Register/"><span class="contribute">Contribute</span></a>
-            }
+                    @if ((bool)ViewData["IsLoggedIn"])
+                    {
+                        <a href="/Entries/List/"><span class="contribute">Manage Content</span></a>
+                    }
+                    else
+                    {
+                        <a href="/Login/"><span class="contribute">Log In</span></a>
+                        <a href="/Register/"><span class="contribute">Contribute</span></a>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,7 +91,6 @@
                     </div>
                 </a>
             </div>
-            <div class="col-sm-3"></div>
         </div>
 
         @if (ViewData["Trending"] != null) {
