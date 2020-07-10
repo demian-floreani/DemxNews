@@ -2,6 +2,7 @@
 using RNN.Data;
 using RNN.Data.Repositories;
 using RNN.Models;
+using RNN.Models.ViewModels;
 using RNN.Models.ViewModels.Data;
 using RNN.Services.Impl;
 using System.Collections.Generic;
@@ -23,13 +24,30 @@ namespace RNN.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Entry> GetArticleBySlugAsync(string slug)
+        public Task<FullArticle> GetArticleBySlugAsync(string slug)
         {
             var article = _entryRepository
                 .FindBy(e => e.Slug.Equals(slug))
-                .Include(a => a.ApplicationUser)
-                .Include(a => a.EntryToTopics)
-                    .ThenInclude(et => et.Topic)
+                .Select(e => new FullArticle()
+                {
+                    Id = e.Id,
+                    Slug = e.Slug,
+                    Author = e.ApplicationUser.DisplayName,
+                    Body = e.Body,
+                    Caption = e.Caption,
+                    Date = e.Date,
+                    HeadLine = e.HeadLine,
+                    Img = e.Img,
+                    PageViews = e.PageViews,
+                    Paragraph = e.Paragraph,
+                    Url = e.Url,
+                    Topics = e.EntryToTopics
+                        .Select(et => et.Topic.Name),
+                    PrimaryTopic = e.EntryToTopics
+                        .Where(et => et.IsPrimary)
+                        .Select(et => et.Topic.Name)
+                        .FirstOrDefault()
+                })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 

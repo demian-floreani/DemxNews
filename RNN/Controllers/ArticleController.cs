@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using RNN.Controllers.Common;
 using RNN.Models;
+using RNN.Models.ViewModels.Data;
 using RNN.Models.ViewModels.Pages;
 using RNN.Models.ViewModels.ViewComponents;
 using RNN.Services;
@@ -45,10 +46,10 @@ namespace RNN.Controllers
             [FromRoute] string slug)
         {
             // get article from cache
-            if(!_cache.TryGetValue(slug, out Entry article))
+            if(!_cache.TryGetValue(slug, out FullArticle article))
             {
                 article = await _articleService.GetArticleBySlugAsync(slug);
-                _cache.Set(slug, article);
+                _cache.Set(slug, article, DateTimeOffset.Now.AddDays(1));
             }
 
             if (!_cache.TryGetValue("trending", out IEnumerable<Topic> trending))
@@ -69,20 +70,8 @@ namespace RNN.Controllers
             ViewData["Description"] = article.Paragraph;
             ViewData["OGImage"] = string.Concat("https://www.renegadenews.net/images/uploads/", article.Img);
             ViewData["OGUrl"] = string.Concat("https://www.renegadenews.net/article/", article.Slug);
-            
-            var topics = article
-                .EntryToTopics
-                .Select(et => et.Topic);
 
-            DisplayArticle model = new DisplayArticle()
-            {
-                Article = article,
-                Topics = topics,
-                Timestamp = article.Date,
-                Author = article.ApplicationUser.DisplayName
-            };
-        
-            return View("Index", model);
+            return View("Index", article);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace RNN.Services.Impl
 {
     public interface IArticleService
     {
-        Task<Entry> GetArticleBySlugAsync(string slug);
+        Task<FullArticle> GetArticleBySlugAsync(string slug);
         Task<List<BasicArticle>> GetReccomendedArticlesAsync(List<int> topics, int exclude, int similarity = 2);
         Task<List<BasicArticle>> GetArticlesByTopicAsync(int topic);
         Task<List<Topic>> GetArticleTopics(int article);

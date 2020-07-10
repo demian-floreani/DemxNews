@@ -135,7 +135,7 @@ namespace RNN.Services.Impl
             try
             {
                 article.LastModified = DateTime.Now;
-                tracker.Track(article => article.LastModified);
+                tracker.Track(e => e.LastModified);
 
                 if (article.HeadLine != form.HeadLine)
                 {

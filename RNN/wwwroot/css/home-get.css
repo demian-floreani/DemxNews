@@ -209,7 +209,10 @@ mark {
     font-size: 1.4rem;
   }
   .vertical-narrow-block section {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+  .horizontal-block section {
+    font-size: 0.95rem;
   }
   .horizontal-block header {
     font-size: 1.3rem;

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RNN.Models.ViewModels.Pages
 {
-    public class DisplayArticle : ViewModelBase
-    {
-        public Entry Article { get; set; }
-        public IEnumerable<Topic> Topics { get; set; }
-        public DateTime Timestamp { get; set; }
-        public string Author { get; set; }
-    }
+    //public class DisplayArticle : ViewModelBase
+    //{
+    //    public FullArticle Article { get; set; }
+    //    public IEnumerable<string> Topics { get; set; }
+    //    public DateTime Timestamp { get; set; }
+    //    public string Author { get; set; }
+    //}
 }

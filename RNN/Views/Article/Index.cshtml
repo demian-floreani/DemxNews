@@ -1,4 +1,4 @@
-﻿@model RNN.Models.ViewModels.Pages.DisplayArticle
+﻿@model RNN.Models.ViewModels.Data.FullArticle
 @*@if ((bool)Model.ViewModelData["IsAuthor"])
     {
         <div class="row">
@@ -11,8 +11,8 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="info">
-            <span class="author">by <b>@Model.Author</b></span>
-            <span class="timestamp">@Model.Timestamp.ToString("MMMM dd, yyyy")</span>
+            <span class="author">by <i>@Model.Author</i></span>
+            <span class="timestamp">@Model.Date.ToString("MMMM dd, yyyy")</span>
         </div>
     </div>
 </div>
@@ -20,12 +20,12 @@
 <div class="row row-equal opinion-header-row">
     <div class="col-xs-12 col-md-8 middle-column">
         <header>
-            <h1>@Model.Article.HeadLine</h1>
-            <p>@Model.Article.Paragraph</p>
+            <h1>@Model.HeadLine</h1>
+            <p>@Model.Paragraph</p>
         </header>
     </div>
     <div class="d-none d-sm-none d-md-block col-md-4 opinion-page-side-header">
-        <h3>@Model.Article.EntryToTopics.First(et => et.IsPrimary == true).Topic.Name</h3>
+        <h3>@Model.PrimaryTopic</h3>
         <section></section>
         <section></section>
         <section></section>
@@ -43,21 +43,21 @@
                 1200:   729      (large)      730
             -->
             <picture>
-                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.WebP" type="image/webp">
-                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Article.Img-large.Jpg" type="image/jpeg">
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-large.WebP" type="image/webp">
+                <source media="(min-width: 992px)" srcset="~/images/uploads/@Model.Img-large.Jpg" type="image/jpeg">
 
-                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.WebP" type="image/webp">
-                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Article.Img-medium.Jpg" type="image/jpeg">
+                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Img-medium.WebP" type="image/webp">
+                <source media="(min-width: 576px)" srcset="~/images/uploads/@Model.Img-medium.Jpg" type="image/jpeg">
 
-                <source srcset="~/images/uploads/@Model.Article.Img-tiny.WebP" type="image/webp">
-                <source srcset="~/images/uploads/@Model.Article.Img-tiny.Jpg" type="image/jpeg">
+                <source srcset="~/images/uploads/@Model.Img-tiny.WebP" type="image/webp">
+                <source srcset="~/images/uploads/@Model.Img-tiny.Jpg" type="image/jpeg">
 
-                <img class="article-img" src="~/images/uploads/@Model.Article.Img-tiny.Jpg" alt="">
+                <img class="article-img" src="~/images/uploads/@Model.Img-tiny.Jpg" alt="">
             </picture>
 
             <div class="row">
                 <div class="col-sm-12">
-                    @Html.Raw(@Model.Article.Body)
+                    @Html.Raw(@Model.Body)
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
                 <div class="inner">
                     @foreach (var t in Model.Topics)
                     {
-                        <div class="topic">@t.Name</div>
+                        <div class="topic">@t</div>
                     }
                 </div>
             </div>
@@ -132,7 +132,7 @@
     (function () {
 
         // load reccomendations async
-        load("/article/@Model.Article.Id/reccomendations", "reccomendations");
+        load("/article/@Model.Id/reccomendations", "reccomendations");
 
         document.getElementById("add-email").onclick = function () {
             var value = document.getElementById("email-input").value;
@@ -151,7 +151,7 @@
         }
 
         // increase page views
-        put("/article/@Model.Article.Id/viewed");
+        put("/article/@Model.Id/viewed");
 
         document.getElementById("show-comments").onclick = function () {
             var disqus_config = function () {
